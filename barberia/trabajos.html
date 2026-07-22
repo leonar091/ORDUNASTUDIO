@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Barbería Style · Galería</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== RESET Y BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0b0b;
+            color: #e5e5e5;
+            line-height: 1.6;
+            overflow-x: hidden;
+            cursor: auto;
+        }
+        .contenedor {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* ===== LOADER ===== */
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: #0b0b0b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        .loader.oculto {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader .logo-loader {
+            font-size: 4rem;
+            color: var(--dorado);
+            animation: pulseLoader 1.2s ease-in-out infinite;
+        }
+        .loader h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fff;
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
+        .loader h1 span {
+            color: var(--dorado);
+        }
+        .loader .barra-carga {
+            width: 200px;
+            height: 3px;
+            background: #2a2a2a;
+            border-radius: 4px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+        .loader .barra-carga .progreso {
+            width: 0%;
+            height: 100%;
+            background: var(--dorado);
+            border-radius: 4px;
+            animation: cargaProgreso 1.5s ease forwards;
+        }
+        @keyframes cargaProgreso {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        @keyframes pulseLoader {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* ===== VARIABLES ===== */
+        :root {
+            --dorado: #d4a743;
+            --dorado-oscuro: #b8922f;
+            --negro: #0b0b0b;
+            --gris-oscuro: #1a1a1a;
+            --gris-medio: #2a2a2a;
+            --blanco: #f5f5f5;
+            --sombra: 0 10px 30px rgba(0, 0, 0, 0.6);
+            --sombra-dorada: 0 8px 25px rgba(212, 167, 67, 0.25);
+            --radio: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== FONDO CON TEXTURA ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.012) 0px, rgba(255, 255, 255, 0.012) 1px, transparent 1px, transparent 8px);
+            pointer-events: none;
+        }
+
+        /* ===== PARTÍCULAS DORADAS ===== */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== TOPBAR ===== */
+        .topbar {
+            background: #0f0f0f;
+            color: #aaa;
+            padding: 6px 0;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #1a1a1a;
+            position: relative;
+            z-index: 2;
+        }
+        .topbar .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .topbar a {
+            color: #aaa;
+            transition: color 0.3s;
+        }
+        .topbar a:hover {
+            color: var(--dorado);
+        }
+        .topbar i {
+            color: var(--dorado);
+            margin-right: 4px;
+            width: 16px;
+        }
+        .topbar .separador {
+            color: #333;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: rgba(11, 11, 11, 0.55);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(212, 167, 67, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        header.shrink {
+            padding: 6px 0;
+            background: rgba(11, 11, 11, 0.85);
+            border-bottom-color: rgba(212, 167, 67, 0.4);
+        }
+        header .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icono {
+            width: 42px;
+            height: 42px;
+            border: 2px solid var(--dorado);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 20px;
+            color: var(--dorado);
+            transition: all 0.3s ease;
+        }
+        .logo:hover .logo-icono {
+            transform: rotate(-10deg) scale(1.05);
+            background: var(--dorado);
+            color: #0b0b0b;
+        }
+        .logo-texto {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+        .logo-texto .nombre {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+        .logo-texto .nombre span {
+            color: var(--dorado);
+        }
+        .logo-texto .subtitulo {
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #888;
+            font-weight: 600;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: max-height 0.4s ease;
+            overflow: hidden;
+        }
+        nav a {
+            padding: 8px 14px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+            color: #ccc;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid transparent;
+        }
+        nav a:hover,
+        nav a.activo {
+            color: var(--dorado);
+            border-color: rgba(212, 167, 67, 0.2);
+            background: rgba(212, 167, 67, 0.06);
+        }
+        .btn-reserva-nav {
+            background: var(--dorado);
+            color: #0b0b0b !important;
+            padding: 8px 22px !important;
+            border-radius: 40px !important;
+            font-weight: 700;
+            border: none !important;
+            box-shadow: 0 4px 14px rgba(212, 167, 67, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-reserva-nav::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(25deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+        .btn-reserva-nav:hover::after {
+            left: 60%;
+            opacity: 1;
+        }
+        .btn-reserva-nav:hover {
+            background: var(--dorado-oscuro);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 167, 67, 0.4);
+        }
+
+        /* ===== HERO GALERÍA ===== */
+        .hero-galeria {
+            position: relative;
+            min-height: 55vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 0 60px;
+            background: url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1600&fit=crop') center/cover no-repeat;
+            background-attachment: fixed;
+            isolation: isolate;
+            z-index: 1;
+        }
+        .hero-galeria::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 0;
+        }
+        .hero-galeria .contenedor {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+        .hero-galeria h1 {
+            font-size: 3.8rem;
+            font-weight: 900;
+            color: #fff;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+        }
+        .hero-galeria h1 span {
+            color: var(--dorado);
+        }
+        .hero-galeria p {
+            font-size: 1.3rem;
+            color: #ddd;
+            max-width: 600px;
+            margin: 12px auto 24px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.7s forwards;
+        }
+        .hero-galeria .btn-hero {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 40px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            background: var(--dorado);
+            color: #0b0b0b;
+            box-shadow: 0 8px 30px rgba(212, 167, 67, 0.35);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 1.0s forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-galeria .btn-hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(25deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+        .hero-galeria .btn-hero:hover::after {
+            left: 60%;
+            opacity: 1;
+        }
+        .hero-galeria .btn-hero:hover {
+            background: var(--dorado-oscuro);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(212, 167, 67, 0.5);
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== CATEGORÍAS VISUALES ===== */
+        .categorias-visuales {
+            background: var(--gris-oscuro);
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(212, 167, 67, 0.1);
+        }
+        .categorias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+        .categoria-icono {
+            background: var(--gris-medio);
+            border: 1px solid #2a2a2a;
+            border-radius: var(--radio);
+            padding: 20px 10px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        .categoria-icono:hover {
+            border-color: var(--dorado);
+            transform: translateY(-6px);
+            box-shadow: 0 8px 30px rgba(212, 167, 67, 0.1);
+        }
+        .categoria-icono i {
+            font-size: 2.5rem;
+            color: var(--dorado);
+            display: block;
+            margin-bottom: 6px;
+        }
+        .categoria-icono h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .categoria-icono .ver-trabajos {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.75rem;
+            color: var(--dorado);
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 1px solid transparent;
+        }
+        .categoria-icono:hover .ver-trabajos {
+            border-bottom-color: var(--dorado);
+        }
+
+        /* ===== FILTROS ===== */
+        .filtros {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .filtro-btn {
+            background: transparent;
+            border: 1px solid #333;
+            color: #ccc;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filtro-btn:hover,
+        .filtro-btn.activo {
+            background: var(--dorado);
+            color: #0b0b0b;
+            border-color: var(--dorado);
+            box-shadow: 0 4px 14px rgba(212, 167, 67, 0.3);
+        }
+
+        /* ===== GALERÍA MASONRY ===== */
+        .galeria-masonry {
+            column-count: 4;
+            column-gap: 16px;
+            padding: 20px 0 40px;
+        }
+        .galeria-masonry .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 16px;
+            border-radius: var(--radio);
+            overflow: hidden;
+            position: relative;
+            background: var(--gris-medio);
+            border: 1px solid #2a2a2a;
+            transition: transform 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease;
+            cursor: pointer;
+            opacity: 0;
+            transform: scale(0.92) translateY(30px);
+            animation: revealMasonry 0.7s ease forwards;
+            animation-delay: calc(var(--i, 0) * 0.05s);
+        }
+        .galeria-masonry .masonry-item.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+        @keyframes revealMasonry {
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .galeria-masonry .masonry-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .galeria-masonry .masonry-item:hover img {
+            transform: scale(1.06);
+        }
+
+        .galeria-masonry .masonry-item .hover-info {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+        }
+        .galeria-masonry .masonry-item:hover .hover-info {
+            opacity: 1;
+        }
+        .hover-info .titulo-hover {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 2px;
+            color: #fff;
+        }
+        .hover-info .barbero-hover {
+            font-size: 0.85rem;
+            color: #ccc;
+        }
+        .hover-info .estrellas-hover {
+            color: #ffb800;
+            font-size: 1rem;
+            margin: 4px 0;
+        }
+        .hover-info .ver-grande {
+            margin-top: 8px;
+            background: var(--dorado);
+            color: #0b0b0b;
+            padding: 4px 18px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            transition: transform 0.3s;
+        }
+        .hover-info .ver-grande:hover {
+            transform: scale(1.05);
+        }
+
+        .galeria-masonry .masonry-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 167, 67, 0.15), transparent);
+            transform: skewX(-25deg);
+            transition: left 0.8s ease;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .galeria-masonry .masonry-item:hover::after {
+            left: 150%;
+        }
+
+        .galeria-masonry .masonry-item .badge-float {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(212, 167, 67, 0.9);
+            color: #0b0b0b;
+            font-size: 0.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 2px 12px;
+            border-radius: 30px;
+            z-index: 3;
+            backdrop-filter: blur(4px);
+        }
+        .badge-float.popular { background: #ff6f00; color: #fff; }
+        .badge-float.top { background: #1a237e; color: #fff; }
+        .badge-float.premium { background: #b8860b; color: #fff; }
+        .badge-float.nuevo { background: #2e7d32; color: #fff; }
+        .badge-float.favorito { background: #c62828; color: #fff; }
+
+        /* ===== PAGINACIÓN ===== */
+        .paginacion {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 30px 0 10px;
+        }
+        .paginacion button {
+            background: var(--gris-medio);
+            border: 1px solid #333;
+            color: #ccc;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 44px;
+        }
+        .paginacion button:hover,
+        .paginacion button.activo {
+            background: var(--dorado);
+            color: #0b0b0b;
+            border-color: var(--dorado);
+        }
+        .paginacion button.deshabilitado {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        /* ===== SECCIÓN VIDEO (más pequeño) ===== */
+        .video-section {
+            background: var(--gris-oscuro);
+            padding: 40px 0;
+            border-top: 1px solid rgba(212, 167, 67, 0.1);
+            border-bottom: 1px solid rgba(212, 167, 67, 0.1);
+        }
+        .video-wrapper {
+            max-width: 560px;  /* Antes 800px */
+            margin: 0 auto;
+            border-radius: var(--radio);
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        .video-wrapper video {
+            width: 100%;
+            display: block;
+            border-radius: var(--radio);
+            max-height: 360px;  /* Evita que se estire demasiado */
+            object-fit: contain;
+        }
+        .video-wrapper .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;    /* Antes 80px */
+            height: 60px;   /* Antes 80px */
+            background: rgba(212, 167, 67, 0.85);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem; /* Antes 2.5rem */
+            color: #0b0b0b;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        .video-wrapper .play-btn:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: var(--dorado);
+        }
+
+        /* ===== BOTÓN FLOTANTE RESERVA ===== */
+        .btn-flotante-reserva {
+            position: fixed;
+            bottom: 100px;
+            left: 30px;
+            z-index: 998;
+            background: var(--dorado);
+            color: #0b0b0b;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            box-shadow: 0 8px 30px rgba(212, 167, 67, 0.4);
+            transition: all 0.4s ease;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: flotarReserva 3s ease-in-out infinite;
+        }
+        .btn-flotante-reserva:hover {
+            transform: scale(1.05) translateY(-4px);
+            box-shadow: 0 12px 40px rgba(212, 167, 67, 0.6);
+            background: var(--dorado-oscuro);
+        }
+        @keyframes flotarReserva {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        @media (max-width: 768px) {
+            .btn-flotante-reserva {
+                bottom: 80px;
+                left: 20px;
+                padding: 10px 18px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0a0a0a;
+            border-top: 1px solid #1a1a1a;
+            padding: 40px 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .footer-logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .footer-logo span {
+            color: var(--dorado);
+        }
+        .footer-desc {
+            color: #999;
+            font-size: 0.95rem;
+            max-width: 300px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+        }
+        .footer-social a:hover {
+            background: var(--dorado);
+            color: #0b0b0b;
+            transform: translateY(-4px) rotate(6deg);
+        }
+        footer h4 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 14px;
+        }
+        footer ul {
+            list-style: none;
+        }
+        footer ul li {
+            margin-bottom: 8px;
+        }
+        footer ul a {
+            color: #999;
+            transition: color 0.3s;
+        }
+        footer ul a:hover {
+            color: var(--dorado);
+            padding-left: 4px;
+        }
+        .footer-copy {
+            border-top: 1px solid #1a1a1a;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        .footer-copy a {
+            color: #888;
+            transition: color 0.3s;
+        }
+        .footer-copy a:hover {
+            color: var(--dorado);
+        }
+
+        /* ===== WHATSAPP FLOTANTE ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            background: #25d366;
+            color: #fff !important;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            animation: pulsoWhats 3s ease-in-out infinite;
+        }
+        @keyframes pulsoWhats {
+            0%, 100% { transform: scale(1); box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 8px 35px rgba(37, 211, 102, 0.8); }
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            animation: none;
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.9);
+            color: #fff !important;
+        }
+
+        .btn-subir {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            z-index: 998;
+            background: var(--dorado);
+            color: #0b0b0b;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            box-shadow: var(--sombra-dorada);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+        .btn-subir.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .btn-subir:hover {
+            background: var(--dorado-oscuro);
+            transform: scale(1.08);
+        }
+
+        /* ===== LIGHTBOX MEJORADO ===== */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            flex-direction: column;
+        }
+        .lightbox.abierto {
+            display: flex;
+        }
+        .lightbox .lightbox-contenido {
+            position: relative;
+            max-width: 90%;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .lightbox .lightbox-contenido img {
+            max-width: 100%;
+            max-height: 75vh;
+            border-radius: var(--radio);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            object-fit: contain;
+        }
+        .lightbox .lightbox-info {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 8px 0;
+            color: #ccc;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .lightbox .lightbox-info .contador {
+            font-weight: 600;
+        }
+        .lightbox .lightbox-info .acciones {
+            display: flex;
+            gap: 16px;
+        }
+        .lightbox .lightbox-info .acciones button {
+            background: none;
+            border: none;
+            color: #ccc;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .lightbox .lightbox-info .acciones button:hover {
+            color: var(--dorado);
+            transform: scale(1.1);
+        }
+
+        .lightbox .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(212, 167, 67, 0.15);
+            border: 1px solid rgba(212, 167, 67, 0.3);
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+        .lightbox .nav-btn:hover {
+            background: var(--dorado);
+            color: #0b0b0b;
+            border-color: var(--dorado);
+            transform: translateY(-50%) scale(1.1);
+        }
+        .lightbox .nav-btn.prev { left: -70px; }
+        .lightbox .nav-btn.next { right: -70px; }
+        .lightbox .cerrar {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 3rem;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s;
+            background: none;
+            border: none;
+            z-index: 10;
+        }
+        .lightbox .cerrar:hover {
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            .lightbox .nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                top: auto;
+                bottom: 10px;
+                transform: none;
+            }
+            .lightbox .nav-btn.prev { left: 10px; top: auto; bottom: 10px; }
+            .lightbox .nav-btn.next { right: 10px; top: auto; bottom: 10px; }
+            .lightbox .nav-btn:hover { transform: scale(1.1); }
+            .lightbox .cerrar { font-size: 2rem; top: 10px; right: 16px; }
+            .lightbox .lightbox-info { font-size: 0.8rem; }
+
+            /* Ajuste extra para el video en móvil */
+            .video-wrapper {
+                max-width: 100%;
+            }
+            .video-wrapper video {
+                max-height: 280px;
+            }
+            .video-wrapper .play-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            .video-section {
+                padding: 30px 0;
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .galeria-masonry { column-count: 3; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .hero-galeria h1 { font-size: 2.8rem; }
+        }
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            nav { width: 100%; order: 3; }
+            nav ul {
+                flex-direction: column;
+                align-items: stretch;
+                max-height: 0;
+                gap: 6px;
+                padding-top: 0;
+                width: 100%;
+            }
+            nav.abierto ul { max-height: 600px; padding-top: 15px; padding-bottom: 10px; }
+            nav a { justify-content: center; padding: 12px; width: 100%; border: none; }
+            .btn-reserva-nav { background: var(--dorado) !important; color: #0b0b0b !important; border-radius: 40px !important; }
+            .hero-galeria { min-height: 40vh; padding: 60px 0 40px; background-attachment: scroll; }
+            .hero-galeria h1 { font-size: 2.2rem; }
+            .hero-galeria p { font-size: 1rem; }
+            .galeria-masonry { column-count: 2; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 26px; bottom: 20px; right: 20px; }
+            .btn-subir { width: 44px; height: 44px; font-size: 1.2rem; bottom: 80px; right: 20px; }
+            .categorias-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .galeria-masonry { column-count: 1; }
+            .topbar .contenedor { flex-direction: column; align-items: center; gap: 4px; }
+            .categorias-grid { grid-template-columns: 1fr 1fr; }
+            .filtros { gap: 6px; }
+            .filtro-btn { padding: 6px 14px; font-size: 0.75rem; }
+            .paginacion button { padding: 6px 12px; min-width: 36px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== LOADER ===== -->
+    <div class="loader" id="loader">
+        <div class="logo-loader">✂</div>
+        <h1>Barbería <span>Style</span></h1>
+        <div class="barra-carga"><div class="progreso"></div></div>
+    </div>
+
+    <!-- ===== PARTÍCULAS ===== -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- ===== TOPBAR ===== -->
+    <div class="topbar">
+        <div class="contenedor">
+            <div>
+                <a href="tel:+525512345678"><i class="fas fa-phone-alt"></i> +52 55 1234 5678</a>
+                <span class="separador">|</span>
+                <a href="mailto:info@barberiastyle.com"><i class="fas fa-envelope"></i> info@barberiastyle.com</a>
+                <span class="separador">|</span>
+                <span><i class="fas fa-map-marker-alt"></i> Av. Principal #123, CDMX</span>
+            </div>
+            <div>
+                <a href="https://wa.me/525512345678" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header id="mainHeader">
+        <div class="contenedor">
+            <a href="index.html" class="logo">
+                <div class="logo-icono">✂</div>
+                <div class="logo-texto">
+                    <span class="nombre">Barbería <span>Style</span></span>
+                    <span class="subtitulo">Tu estilo comienza aquí</span>
+                </div>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menú"><i class="fas fa-bars"></i></button>
+            <nav id="navMenu">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="precios.html">Precios</a></li>
+                    <li><a href="trabajos.html" class="activo">Galería</a></li>
+                    <li><a href="horarios.html">Horarios</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== HERO GALERÍA ===== -->
+    <section class="hero-galeria" id="heroGaleria">
+        <div class="contenedor">
+            <h1>Nuestros <span>Trabajos</span></h1>
+            <p>Cada corte refleja precisión, estilo y dedicación.</p>
+            <a href="contacto.html" class="btn-hero"><i class="fas fa-calendar-check"></i> Reservar cita</a>
+        </div>
+    </section>
+
+    <!-- ===== CATEGORÍAS VISUALES ===== -->
+    <section class="categorias-visuales" id="categoriasVisuales">
+        <div class="contenedor">
+            <div class="categorias-grid">
+                <div class="categoria-icono" data-filtro="corte">
+                    <i class="fas fa-cut"></i><h4>Corte clásico</h4>
+                    <span class="ver-trabajos">Ver trabajos →</span>
+                </div>
+                <div class="categoria-icono" data-filtro="barba">
+                    <i class="fas fa-beard"></i><h4>Barba</h4>
+                    <span class="ver-trabajos">Ver trabajos →</span>
+                </div>
+                <div class="categoria-icono" data-filtro="fade">
+                    <i class="fas fa-razor"></i><h4>Fade</h4>
+                    <span class="ver-trabajos">Ver trabajos →</span>
+                </div>
+                <div class="categoria-icono" data-filtro="infantil">
+                    <i class="fas fa-child"></i><h4>Infantil</h4>
+                    <span class="ver-trabajos">Ver trabajos →</span>
+                </div>
+                <div class="categoria-icono" data-filtro="diseno">
+                    <i class="fas fa-paint-brush"></i><h4>Diseños</h4>
+                    <span class="ver-trabajos">Ver trabajos →</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== GALERÍA CON FILTROS ===== -->
+    <section class="galeria bg-gris" id="galeria">
+        <div class="contenedor">
+            <div class="filtros" id="filtrosContainer">
+                <button class="filtro-btn activo" data-filtro="todos">Todos</button>
+                <button class="filtro-btn" data-filtro="corte">Cortes</button>
+                <button class="filtro-btn" data-filtro="barba">Barbas</button>
+                <button class="filtro-btn" data-filtro="fade">Fade</button>
+                <button class="filtro-btn" data-filtro="infantil">Infantil</button>
+                <button class="filtro-btn" data-filtro="diseno">Diseños</button>
+            </div>
+            <div class="galeria-masonry" id="galeriaMasonry"></div>
+            <div class="paginacion" id="paginacion">
+                <button class="deshabilitado" id="pagPrev"><i class="fas fa-chevron-left"></i></button>
+                <button class="activo" data-pagina="1">1</button>
+                <button data-pagina="2">2</button>
+                <button data-pagina="3">3</button>
+                <button data-pagina="4">4</button>
+                <button id="pagNext"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECCIÓN VIDEO (más pequeño) ===== -->
+    <section class="video-section" id="videoSection">
+        <div class="contenedor">
+            <h2 class="section-titulo">Así <span>trabajamos</span></h2>
+            <p class="section-sub">Mira nuestro proceso y la pasión que ponemos en cada servicio</p>
+            <div class="video-wrapper">
+                <video id="videoDemo" controls poster="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&fit=crop">
+                    <source src="WhatsApp%20Video%202026-07-17%20at%209.28.36%20PM.mp4" type="video/mp4" />
+                    Tu navegador no soporta videos.
+                </video>
+                <div class="play-btn" id="playBtn"><i class="fas fa-play"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="contenedor">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">✂ Barbería <span>Style</span></div>
+                    <div class="footer-desc">Tu estilo comienza aquí. Expertos en cortes y barba con atención personalizada.</div>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Enlaces rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="servicios.html">Servicios</a></li>
+                        <li><a href="precios.html">Precios</a></li>
+                        <li><a href="trabajos.html">Galería</a></li>
+                        <li><a href="horarios.html">Horarios</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Horario</h4>
+                    <ul>
+                        <li>Lun-Vie: 10:00 - 20:00</li>
+                        <li>Sáb: 9:00 - 18:00</li>
+                        <li>Dom: Cerrado</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><a href="tel:+525512345678"><i class="fas fa-phone-alt" style="color: var(--dorado);"></i> +52 55 1234 5678</a></li>
+                        <li><a href="mailto:info@barberiastyle.com"><i class="fas fa-envelope" style="color: var(--dorado);"></i> info@barberiastyle.com</a></li>
+                        <li><i class="fas fa-map-marker-alt" style="color: var(--dorado);"></i> Av. Principal #123, CDMX</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-copy">
+                &copy; 2026 Barbería Style. Todos los derechos reservados.
+                <span style="margin: 0 8px;">·</span>
+                <a href="#">Aviso de privacidad</a>
+                <span style="margin: 0 8px;">·</span>
+                <a href="#">Términos y condiciones</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOTANTE ===== -->
+    <a href="https://wa.me/525512345678?text=Hola%2C%20quiero%20agendar%20una%20cita" target="_blank" class="whatsapp-float" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- ===== BOTÓN FLOTANTE RESERVA ===== -->
+    <a href="contacto.html" class="btn-flotante-reserva" id="btnFlotanteReserva">
+        <i class="fas fa-calendar-check"></i> ¿Te gustó este estilo? Reserva ahora
+    </a>
+
+    <!-- ===== BOTÓN SUBIR ===== -->
+    <button class="btn-subir" id="btnSubir" aria-label="Volver arriba"><i class="fas fa-chevron-up"></i></button>
+
+    <!-- ===== LIGHTBOX MEJORADO ===== -->
+    <div class="lightbox" id="lightbox">
+        <button class="cerrar" id="cerrarLightbox">&times;</button>
+        <button class="nav-btn prev" id="lbPrev"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn next" id="lbNext"><i class="fas fa-chevron-right"></i></button>
+        <div class="lightbox-contenido">
+            <img id="lightboxImg" src="" alt="Ampliación" />
+            <div class="lightbox-info">
+                <span class="contador" id="lbContador">1 / 30</span>
+                <span id="lbTitulo">Corte Clásico</span>
+                <div class="acciones">
+                    <button id="lbDownload" title="Descargar"><i class="fas fa-download"></i></button>
+                    <button id="lbShare" title="Compartir"><i class="fas fa-share-alt"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        // ============================================================
+        //  DATOS DE IMÁGENES (17 imágenes locales - rutas corregidas)
+        // ============================================================
+        const imagenesData = [
+            // Cortes
+            { url: 'img-trab/corte-moderno.jpg.jpg', titulo: 'Corte Moderno', categoria: 'corte', barbero: 'Carlos García', fecha: 'Hace 2 días', estrellas: 5, etiqueta: 'Popular' },
+            { url: 'img-trab/corte-ejecutivo.jpg.jpg', titulo: 'Corte Ejecutivo', categoria: 'corte', barbero: 'Miguel Torres', fecha: 'Hace 5 días', estrellas: 4, etiqueta: 'Premium' },
+            { url: 'img-trab/corte-clasico4.jpg.jpg', titulo: 'Corte Clásico 4', categoria: 'corte', barbero: 'Javier López', fecha: 'Hace 1 semana', estrellas: 5, etiqueta: 'Nuevo' },
+            { url: 'img-trab/corte-clasico3.jpg.jpg', titulo: 'Corte Clásico 3', categoria: 'corte', barbero: 'Ana Ruiz', fecha: 'Hace 3 días', estrellas: 4, etiqueta: '' },
+            { url: 'img-trab/corte-clasico2.jpg.jpg', titulo: 'Corte Clásico 2', categoria: 'corte', barbero: 'Carlos García', fecha: 'Hace 6 días', estrellas: 5, etiqueta: 'Favorito' },
+            { url: 'img-trab/corte-clasico.jpg.jpg', titulo: 'Corte Clásico', categoria: 'corte', barbero: 'Miguel Torres', fecha: 'Hace 2 semanas', estrellas: 5, etiqueta: 'Top' },
+            // Barbas
+            { url: 'img-trab/barba-perfilada2.jpg.jpg', titulo: 'Barba Perfilada 2', categoria: 'barba', barbero: 'Javier López', fecha: 'Hace 4 días', estrellas: 4, etiqueta: '' },
+           
+            // Fades
+            { url: 'img-trab/fade-con-lineas2.jpg.jpg', titulo: 'Fade con Líneas 2', categoria: 'fade', barbero: 'Carlos García', fecha: 'Hace 3 días', estrellas: 4, etiqueta: '' },
+            { url: 'img-trab/fade-con-lineas.jpg.jpg', titulo: 'Fade con Líneas', categoria: 'fade', barbero: 'Miguel Torres', fecha: 'Hace 5 días', estrellas: 5, etiqueta: 'Premium' },
+            { url: 'img-trab/fade-moderno2.jpg.jpg', titulo: 'Fade Moderno 2', categoria: 'fade', barbero: 'Javier López', fecha: 'Hace 2 días', estrellas: 5, etiqueta: 'Nuevo' },
+            { url: 'img-trab/fade-moderno.jpg.jpg', titulo: 'Fade Moderno', categoria: 'fade', barbero: 'Ana Ruiz', fecha: 'Hace 1 semana', estrellas: 4, etiqueta: '' },
+            // Infantiles
+            { url: 'img-trab/corte-infantil3.jpg.jpg', titulo: 'Corte Infantil 3', categoria: 'infantil', barbero: 'Carlos García', fecha: 'Hace 6 días', estrellas: 5, etiqueta: 'Favorito' },
+            { url: 'img-trab/corte-infantil2.jpg.jpg', titulo: 'Corte Infantil 2', categoria: 'infantil', barbero: 'Miguel Torres', fecha: 'Hace 4 días', estrellas: 4, etiqueta: '' },
+            { url: 'img-trab/corte-infantil.jpg.jpg', titulo: 'Corte Infantil', categoria: 'infantil', barbero: 'Javier López', fecha: 'Hace 2 semanas', estrellas: 5, etiqueta: 'Popular' },
+            // Diseños
+            { url: 'img-trab/barba-con-diseño2.jpg.jpg', titulo: 'Barba con Diseño 2', categoria: 'diseno', barbero: 'Ana Ruiz', fecha: 'Hace 3 días', estrellas: 4, etiqueta: '' },
+            { url: 'img-trab/barba-con-diseño.jpg.jpg', titulo: 'Barba con Diseño', categoria: 'diseno', barbero: 'Carlos García', fecha: 'Hace 1 semana', estrellas: 5, etiqueta: 'Premium' }
+        ];
+
+        // ============================================================
+        //  RENDERIZAR GALERÍA MASONRY
+        // ============================================================
+        const container = document.getElementById('galeriaMasonry');
+        let imagenesFiltradas = [...imagenesData];
+        const itemsPorPagina = 8;
+        let paginaActual = 1;
+        let totalPaginas = 1;
+
+        function renderizarGaleria(pagina = 1, filtro = 'todos') {
+            if (filtro === 'todos') imagenesFiltradas = [...imagenesData];
+            else imagenesFiltradas = imagenesData.filter(img => img.categoria === filtro);
+
+            totalPaginas = Math.ceil(imagenesFiltradas.length / itemsPorPagina);
+            if (pagina > totalPaginas) pagina = totalPaginas;
+            if (pagina < 1) pagina = 1;
+            paginaActual = pagina;
+
+            const inicio = (pagina - 1) * itemsPorPagina;
+            const fin = inicio + itemsPorPagina;
+            const itemsPagina = imagenesFiltradas.slice(inicio, fin);
+
+            container.innerHTML = '';
+            itemsPagina.forEach((img, idx) => {
+                const item = document.createElement('div');
+                item.className = 'masonry-item';
+                item.style.setProperty('--i', idx);
+                item.dataset.categoria = img.categoria;
+                const badgeClass = img.etiqueta ? `badge-float ${img.etiqueta.toLowerCase()}` : '';
+                const etiqueta = img.etiqueta ? `<span class="badge-float ${badgeClass}">${img.etiqueta}</span>` : '';
+                let estrellasHTML = '';
+                for (let i = 0; i < 5; i++) {
+                    estrellasHTML += i < img.estrellas ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
+                }
+                item.innerHTML = `
+                    <img src="${img.url}" alt="${img.titulo}" loading="lazy" />
+                    <div class="hover-info">
+                        <span class="etiqueta ${img.etiqueta ? img.etiqueta.toLowerCase() : ''}">${img.etiqueta || ''}</span>
+                        <div class="titulo-hover">${img.titulo}</div>
+                        <div class="barbero-hover">✂ ${img.barbero}</div>
+                        <div class="estrellas-hover">${estrellasHTML}</div>
+                        <div class="ver-grande">Ver en grande</div>
+                    </div>
+                    ${etiqueta}
+                `;
+                item.addEventListener('click', () => {
+                    const indexGlobal = imagenesData.indexOf(img);
+                    abrirLightbox(indexGlobal);
+                });
+                container.appendChild(item);
+            });
+            actualizarPaginacion();
+        }
+
+        // ===== PAGINACIÓN =====
+        function actualizarPaginacion() {
+            const pagContainer = document.getElementById('paginacion');
+            const prevBtn = pagContainer.querySelector('#pagPrev');
+            const nextBtn = pagContainer.querySelector('#pagNext');
+            const pageBtns = pagContainer.querySelectorAll('button:not(#pagPrev):not(#pagNext)');
+            pageBtns.forEach(b => b.remove());
+
+            for (let i = 1; i <= totalPaginas; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.dataset.pagina = i;
+                if (i === paginaActual) btn.classList.add('activo');
+                btn.addEventListener('click', () => {
+                    renderizarGaleria(i, filtroActual);
+                    window.scrollTo({ top: container.offsetTop - 100, behavior: 'smooth' });
+                });
+                pagContainer.insertBefore(btn, nextBtn);
+            }
+            prevBtn.classList.toggle('deshabilitado', paginaActual <= 1);
+            nextBtn.classList.toggle('deshabilitado', paginaActual >= totalPaginas);
+        }
+
+        // ===== FILTROS =====
+        let filtroActual = 'todos';
+        document.querySelectorAll('.filtro-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('activo'));
+                btn.classList.add('activo');
+                filtroActual = btn.dataset.filtro;
+                renderizarGaleria(1, filtroActual);
+            });
+        });
+
+        // Categorías visuales
+        document.querySelectorAll('.categoria-icono').forEach(el => {
+            el.addEventListener('click', () => {
+                const filtro = el.dataset.filtro;
+                document.querySelectorAll('.filtro-btn').forEach(b => {
+                    b.classList.remove('activo');
+                    if (b.dataset.filtro === filtro) b.classList.add('activo');
+                });
+                filtroActual = filtro;
+                renderizarGaleria(1, filtroActual);
+                window.scrollTo({ top: container.offsetTop - 80, behavior: 'smooth' });
+            });
+        });
+
+        // ===== PAGINACIÓN EVENTOS =====
+        document.getElementById('pagPrev').addEventListener('click', () => {
+            if (paginaActual > 1) renderizarGaleria(paginaActual - 1, filtroActual);
+        });
+        document.getElementById('pagNext').addEventListener('click', () => {
+            if (paginaActual < totalPaginas) renderizarGaleria(paginaActual + 1, filtroActual);
+        });
+
+        // ===== LIGHTBOX MEJORADO =====
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const cerrarLightbox = document.getElementById('cerrarLightbox');
+        const lbPrev = document.getElementById('lbPrev');
+        const lbNext = document.getElementById('lbNext');
+        const lbContador = document.getElementById('lbContador');
+        const lbTitulo = document.getElementById('lbTitulo');
+        const lbDownload = document.getElementById('lbDownload');
+        const lbShare = document.getElementById('lbShare');
+
+        let indiceLightbox = 0;
+
+        function abrirLightbox(index) {
+            indiceLightbox = index;
+            actualizarLightbox();
+            lightbox.classList.add('abierto');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarLightboxFn() {
+            lightbox.classList.remove('abierto');
+            document.body.style.overflow = '';
+        }
+
+        function actualizarLightbox() {
+            const img = imagenesData[indiceLightbox];
+            if (!img) return;
+            lightboxImg.src = img.url;
+            lbContador.textContent = `${indiceLightbox + 1} / ${imagenesData.length}`;
+            lbTitulo.textContent = `${img.titulo} · ${img.barbero}`;
+            lbDownload.onclick = () => {
+                const link = document.createElement('a');
+                link.href = img.url;
+                link.download = `${img.titulo}.jpg`;
+                link.click();
+            };
+            lbShare.onclick = () => {
+                if (navigator.share) {
+                    navigator.share({
+                        title: img.titulo,
+                        text: `Mira este trabajo de ${img.barbero} en Barbería Style`,
+                        url: img.url
+                    }).catch(() => {});
+                } else {
+                    navigator.clipboard.writeText(img.url).then(() => alert('Enlace copiado al portapapeles'));
+                }
+            };
+        }
+
+        lbPrev.addEventListener('click', () => {
+            indiceLightbox = (indiceLightbox - 1 + imagenesData.length) % imagenesData.length;
+            actualizarLightbox();
+        });
+        lbNext.addEventListener('click', () => {
+            indiceLightbox = (indiceLightbox + 1) % imagenesData.length;
+            actualizarLightbox();
+        });
+        cerrarLightbox.addEventListener('click', cerrarLightboxFn);
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) cerrarLightboxFn(); });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') cerrarLightboxFn();
+            if (e.key === 'ArrowLeft') lbPrev.click();
+            if (e.key === 'ArrowRight') lbNext.click();
+        });
+
+        // ===== VIDEO =====
+        const video = document.getElementById('videoDemo');
+        const playBtn = document.getElementById('playBtn');
+        playBtn.addEventListener('click', () => {
+            if (video.paused) { video.play(); playBtn.innerHTML = '<i class="fas fa-pause"></i>'; }
+            else { video.pause(); playBtn.innerHTML = '<i class="fas fa-play"></i>'; }
+        });
+        video.addEventListener('ended', () => { playBtn.innerHTML = '<i class="fas fa-play"></i>'; });
+
+        // ===== LOADER =====
+        window.addEventListener('load', () => {
+            setTimeout(() => { document.getElementById('loader').classList.add('oculto'); }, 1800);
+            renderizarGaleria(1, 'todos');
+        });
+
+        // ===== MENÚ HAMBURGUESA =====
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        menuToggle.addEventListener('click', () => navMenu.classList.toggle('abierto'));
+
+        // ===== HEADER SHRINK =====
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 80) header.classList.add('shrink');
+            else header.classList.remove('shrink');
+        });
+
+        // ===== PARALLAX EN HERO =====
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero-galeria');
+            if (hero) hero.style.backgroundPositionY = window.scrollY * 0.3 + 'px';
+        });
+
+        // ===== BOTÓN SUBIR =====
+        const btnSubir = document.getElementById('btnSubir');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) btnSubir.classList.add('visible');
+            else btnSubir.classList.remove('visible');
+        });
+        btnSubir.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // ===== CERRAR MENÚ =====
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => navMenu.classList.remove('abierto'));
+        });
+
+        // ===== PARTÍCULAS =====
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.radius = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.4 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > width) this.speedX *= -1;
+                if (this.y < 0 || this.y > height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(212, 167, 67, ${this.opacity})`;
+                ctx.fill();
+                ctx.shadowColor = 'rgba(212, 167, 67, 0.2)';
+                ctx.shadowBlur = 6;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        for (let i = 0; i < 30; i++) particles.push(new Particle());
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        console.log('✅ Barbería Style · Galería con imágenes locales y video más pequeño');
+    </script>
+</body>
+</html>

@@ -1,0 +1,2142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menú - La Mesa</title>
+
+    <!-- ===== META ETIQUETAS ===== -->
+    <meta name="description" content="Descubre el menú de La Mesa - Restaurante de alta cocina. Entradas, platos fuertes, postres y bebidas. Ingredientes frescos y sabores únicos en la Ciudad de México." />
+    <meta property="og:title" content="Menú - La Mesa Restaurante de Alta Cocina" />
+    <meta property="og:description" content="Explora nuestro menú con platillos elaborados con ingredientes frescos y de temporada. Vive una experiencia gastronómica única." />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" />
+    <meta property="og:url" content="https://tudominio.com/menu.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ===== CONFIGURACIÓN GENERAL ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: #2c1810;
+            line-height: 1.6;
+            background: #faf6f0;
+            overflow-x: hidden;
+        }
+        .contenedor {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== ANIMACIONES ===== */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: rgba(26, 20, 16, 0.95);
+            color: #fff;
+            padding: 12px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(212, 175, 55, 0.2);
+            transition: background 0.3s ease, padding 0.3s ease;
+        }
+        header.scrolled {
+            background: rgba(26, 20, 16, 0.98);
+            padding: 8px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        header .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo h1 {
+            font-size: 28px;
+            font-family: 'Georgia', serif;
+            letter-spacing: 2px;
+        }
+        .logo span {
+            color: #d4af37;
+            font-weight: 300;
+        }
+        .logo .sub {
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: #d4af37;
+            display: block;
+            font-weight: 300;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+        nav ul li a {
+            color: #f0e6d3;
+            text-decoration: none;
+            font-size: 15px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            position: relative;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 300;
+        }
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #d4af37;
+            transition: width 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: #d4af37;
+        }
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        .btn-nav-reserva {
+            background: #d4af37;
+            color: #1a1410 !important;
+            padding: 8px 22px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px !important;
+            transition: all 0.3s ease;
+            border: 2px solid #d4af37;
+            letter-spacing: 1px;
+        }
+        .btn-nav-reserva:hover {
+            background: transparent;
+            color: #d4af37 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+        .btn-nav-reserva::after {
+            display: none !important;
+        }
+
+        /* ===== HERO DEL MENÚ ===== */
+        .hero-menu {
+            background: linear-gradient(rgba(26, 20, 16, 0.75), rgba(26, 20, 16, 0.85)),
+                        url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=1920&q=80') center/cover no-repeat;
+            color: #f0e6d3;
+            padding: 180px 0 80px;
+            text-align: center;
+            position: relative;
+        }
+        .hero-menu .sello {
+            font-size: 14px;
+            letter-spacing: 6px;
+            color: #d4af37;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        .hero-menu h1 {
+            font-size: 52px;
+            font-weight: 400;
+            margin: 10px 0;
+        }
+        .hero-menu h1 span {
+            color: #d4af37;
+            display: block;
+            font-style: italic;
+            font-weight: 300;
+        }
+        .hero-menu .linea-oro {
+            width: 80px;
+            height: 2px;
+            background: #d4af37;
+            margin: 15px auto;
+        }
+        .hero-menu p {
+            font-size: 18px;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto 25px;
+        }
+        .hero-menu .boton-principal {
+            display: inline-block;
+            background: #d4af37;
+            color: #1a1410;
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 15px;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            border: 2px solid #d4af37;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .hero-menu .boton-principal:hover {
+            background: transparent;
+            color: #d4af37;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3);
+        }
+
+        /* ===== SERVICIOS ===== */
+        .servicios {
+            background: #fff;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        .servicios .contenedor {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px 30px;
+        }
+        .servicio-item {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 14px;
+            color: #4a3a2a;
+        }
+        .servicio-item i {
+            color: #d4af37;
+            margin-right: 6px;
+        }
+
+        /* ===== BÚSQUEDA ===== */
+        .busqueda-wrapper {
+            background: #fff;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .busqueda-wrapper .contenedor {
+            max-width: 600px;
+            position: relative;
+        }
+        .busqueda-wrapper input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border-radius: 50px;
+            border: 2px solid #e8ddd2;
+            font-size: 15px;
+            outline: none;
+            font-family: 'Segoe UI', sans-serif;
+            transition: border 0.3s ease;
+        }
+        .busqueda-wrapper input:focus {
+            border-color: #d4af37;
+        }
+        .busqueda-wrapper .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a09080;
+            font-size: 16px;
+        }
+        .resultados-busqueda {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 200;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 5px;
+        }
+        .resultados-busqueda .result-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #f0ebe3;
+            transition: background 0.2s;
+        }
+        .resultados-busqueda .result-item:hover {
+            background: #faf6f0;
+        }
+        .resultados-busqueda .result-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        /* ===== RECOMENDACIÓN DEL CHEF ===== */
+        .chef-section {
+            padding: 40px 0;
+            background: #faf6f0;
+        }
+        .chef-card {
+            background: #fff;
+            border-radius: 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        .chef-card .chef-img {
+            min-height: 240px;
+            background: url('https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80') center/cover;
+            position: relative;
+        }
+        .chef-card .chef-img .chef-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: #d4af37;
+            color: #1a1410;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .chef-card .chef-info {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .chef-card .chef-info .etiqueta-chef {
+            background: #d4af37;
+            color: #1a1410;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 11px;
+            text-transform: uppercase;
+            width: fit-content;
+            margin-bottom: 10px;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+        }
+        .chef-card .chef-info h2 {
+            font-size: 28px;
+            font-weight: 400;
+        }
+        .chef-card .chef-info .precio-chef {
+            font-size: 26px;
+            color: #d4af37;
+            font-weight: 600;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .chef-card .chef-info .btn-chef {
+            background: #d4af37;
+            color: #1a1410;
+            padding: 10px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            width: fit-content;
+            margin-top: 12px;
+            font-family: 'Segoe UI', sans-serif;
+            transition: all 0.3s ease;
+            border: 2px solid #d4af37;
+        }
+        .chef-card .chef-info .btn-chef:hover {
+            background: transparent;
+            color: #d4af37;
+        }
+
+        /* ===== PESTAÑAS DE CATEGORÍAS ===== */
+        .categorias-pestanas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            padding: 20px 0 10px;
+            border-bottom: 1px solid #e8ddd2;
+            margin-bottom: 20px;
+        }
+        .categorias-pestanas .pestana {
+            background: #f0ebe3;
+            color: #2c1810;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .categorias-pestanas .pestana:hover {
+            background: #d4af37;
+            color: #1a1410;
+        }
+        .categorias-pestanas .pestana.active {
+            background: #d4af37;
+            color: #1a1410;
+            font-weight: 600;
+        }
+
+        /* ===== GRID DE PLATILLOS ===== */
+        .page-content {
+            padding: 20px 0 50px;
+        }
+        .categoria-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .categoria-header h3 {
+            font-size: 30px;
+            font-weight: 300;
+        }
+        .categoria-header h3 span {
+            color: #d4af37;
+        }
+        .categoria-header .linea-oro {
+            width: 60px;
+            height: 3px;
+            background: #d4af37;
+            margin-top: 5px;
+        }
+        .categoria-header .contador {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 14px;
+            color: #8a7a6a;
+            background: #f0ebe3;
+            padding: 4px 16px;
+            border-radius: 50px;
+        }
+        .grid-platillos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        /* Tarjeta de platillo */
+        .platillo-card {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+        }
+        .platillo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.15);
+            border-color: #d4af37;
+        }
+        .platillo-card .img-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+        .platillo-card .platillo-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        .platillo-card:hover .platillo-img {
+            transform: scale(1.05);
+            filter: brightness(0.95);
+        }
+        .platillo-card .badge-chef-choice {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #d4af37;
+            color: #1a1410;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 3px 14px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .platillo-card .badge-popular {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(26,20,16,0.8);
+            color: #fff;
+            font-size: 11px;
+            padding: 3px 12px;
+            border-radius: 50px;
+            backdrop-filter: blur(4px);
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .platillo-card .badge-popular i {
+            color: #e74c3c;
+            margin-right: 4px;
+        }
+        .platillo-card .platillo-body {
+            padding: 16px 18px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .platillo-card .platillo-body .nombre-precio {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+        .platillo-card .platillo-body .nombre-precio h4 {
+            font-size: 18px;
+            font-weight: 400;
+        }
+        .platillo-card .platillo-body .nombre-precio .precio {
+            font-size: 16px; /* <-- TAMAÑO REDUCIDO */
+            color: #d4af37;
+            font-weight: 600;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .platillo-card .platillo-body .rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 13px;
+            color: #6a5a4a;
+            margin: 2px 0 6px;
+        }
+        .platillo-card .platillo-body .rating .stars {
+            color: #d4af37;
+            letter-spacing: 1px;
+        }
+        .platillo-card .platillo-body .rating .puntos {
+            font-weight: 600;
+            color: #2c1810;
+        }
+        .platillo-card .platillo-body .descripcion {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 13px;
+            color: #6a5a4a;
+            margin: 4px 0 10px;
+            flex: 1;
+        }
+        .platillo-card .platillo-body .etiquetas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .platillo-card .platillo-body .etiquetas .tag {
+            font-size: 9px;
+            font-weight: 600;
+            font-family: 'Segoe UI', sans-serif;
+            padding: 2px 12px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            background: #f0ebe3;
+            color: #2c1810;
+        }
+        .tag.nuevo { background: #d4af37; color: #1a1410; }
+        .tag.mas-vendido { background: #e74c3c; color: #fff; }
+        .tag.vegetariano { background: #27ae60; color: #fff; }
+        .tag.picante { background: #e67e22; color: #fff; }
+        .tag.chef { background: #2c3e50; color: #fff; }
+        .tag.sin-gluten { background: #8e44ad; color: #fff; }
+        .tag.premium { background: #f39c12; color: #1a1410; }
+        .tag.favorito { background: #e74c3c; color: #fff; }
+        .platillo-card .platillo-body .info-extra {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            color: #8a7a6a;
+            margin-top: 8px;
+            border-top: 1px solid rgba(0,0,0,0.04);
+            padding-top: 10px;
+        }
+        .platillo-card .platillo-body .info-extra span {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .platillo-card .platillo-body .info-extra i {
+            color: #d4af37;
+        }
+        .platillo-card .platillo-body .maridaje {
+            margin-top: 6px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            color: #5a4a3a;
+            border-top: 1px dashed rgba(212,175,55,0.2);
+            padding-top: 8px;
+        }
+        .platillo-card .platillo-body .maridaje i {
+            color: #d4af37;
+            margin-right: 4px;
+        }
+        .btn-ordenar {
+            background: #d4af37;
+            color: #1a1410;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+            border: 2px solid #d4af37;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            width: fit-content;
+        }
+        .btn-ordenar:hover {
+            background: transparent;
+            color: #d4af37;
+        }
+
+        /* ===== MODAL MEJORADO ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-contenido {
+            background: #fff;
+            border-radius: 32px;
+            max-width: 980px;
+            width: 100%;
+            max-height: 92vh;
+            overflow-y: auto;
+            padding: 40px 45px;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+        }
+        .modal-contenido .close-modal {
+            position: absolute;
+            top: 18px;
+            right: 22px;
+            font-size: 32px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #2c1810;
+            transition: transform 0.3s;
+            z-index: 10;
+        }
+        .modal-contenido .close-modal:hover {
+            transform: rotate(90deg);
+        }
+        .modal-contenido .modal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            align-items: stretch;
+        }
+        .modal-contenido .modal-img {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        .modal-contenido .modal-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .modal-contenido .modal-info h2 {
+            font-size: 32px;
+            font-weight: 400;
+            color: #2c1810;
+            margin-bottom: 4px;
+        }
+        .modal-contenido .modal-info .precio-modal {
+            font-size: 28px;
+            color: #d4af37;
+            font-weight: 600;
+            font-family: 'Segoe UI', sans-serif;
+            margin-bottom: 6px;
+        }
+        .modal-contenido .modal-info .rating-modal {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 15px;
+            color: #5a4a3a;
+            margin-bottom: 12px;
+        }
+        .modal-contenido .modal-info .rating-modal .stars {
+            color: #d4af37;
+            font-size: 20px;
+            letter-spacing: 2px;
+        }
+        .modal-contenido .modal-info .descripcion-modal {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 16px;
+            color: #4a3a2a;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .modal-contenido .modal-info .detalles-modal {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 15px;
+            background: #faf6f0;
+            padding: 14px 20px;
+            border-radius: 14px;
+            margin-bottom: 14px;
+        }
+        .modal-contenido .modal-info .detalles-modal span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .modal-contenido .modal-info .detalles-modal i {
+            color: #d4af37;
+            width: 18px;
+        }
+        .modal-contenido .modal-info .alergenos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+        .modal-contenido .modal-info .alergenos .alergeno {
+            background: #f0ebe3;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-family: 'Segoe UI', sans-serif;
+            color: #2c1810;
+        }
+        .modal-contenido .modal-info #modalMaridaje {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 14px;
+            color: #5a4a3a;
+            margin-bottom: 16px;
+        }
+        .modal-contenido .modal-info .btn-modal-reserva {
+            background: #d4af37;
+            color: #1a1410;
+            padding: 14px 38px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            width: fit-content;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: 2px solid #d4af37;
+            margin-top: 6px;
+        }
+        .modal-contenido .modal-info .btn-modal-reserva:hover {
+            background: transparent;
+            color: #d4af37;
+        }
+        .modal-contenido .modal-info .compartir {
+            margin-top: 20px;
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 14px;
+            color: #6a5a4a;
+        }
+        .modal-contenido .modal-info .compartir a {
+            color: #2c1810;
+            font-size: 26px;
+            transition: all 0.3s ease;
+        }
+        .modal-contenido .modal-info .compartir a:hover {
+            color: #d4af37;
+            transform: translateY(-3px);
+        }
+
+        /* ===== GALERÍA DE MINIATURAS DENTRO DEL MODAL (ELIMINADA) ===== */
+        /* .modal-contenido .galeria-modal ya no existe */
+
+        /* ===== MENÚ DEL DÍA ===== */
+        .menu-dia-page {
+            padding: 30px 0;
+            background: linear-gradient(135deg, #1a1410, #2c1a0e);
+            color: #f0e6d3;
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+        .menu-dia-page .contenedor {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+        .menu-dia-page .info-dia h2 {
+            font-size: 34px;
+            font-weight: 300;
+        }
+        .menu-dia-page .info-dia h2 span {
+            color: #d4af37;
+            display: block;
+            font-style: italic;
+        }
+        .menu-dia-page .info-dia .linea-oro {
+            width: 60px;
+            height: 3px;
+            background: #d4af37;
+            margin: 10px 0;
+        }
+        .menu-dia-page .info-dia .precio-dia {
+            font-size: 30px;
+            color: #d4af37;
+            font-weight: 600;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .menu-dia-page .info-dia .btn-dia {
+            background: #d4af37;
+            color: #1a1410;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 12px;
+            font-family: 'Segoe UI', sans-serif;
+            transition: all 0.3s ease;
+            border: 2px solid #d4af37;
+        }
+        .menu-dia-page .info-dia .btn-dia:hover {
+            background: transparent;
+            color: #d4af37;
+        }
+        .menu-dia-page .items-dia {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .menu-dia-page .items-dia .item-dia {
+            background: rgba(255,255,255,0.05);
+            padding: 14px;
+            border-radius: 14px;
+            border: 1px solid rgba(212,175,55,0.1);
+            text-align: center;
+        }
+        .menu-dia-page .items-dia .item-dia .icono {
+            font-size: 28px;
+            display: block;
+        }
+        .menu-dia-page .items-dia .item-dia .nombre {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .menu-dia-page .items-dia .item-dia .detalle {
+            font-size: 11px;
+            opacity: 0.7;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* ===== IMÁGENES DEL MENÚ DEL DÍA ===== */
+        .img-dia {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #d4af37;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            margin-bottom: 8px;
+            transition: transform 0.3s ease;
+        }
+        .item-dia:hover .img-dia {
+            transform: scale(1.08);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0d0a08;
+            color: #8a7a6a;
+            padding: 50px 0 30px;
+            border-top: 1px solid rgba(212, 175, 55, 0.05);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        .footer-col h4 {
+            color: #f0e6d3;
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+        .footer-col p,
+        .footer-col li {
+            font-size: 14px;
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.8;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li a {
+            color: #8a7a6a;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer-col ul li a:hover {
+            color: #d4af37;
+        }
+        .footer-col .social-icons {
+            display: flex;
+            gap: 15px;
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        .footer-col .social-icons a {
+            color: #8a7a6a;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .footer-col .social-icons a:hover {
+            color: #d4af37;
+            transform: translateY(-3px);
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.03);
+            padding-top: 20px;
+            text-align: center;
+            font-size: 13px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .footer-bottom span {
+            color: #d4af37;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .chef-card {
+                grid-template-columns: 1fr;
+            }
+            .chef-card .chef-img {
+                min-height: 200px;
+            }
+            .menu-dia-page .contenedor {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .menu-dia-page .info-dia .linea-oro {
+                margin: 10px auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header .contenedor {
+                flex-direction: column;
+                gap: 10px;
+            }
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .hero-menu {
+                padding: 150px 0 60px;
+            }
+            .hero-menu h1 {
+                font-size: 36px;
+            }
+            .hero-menu p {
+                font-size: 16px;
+            }
+            .grid-platillos {
+                grid-template-columns: 1fr 1fr;
+            }
+            .modal-contenido {
+                padding: 25px 20px;
+                max-width: 100%;
+                margin: 10px;
+                border-radius: 24px;
+            }
+            .modal-contenido .modal-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .modal-contenido .modal-img {
+                min-height: 250px;
+                max-height: 300px;
+            }
+            .modal-contenido .modal-info h2 {
+                font-size: 26px;
+            }
+            .modal-contenido .modal-info .precio-modal {
+                font-size: 24px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-col .social-icons {
+                justify-content: center;
+            }
+            .logo h1 {
+                font-size: 22px;
+            }
+            .btn-nav-reserva {
+                padding: 6px 16px;
+                font-size: 12px !important;
+            }
+            .categorias-pestanas .pestana {
+                font-size: 12px;
+                padding: 6px 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid-platillos {
+                grid-template-columns: 1fr;
+            }
+            .hero-menu h1 {
+                font-size: 28px;
+            }
+            .chef-card .chef-info h2 {
+                font-size: 22px;
+            }
+            .menu-dia-page .items-dia {
+                grid-template-columns: 1fr;
+            }
+            .modal-contenido {
+                padding: 20px 15px;
+            }
+            .modal-contenido .modal-img {
+                min-height: 200px;
+            }
+            .modal-contenido .modal-info .detalles-modal {
+                font-size: 13px;
+                padding: 12px 14px;
+            }
+            .modal-contenido .galeria-modal img {
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header id="main-header">
+        <div class="contenedor">
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <h1>🍽️ <span>La</span> Mesa</h1>
+                    <span class="sub">RESTAURANTE</span>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="index.html#historia">Nosotros</a></li>
+                    <li><a href="menu.html" style="color: #d4af37;">Menú</a></li>
+                    <li><a href="index.html#galeria">Galería</a></li>
+                    <li><a href="reservas.html">Reservas</a></li>
+                    <li><a href="index.html#footer">Contacto</a></li>
+                    <li><a href="reservas.html" class="btn-nav-reserva">Reservar Ahora</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== BOTÓN FLOTANTE WHATSAPP ===== -->
+    <a href="https://wa.me/521234567890?text=Hola%2C%20me%20gustar%C3%ADa%20hacer%20una%20reserva"
+       class="whatsapp-float" target="_blank" rel="noopener" style="position:fixed; bottom:30px; right:30px; background:#25d366; color:#fff; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; box-shadow:0 4px 20px rgba(37,211,102,0.4); z-index:999; transition:all 0.3s ease; text-decoration:none;">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ===== HERO DEL MENÚ ===== -->
+    <section class="hero-menu">
+        <div class="contenedor">
+            <div class="sello">✦ Nuestro Menú ✦</div>
+            <h1>Los mejores <span>ingredientes</span></h1>
+            <div class="linea-oro"></div>
+            <p>Elaborados al momento para ti, con la pasión que nos caracteriza.</p>
+            <a href="reservas.html" class="boton-principal">📅 Reservar Mesa</a>
+        </div>
+    </section>
+
+    <!-- ===== SERVICIOS ===== -->
+    <section class="servicios">
+        <div class="contenedor">
+            <span class="servicio-item"><i class="fas fa-truck"></i> Delivery</span>
+            <span class="servicio-item"><i class="fas fa-shopping-bag"></i> Para llevar</span>
+            <span class="servicio-item"><i class="fas fa-utensils"></i> Comer aquí</span>
+            <span class="servicio-item"><i class="fas fa-calendar-check"></i> Reserva</span>
+            <span class="servicio-item"><i class="fas fa-credit-card"></i> Pago con tarjeta</span>
+            <span class="servicio-item"><i class="fas fa-wifi"></i> WiFi</span>
+        </div>
+    </section>
+
+    <!-- ===== BÚSQUEDA ===== -->
+    <section class="busqueda-wrapper">
+        <div class="contenedor">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="buscador" placeholder="🔍 Buscar un platillo..." autocomplete="off" />
+            <div class="resultados-busqueda" id="resultadosBusqueda"></div>
+        </div>
+    </section>
+
+    <!-- ===== RECOMENDACIÓN DEL CHEF ===== -->
+    <section class="chef-section">
+        <div class="contenedor">
+            <div class="chef-card">
+                <div class="chef-img"><span class="chef-badge">👨🏻‍🍳 Chef's Choice</span></div>
+                <div class="chef-info">
+                    <span class="etiqueta-chef">👨🏻‍🍳 Recomendación del Chef</span>
+                    <h2>Rib Eye Premium</h2>
+                    <div class="precio-chef">$480</div>
+                    <div style="display:flex;gap:8px;margin-bottom:8px;font-family:'Segoe UI',sans-serif;font-size:14px;">
+                        <span style="color:#d4af37;">★★★★★</span>
+                        <span style="font-weight:600;">4.9</span>
+                        <span style="color:#8a7a6a;">(230 opiniones)</span>
+                    </div>
+                    <p style="font-family:'Segoe UI',sans-serif;color:#5a4a3a;font-size:15px;">Con mantequilla de ajo, papas al romero y espárragos a la parrilla.</p>
+                    <a href="reservas.html" class="btn-chef">📅 Pedir ahora</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PESTAÑAS DE CATEGORÍAS ===== -->
+    <div class="contenedor">
+        <div class="categorias-pestanas" id="categorias-pestanas">
+            <!-- Generadas con JavaScript -->
+        </div>
+    </div>
+
+    <!-- ===== GRID DE PLATILLOS ===== -->
+    <div id="page-content" class="page-content">
+        <div class="contenedor">
+            <div id="dynamic-content">
+                <p style="text-align:center;font-family:'Segoe UI',sans-serif;color:#8a7a6a;padding:40px 0;">Cargando platillos...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer id="footer">
+        <div class="contenedor">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>🍽️ La Mesa</h4>
+                    <p>Sabores que conectan</p>
+                    <p style="margin-top: 10px; color: #6a5a4a;">
+                        Un lugar donde la buena comida y las personas se encuentran.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4>Horario</h4>
+                    <p>Lunes a Domingo</p>
+                    <p><span style="color: #d4af37;">13:00 - 23:00 hrs</span></p>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <p>📞 +52 55 0000 0000</p>
+                    <p>📧 contacto@tudominio.com</p>
+                    <p>📍 Av. Reforma #123, Ciudad de México, CDMX</p>
+                    <p><a href="https://www.google.com/maps?q=19.4326,-99.1332" target="_blank" rel="noopener" style="color: #d4af37; text-decoration: none;">📍 Ver en Google Maps</a></p>
+                </div>
+                <div class="footer-col">
+                    <h4>Síguenos</h4>
+                    <div class="social-icons">
+                        <!-- ===== REEMPLAZAR con tus URLs reales ===== -->
+                        <a href="https://instagram.com/tu_usuario" target="_blank" rel="noopener" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://facebook.com/tu_pagina" target="_blank" rel="noopener" aria-label="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://tiktok.com/@tu_usuario" target="_blank" rel="noopener" aria-label="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://wa.me/521234567890?text=Hola%2C%20me%20gustar%C3%ADa%20hacer%20una%20reserva" target="_blank" rel="noopener" aria-label="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="mailto:contacto@tudominio.com" target="_blank" rel="noopener" aria-label="Correo">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 <span>La Mesa</span> Restaurante. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== MODAL ===== -->
+    <div class="modal-overlay" id="modalPlatillo">
+        <div class="modal-contenido">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <div class="modal-grid">
+                <div>
+                    <img class="modal-img" id="modalImg" src="" alt="" />
+                    <!-- GALERÍA DE MINIATURAS ELIMINADA -->
+                </div>
+                <div class="modal-info">
+                    <h2 id="modalNombre"></h2>
+                    <div class="precio-modal" id="modalPrecio"></div>
+                    <div class="rating-modal">
+                        <span class="stars" id="modalEstrellas"></span>
+                        <span id="modalPuntos"></span>
+                        <span style="color:#8a7a6a;" id="modalOpiniones"></span>
+                    </div>
+                    <div class="descripcion-modal" id="modalDescripcion"></div>
+                    <div class="detalles-modal" id="modalDetalles"></div>
+                    <div class="alergenos" id="modalAlergenos"></div>
+                    <div id="modalMaridaje"></div>
+                    <a href="reservas.html" class="btn-modal-reserva" id="btnModalReserva">📅 Reservar ahora</a>
+                    <div class="compartir">
+                        <span>Compartir:</span>
+                        <a href="#" id="compartirWhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" id="compartirFacebook" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" id="compartirInstagram" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ============================================================
+        // FUNCIÓN PARA NORMALIZAR NOMBRES (minúsculas, sin acentos, guiones)
+        // ============================================================
+        function normalizarNombre(nombre) {
+            return nombre
+                .toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+        }
+
+        // ============================================================
+        // MAPEO DE IMÁGENES PARA ENTRADAS (ruta: imgg/)
+        // ============================================================
+        const entradasImagenes = [
+            { nombre: "Pan Artesanal", imagen: "imgg/pan-artesanal.jpg.jpg" },
+            { nombre: "Ensalada César", imagen: "imgg/ensalada-cesar.jpg.jpg" },
+            { nombre: "Tabla de Quesos", imagen: "imgg/tabla-de-quesos.jpg.jpg" },
+            { nombre: "Bruschetta de Tomate", imagen: "imgg/bruschetta-de-tomate.jpg.jpg" },
+            { nombre: "Calamares Fritos", imagen: "imgg/calamares-fritos.jpg.jpg" },
+            { nombre: "Croquetas de Jamón", imagen: "imgg/croquetas-de-jamon.jpg.jpg" },
+            { nombre: "Chipirones a la Plancha", imagen: "imgg/chipirones-a-la-plancha.jpg.jpg" },
+            { nombre: "Hummus con Pan Pita", imagen: "imgg/hummus-con-pan-pita.jpg.jpg" },
+            { nombre: "Verduras Asadas", imagen: "imgg/verduras-asadas.jpg.jpg" },
+            { nombre: "Mejillones al Vapor", imagen: "imgg/mejillones-al-vapor.jpg.jpg" },
+            { nombre: "Gazpacho Andaluz", imagen: "imgg/gazpacho-andaluz.jpg.jpg" },
+            { nombre: "Empanadillas de Carne", imagen: "imgg/empanadillas-de-carne.jpg.jpg" },
+            { nombre: "Tartar de Atún", imagen: "imgg/tartar-de-atun.jpg.jpg" },
+            { nombre: "Tosta de Aguacate", imagen: "imgg/tosta-de-aguacate.jpg.jpg" },
+            { nombre: "Alitas de Pollo", imagen: "imgg/alitas-de-pollo.jpg.jpg" },
+            { nombre: "Carpaccio de Res", imagen: "imgg/carpaccio-de-res.jpg.jpg" },
+            { nombre: "Pulpo a la Gallega", imagen: "imgg/pulpo-a-la-gallega.jpg.jpg" },
+            { nombre: "Sopa de Cebolla", imagen: "imgg/sopa-de-cebolla.jpg.jpg" },
+            { nombre: "Tempura de Verduras", imagen: "imgg/tempura-de-verduras.jpg.jpg" },
+            { nombre: "Champiñones Rellenos", imagen: "imgg/champinones-rellenos.jpg.jpg" },
+            { nombre: "Ceviche de Pescado", imagen: "imgg/ceviche-de-pescado.jpg.jpg" },
+            { nombre: "Patatas Bravas", imagen: "imgg/patatas-bravas.jpg.jpg" },
+            { nombre: "Quesadillas de Hongos", imagen: "imgg/quesadillas-de-hongos.jpg.jpg" },
+            { nombre: "Escargots de Bourgogne", imagen: "imgg/escargots-de-bourgogne.jpg.jpg" },
+            { nombre: "Sashimi de Salmón", imagen: "imgg/sashimi-de-salmon.jpg.jpg" },
+            { nombre: "Rollos de Primavera", imagen: "imgg/rollos-de-primavera.jpg.jpg" },
+            { nombre: "Causa Limeña", imagen: "imgg/causa-limena.jpg.jpg" },
+            { nombre: "Anticuchos de Corazón", imagen: "imgg/anticuchos-de-corazon.jpg.jpg" },
+            { nombre: "Tiradito de Pescado", imagen: "imgg/tiradito-de-pescado.jpg.jpg" },
+            { nombre: "Causa de Atún", imagen: "imgg/causa-de-atun.jpg.jpg" }
+        ];
+
+        const mapaImagenesEntradas = {};
+        entradasImagenes.forEach(item => {
+            // Usamos clave normalizada
+            const clave = normalizarNombre(item.nombre);
+            mapaImagenesEntradas[clave] = item.imagen;
+        });
+
+        // ============================================================
+        // MAPEO DE IMÁGENES PARA FUERTES (ruta: Platos-Fuertes/)
+        // ============================================================
+    const fuertesImagenes = [
+    { nombre: "Carne Asada", imagen: "Platos-Fuertes/carne-asada.jpg.jpg" },
+    { nombre: "Pescado a la Plancha", imagen: "Platos-Fuertes/pescado-a-la-plancha.jpg.jpg" },
+    { nombre: "Pasta Alfredo", imagen: "Platos-Fuertes/pasta-alfredo.jpg.jpg" },
+    { nombre: "Pollo al Horno", imagen: "Platos-Fuertes/pollo-al-horno.jpg.jpg" },
+    { nombre: "Rib Eye", imagen: "Platos-Fuertes/rib-eye.jpg.jpg" },
+    { nombre: "Salmón a la Miel", imagen: "Platos-Fuertes/salmon-a-la-miel.jpg.jpg" },
+    { nombre: "Costillas BBQ", imagen: "Platos-Fuertes/costillas-bbq.jpg.jpg" },
+    { nombre: "Lomo de Cerdo", imagen: "Platos-Fuertes/lomo-de-cerdo.jpg.jpg" },
+    { nombre: "Ceviche de Camarón", imagen: "Platos-Fuertes/ceviche-de-camaron.jpg.jpg" },
+    { nombre: "Lasagna de Verduras", imagen: "Platos-Fuertes/lasagna-de-verduras.jpg.jpg" },
+    { nombre: "Risotto de Hongos", imagen: "Platos-Fuertes/risotto-de-hongos.jpg.jpg" },
+    { nombre: "Filete de Res", imagen: "Platos-Fuertes/filete-de-res.jpg.jpg" },
+    { nombre: "Chuletón de Cerdo", imagen: "Platos-Fuertes/chuleton-de-cerdo.jpg.jpg" },
+    { nombre: "Paella de Mariscos", imagen: "Platos-Fuertes/paella-de-mariscos.jpg.jpg" },
+    { nombre: "Langosta a la Plancha", imagen: "Platos-Fuertes/langosta-a-la-plancha.jpg.jpg" },
+    { nombre: "Moussaka Griega", imagen: "Platos-Fuertes/moussaka-griega.jpg.jpg" },
+    { nombre: "Ravioles de Espinaca", imagen: "Platos-Fuertes/ravioles-de-espinaca.jpg.jpg" },
+    { nombre: "Pato a la Naranja", imagen: "Platos-Fuertes/pato-a-la-naranja.jpg.jpg" },
+    { nombre: "Tacos de Pescado", imagen: "Platos-Fuertes/tacos-de-pescado.jpg.jpg" },
+    { nombre: "Fettuccine al Pesto", imagen: "Platos-Fuertes/fettuccine-al-pesto.jpg.jpg" },
+    { nombre: "Cordero al Horno", imagen: "Platos-Fuertes/cordero-al-horno.jpg.jpg" },
+    { nombre: "Trucha a la Navarra", imagen: "Platos-Fuertes/trucha-a-la-navarra.jpg.jpg" },
+    { nombre: "Pizza Margarita", imagen: "Platos-Fuertes/pizza-margarita.jpg.jpg" },
+    { nombre: "Bistec Tampiqueño", imagen: "Platos-Fuertes/bistec-tampiqueno.jpg.jpg" },
+    { nombre: "Sashimi de Atún", imagen: "Platos-Fuertes/sashimi-de-atun.jpg.jpg" },
+    { nombre: "Pollo a la Brasa", imagen: "Platos-Fuertes/pollo-a-la-brasa.jpg.jpg" },
+    { nombre: "Lomo Saltado", imagen: "Platos-Fuertes/lomo-saltado.jpg.jpg" },
+    { nombre: "Arroz con Mariscos", imagen: "Platos-Fuertes/arroz-con-mariscos.jpg.jpg" },
+    { nombre: "Cau Cau de Pollo", imagen: "Platos-Fuertes/cau-cau-de-pollo.jpg.jpg" },
+    { nombre: "Seco de Res", imagen: "Platos-Fuertes/seco-de-res.jpg.jpg" }
+];
+
+        const mapaImagenesFuertes = {};
+        fuertesImagenes.forEach(item => {
+            const clave = normalizarNombre(item.nombre);
+            mapaImagenesFuertes[clave] = item.imagen;
+        });
+
+        // ============================================================
+        // MAPEO DE IMÁGENES PARA POSTRES (ruta: img postres/)
+        // ============================================================
+        const postresImagenes = [
+            { nombre: "Pastel de Chocolate", imagen: " postres/pastel-de-chocolate.jpg.jpg" },
+            { nombre: "Flan Casero", imagen: " postres/flan-casero.jpg.jpg" },
+            { nombre: "Tarta de Queso", imagen: " postres/tarta-de-queso.jpg.jpg" },
+            { nombre: "Mousse de Chocolate", imagen: " postres/mousse-de-chocolate.jpg.jpg" },
+            { nombre: "Brownie con Helado", imagen: " postres/brownie-con-helado.jpg.jpg" },
+            { nombre: "Helado Artesanal", imagen: " postres/helado-artesanal.jpg.jpg" },
+            { nombre: "Tiramisú", imagen: " postres/tiramisu.jpg.jpg" },
+            { nombre: "Crema Catalana", imagen: " postres/crema-catalana.jpg.jpg" },
+            { nombre: "Tarta de Manzana", imagen: " postres/tarta-de-manzana.jpg.jpg" },
+            { nombre: "Churros con Chocolate", imagen: " postres/churros-con-chocolate.jpg.jpg" },
+            { nombre: "Panna Cotta", imagen: " postres/panna-cotta.jpg.jpg" },
+            { nombre: "Tarta de Santiago", imagen: " postres/tarta-de-santiago.jpg.jpg" },
+            { nombre: "Macedonia de Frutas", imagen: " postres/macedonia-de-frutas.jpg.jpg" },
+            { nombre: "Leche Frita", imagen: " postres/leche-frita.jpg.jpg" },
+            { nombre: "Tarta de Queso Vasca", imagen: " postres/tarta-de-queso-vasca.jpg.jpg" },
+            { nombre: "Coulant de Chocolate", imagen: " postres/coulant-de-chocolate.jpg.jpg" },
+            { nombre: "Sorbete de Limón", imagen: " postres/sorbete-de-limon.jpg.jpg" },
+            { nombre: "Pastel de Zanahoria", imagen: " postres/pastel-de-zanahoria.jpg.jpg" },
+            { nombre: "Gelato Italiano", imagen: " postres/gelato-italiano.jpg.jpg" },
+            { nombre: "Tarta de Frutas", imagen: " postres/tarta-de-frutas.jpg.jpg" },
+              { nombre: "Baklava", imagen: " postres/baklava.jpg.jpg" },
+            { nombre: "Pudín de Pan", imagen: " postres/pudin-de-pan.jpg.jpg" },
+            { nombre: "Truffas de Chocolate", imagen: " postres/truffas-de-chocolate.jpg.jpg" },
+            { nombre: "Tarta de Limón", imagen: " postres/tarta-de-limon.jpg.jpg" },
+            { nombre: "Fondue de Chocolate", imagen: " postres/fondue-de-chocolate.jpg.jpg" },
+            { nombre: "Tarta de Naranja", imagen: "postres/tarta-de-naranja.jpg.jpg" },
+            { nombre: "Mousse de Maracuyá", imagen: " postres/mousse-de-maracuya.jpg.jpg" },
+            { nombre: "Tarta de Coco", imagen: " postres/tarta-de-coco.jpg.jpg" },
+            { nombre: "Helado de Lucuma", imagen: " postres/helado-de-lucuma.jpg.jpg" },
+            { nombre: "Crepas con Cajeta", imagen: " postres/crepas-con-cajeta.jpg.jpg" }
+        ];
+
+        const mapaImagenesPostres = {};
+        postresImagenes.forEach(item => {
+            const clave = normalizarNombre(item.nombre);
+            mapaImagenesPostres[clave] = item.imagen;
+        });
+
+        // ============================================================
+        // MAPEO DE IMÁGENES PARA BEBIDAS (ruta: img bebidas/)
+        // ============================================================
+  const bebidasImagenes = [
+            { nombre: "Vino Tinto", imagen: " bebidas/vino-tinto.jpg.jpg" },
+            { nombre: "Vino Blanco", imagen: " bebidas/vino-blanco.jpg.jpg" },
+            { nombre: "Cerveza Lager", imagen: " bebidas/cerveza-lager.jpg.jpg" },
+            { nombre: "Cerveza IPA", imagen: " bebidas/cerveza-ipa.jpg" },
+            { nombre: "Refresco", imagen: " bebidas/refresco.jpg.jpg" },
+            { nombre: "Coctelería", imagen: "bebidas/cocteleria.jpg.jpg" },
+            { nombre: "Agua Fresca", imagen: " bebidas/agua-fresca.jpg.jpg" },
+            { nombre: "Café Espresso", imagen: " bebidas/cafe-espresso.jpg.jpg" },
+            { nombre: "Cappuccino", imagen: " bebidas/cappuccino.jpg.jpg" },
+            { nombre: "Té Verde", imagen: " bebidas/te-verde.jpg.jpg" },
+            { nombre: "Té Negro", imagen: " bebidas/te-negro.jpg.jpg" },
+            { nombre: "Chocolate Caliente", imagen: " bebidas/chocolate-caliente.jpg.jpg" },
+            { nombre: "Limonada Natural", imagen: " bebidas/limonada-natural.jpg.jpg" },
+            { nombre: "Smoothie de Frutas", imagen: " bebidas/smoothie-de-frutas.jpg.jpg" },
+            { nombre: "Agua Mineral", imagen: " bebidas/agua-mineral.jpg.jpg" },
+            { nombre: "Zumo de Naranja", imagen: " bebidas/zumo-de-naranja.jpg.jpg" },
+            { nombre: "Mojito", imagen: " bebidas/mojito.jpg.jpg" },
+            { nombre: "Margarita", imagen: " bebidas/margarita.jpg.jpg" },
+            { nombre: "Piña Colada", imagen: " bebidas/pina-colada.jpg.jpg" },
+            { nombre: "Cerveza Sin Alcohol", imagen: " bebidas/cerveza-sin-alcohol.jpg.jpg" },
+            { nombre: "Cava Brut", imagen: " bebidas/cava-brut.jpg.jpg" },
+            { nombre: "Champán Rosé", imagen: " bebidas/champan-rose.jpg.jpg" },
+            { nombre: "Té Chai", imagen: " bebidas/te-chai.jpg.jpg" },
+            { nombre: "Batido de Vainilla", imagen: " bebidas/batido-de-vainilla.jpg.jpg" },
+            { nombre: "Agua de Coco", imagen: " bebidas/agua-de-coco.jpg.jpg" },
+            { nombre: "Jugo de Piña", imagen: "bebidas/jugo-de-pina.jpg.jpg" },
+            { nombre: "Jugo de Naranja", imagen: " bebidas/jugo-de-naranja.jpg.jpg" },
+            { nombre: "Refresco de Cola", imagen: " bebidas/refresco-de-cola.jpg.jpg" },
+            { nombre: "Refresco de Lima", imagen: " bebidas/refresco-de-lima.jpg.jpg" },
+            { nombre: "Agua de Jamaica", imagen: " bebidas/agua-de-jamaica.jpg.jpg" }
+        ];
+
+        const mapaImagenesBebidas = {};
+        bebidasImagenes.forEach(item => {
+            const clave = normalizarNombre(item.nombre);
+            mapaImagenesBebidas[clave] = item.imagen;
+        });
+
+        // ============================================================
+        // DATOS FIJOS PARA ENTRADAS
+        // ============================================================
+        const CATEGORIAS = ['entradas', 'fuertes', 'postres', 'bebidas'];
+
+        // Nombres completos de entradas
+        const nombresEntradas = entradasImagenes.map(item => item.nombre);
+
+        // Fechas de modificación (de la primera imagen, en el mismo orden)
+        const fechasEntradas = [
+            '12/07/2026 21:49', '12/07/2026 21:48', '12/07/2026 21:46', '12/07/2026 21:46',
+            '12/07/2026 21:44', '12/07/2026 21:43', '12/07/2026 21:42', '12/07/2026 21:41',
+            '12/07/2026 21:40', '12/07/2026 21:39', '12/07/2026 21:38', '12/07/2026 21:37',
+            '12/07/2026 21:36', '12/07/2026 21:35', '12/07/2026 21:34', '12/07/2026 21:33',
+            '12/07/2026 21:32', '12/07/2026 21:31', '12/07/2026 21:30', '12/07/2026 21:29',
+            '12/07/2026 21:28', '12/07/2026 21:27', '12/07/2026 21:26', '12/07/2026 21:25',
+            '12/07/2026 21:24', '12/07/2026 21:23', '12/07/2026 21:22', '12/07/2026 21:21',
+            '12/07/2026 21:20', '12/07/2026 21:19'
+        ];
+
+        // Tamaños (de la segunda imagen, en el mismo orden)
+        const tamanosEntradas = [
+            '40 KB', '46 KB', '47 KB', '31 KB', '29 KB', '26 KB', '24 KB', '27 KB',
+            '54 KB', '42 KB', '32 KB', '39 KB', '34 KB', '60 KB', '49 KB', '39 KB', '38 KB',
+            '45 KB', '33 KB', '36 KB', '41 KB', '48 KB', '37 KB', '52 KB', '43 KB',
+            '50 KB', '44 KB', '35 KB', '51 KB', '30 KB'
+        ];
+
+        // Datos fijos para los 4 platos destacados (de la tercera imagen)
+        const entradasDestacadas = [
+            {
+                nombre: 'Pan Artesanal',
+                precio: 120,
+                descripcion: 'Elaborado con ingredientes frescos y de la mejor calidad.',
+                tags: ['picante', 'sin-gluten', 'mas-vendido', 'nuevo', 'vegetariano'],
+                rating: 3.8,
+                opiniones: 87,
+                tiempo: '10 min',
+                kcal: 280,
+                peso: '180 g',
+                maridaje: 'Vino Tinto'
+            },
+            {
+                nombre: 'Ensalada César',
+                precio: 135,
+                descripcion: 'Receta tradicional con un toque moderno.',
+                tags: ['favorito', 'sin-gluten', 'vegetariano'],
+                rating: 4.2,
+                opiniones: 166,
+                tiempo: '12 min',
+                kcal: 184,
+                peso: '288 g',
+                maridaje: 'Vino Blanco'
+            },
+            {
+                nombre: 'Tabla de Quesos',
+                precio: 180,
+                descripcion: 'Perfecto para compartir en cualquier ocasión.',
+                tags: ['favorito', 'chef', 'sin-gluten', 'mariscos'],
+                rating: 3.9,
+                opiniones: 202,
+                tiempo: '15 min',
+                kcal: 450,
+                peso: '350 g',
+                maridaje: 'Cerveza Lager'
+            },
+            {
+                nombre: 'Bruschetta de Tomate',
+                precio: 110,
+                descripcion: 'Una explosión de sabores en cada bocado.',
+                tags: ['picante', 'sin-gluten', 'vegetariano'],
+                rating: 4.6,
+                opiniones: 70,
+                tiempo: '8 min',
+                kcal: 210,
+                peso: '160 g',
+                maridaje: 'Vino Tinto'
+            }
+        ];
+
+        // Construir array completo de entradas (30 platos)
+        const entradasCompletas = nombresEntradas.map((nombre, index) => {
+            const destacada = entradasDestacadas.find(d => d.nombre === nombre);
+            const clave = normalizarNombre(nombre);
+            const imagen = mapaImagenesEntradas[clave] || 'imgg/default.jpg';
+            if (destacada) {
+                return {
+                    ...destacada,
+                    imagen: imagen,
+                    fecha: fechasEntradas[index] || '12/07/2026 21:00',
+                    tamaño: tamanosEntradas[index] || '30 KB',
+                    tipo: 'Archivo JPG'
+                };
+            }
+            const precio = 50 + Math.floor(Math.random() * 200);
+            const rating = (3.5 + Math.random() * 1.5).toFixed(1);
+            const opiniones = 20 + Math.floor(Math.random() * 300);
+            const tags = ['nuevo', 'vegetariano', 'sin-gluten', 'favorito'].slice(0, 2 + Math.floor(Math.random() * 2));
+            return {
+                nombre,
+                precio,
+                descripcion: 'Delicioso platillo elaborado con ingredientes frescos.',
+                tags,
+                rating: parseFloat(rating),
+                opiniones,
+                tiempo: (5 + Math.floor(Math.random() * 20)) + ' min',
+                kcal: 150 + Math.floor(Math.random() * 400),
+                peso: (150 + Math.floor(Math.random() * 300)) + ' g',
+                maridaje: '',
+                imagen: imagen,
+                fecha: fechasEntradas[index] || '12/07/2026 21:00',
+                tipo: 'Archivo JPG',
+                tamaño: tamanosEntradas[index] || '30 KB'
+            };
+        });
+
+        // ============================================================
+        // GENERACIÓN DE PRODUCTOS PARA TODAS LAS CATEGORÍAS
+        // ============================================================
+        const nombresPorCategoria = {
+            entradas: nombresEntradas,
+            fuertes: ['Carne Asada', 'Pescado a la Plancha', 'Pasta Alfredo', 'Pollo al Horno', 'Rib Eye',
+                'Salmón a la Miel', 'Costillas BBQ', 'Lomo de Cerdo', 'Ceviche de Camarón', 'Lasagna de Verduras',
+                'Risotto de Hongos', 'Filete de Res', 'Chuletón de Cerdo', 'Paella de Mariscos',
+                'Langosta a la Plancha', 'Moussaka Griega', 'Ravioles de Espinaca', 'Pato a la Naranja',
+                'Tacos de Pescado', 'Fettuccine al Pesto', 'Cordero al Horno', 'Trucha a la Navarra',
+                'Pizza Margarita', 'Bistec Tampiqueño', 'Sashimi de Atún',
+                'Pollo a la Brasa', 'Lomo Saltado', 'Arroz con Mariscos', 'Cau Cau de Pollo', 'Seco de Res'
+            ],
+            postres: ['Pastel de Chocolate', 'Flan Casero', 'Tarta de Queso', 'Mousse de Chocolate',
+                'Brownie con Helado', 'Helado Artesanal', 'Tiramisú', 'Crema Catalana', 'Tarta de Manzana',
+                'Churros con Chocolate', 'Panna Cotta', 'Tarta de Santiago', 'Macedonia de Frutas',
+                'Leche Frita', 'Tarta de Queso Vasca', 'Coulant de Chocolate', 'Sorbete de Limón',
+                'Pastel de Zanahoria', 'Gelato Italiano', 'Tarta de Frutas', 'Baklava', 'Pudín de Pan',
+                'Truffas de Chocolate', 'Tarta de Limón', 'Fondue de Chocolate',
+                'Tarta de Naranja', 'Mousse de Maracuyá', 'Tarta de Coco', 'Helado de Lucuma', 'Crepas con Cajeta'
+            ],
+            bebidas: ['Vino Tinto', 'Vino Blanco', 'Cerveza Lager', 'Cerveza IPA', 'Refresco', 'Coctelería',
+                'Agua Fresca', 'Café Espresso', 'Cappuccino', 'Té Verde', 'Té Negro', 'Chocolate Caliente',
+                'Limonada Natural', 'Smoothie de Frutas', 'Agua Mineral', 'Zumo de Naranja', 'Mojito',
+                'Margarita', 'Piña Colada', 'Cerveza Sin Alcohol', 'Cava Brut', 'Champán Rosé', 'Té Chai',
+                'Batido de Vainilla', 'Agua de Coco',
+                'Jugo de Piña', 'Jugo de Naranja', 'Refresco de Cola', 'Refresco de Lima', 'Agua de Jamaica'
+            ]
+        };
+
+        const descripciones = [
+            'Elaborado con ingredientes frescos y de la mejor calidad.',
+            'Receta tradicional con un toque moderno.',
+            'Perfecto para compartir en cualquier ocasión.',
+            'Una explosión de sabores en cada bocado.',
+            'Ideal para los amantes de la buena cocina.',
+            'Preparado al momento con esmero y dedicación.',
+            'Combinación perfecta de texturas y aromas.',
+            'Un clásico que nunca pasa de moda.',
+            'Con un toque especial de la casa.',
+            'Para disfrutar con todos los sentidos.'
+        ];
+
+        function generarProductos(categoria, cantidad = 30) {
+            if (categoria === 'entradas') {
+                return entradasCompletas.slice(0, cantidad);
+            }
+
+            const listaNombres = nombresPorCategoria[categoria] || [];
+            const productos = [];
+            for (let i = 0; i < cantidad; i++) {
+                const idx = i % listaNombres.length;
+                const nombreBase = listaNombres[idx] || `Producto ${i+1}`;
+                let tagsBase = [];
+                if (categoria === 'fuertes') tagsBase = ['carnes', 'mariscos', 'vegetariano', 'mas-vendido', 'premium', 'chef', 'picante', 'sin-gluten', 'nuevo', 'favorito'];
+                else if (categoria === 'postres') tagsBase = ['dulces', 'mas-vendido', 'vegetariano', 'sin-gluten', 'premium', 'favorito', 'nuevo'];
+                else if (categoria === 'bebidas') tagsBase = ['maridaje', 'cerveza', 'bebida', 'coctel', 'cafe', 'te', 'premium'];
+                const shuffled = tagsBase.sort(() => 0.5 - Math.random());
+                const numTags = 2 + Math.floor(Math.random() * 3);
+                let tags = shuffled.slice(0, Math.min(numTags, shuffled.length));
+                tags = [...new Set(tags)];
+                if (tags.length === 0) tags.push('nuevo');
+
+                const precio = 50 + Math.floor(Math.random() * 400);
+                const rating = (3.5 + Math.random() * 1.5).toFixed(1);
+                const opiniones = 20 + Math.floor(Math.random() * 300);
+                const tiempo = (5 + Math.floor(Math.random() * 25)) + ' min';
+                const kcal = 100 + Math.floor(Math.random() * 600);
+                const peso = (150 + Math.floor(Math.random() * 350)) + ' g';
+                let maridaje = '';
+                if (Math.random() > 0.5) {
+                    const vinos = ['Vino Tinto', 'Vino Blanco', 'Cerveza Lager', 'Cerveza IPA', 'Albariño', 'Malbec', 'Chardonnay', 'Rioja', 'Sake', 'Cerveza Stout'];
+                    maridaje = vinos[Math.floor(Math.random() * vinos.length)];
+                }
+
+                // ===== AQUÍ EL CAMBIO QUE PEDISTE =====
+                let imagenProducto = null;
+                if (categoria === 'fuertes') {
+                    const clave = normalizarNombre(nombreBase);
+                    imagenProducto = mapaImagenesFuertes[clave] || null;
+                } else if (categoria === 'postres') {
+                    const clave = normalizarNombre(nombreBase);
+                    imagenProducto = mapaImagenesPostres[clave] || null;
+                } else if (categoria === 'bebidas') {
+                    const clave = normalizarNombre(nombreBase);
+                    imagenProducto = mapaImagenesBebidas[clave] || null;
+                }
+
+                productos.push({
+                    nombre: nombreBase,
+                    precio: precio,
+                    descripcion: descripciones[i % descripciones.length],
+                    tags: tags,
+                    rating: parseFloat(rating),
+                    opiniones: opiniones,
+                    tiempo: tiempo,
+                    kcal: kcal,
+                    peso: peso,
+                    maridaje: maridaje,
+                    imagen: imagenProducto,
+                    fecha: '12/07/2026 21:00',
+                    tipo: 'Archivo JPG',
+                    tamaño: '30 KB'
+                });
+            }
+            return productos;
+        }
+
+        const baseData = {};
+        CATEGORIAS.forEach(cat => {
+            baseData[cat] = generarProductos(cat, 30);
+        });
+
+        // ============================================================
+        // MAPEO DE IMÁGENES PARA CATEGORÍAS NO DEFINIDAS (fallback normalizado)
+        // ============================================================
+        function obtenerRutaImagen(nombrePlatillo) {
+            return `img/${normalizarNombre(nombrePlatillo)}.jpg`;
+        }
+
+        // ============================================================
+        // FUNCIONES DE RENDER (crearCardHTML, renderMenuPage, navigateMenu, generarPestanas, etc.)
+        // ============================================================
+        function crearCardHTML(p) {
+            const stars = '★'.repeat(Math.floor(p.rating)) + '☆'.repeat(5 - Math.floor(p.rating));
+            const opinionesText = p.opiniones ? `(${p.opiniones} opiniones)` : '';
+
+            let imgSrc = p.imagen || obtenerRutaImagen(p.nombre);
+            const imgPool = [
+                '1585515323553-c4b7d1a44a5d', '1546069901-ba9599a7e63c', '1594510885478-118aeccb3c90',
+                '1597528662465-55ece5734101', '1584556812952-9053bd6b2360', '1562967914-608f82629710',
+                '1576879873656-07b2566910c3', '1565557623262-b5c311cba6b9', '1540420773420-3366772f4999',
+                '1547592180-85f173990554', '1578985545062-69928b1d9587', '1563805042-7684c019e1cb',
+                '1574085733277-851d9d856a3a', '1556679343-c7306c1976bc', '1519708227418-c8fd9a32b7a2',
+                '1601784551446-20c9e07cdbdb', '1551183053-bf91a1d81141', '1598515214211-89d3c73ae83b',
+                '1544025162-d76694265947', '1563379926898-05f4575a45d8', '1559864802-bb4c64d9e6c8',
+                '1560518883-ce09059eeffa', '1551024709-8f23befc6f87', '1520282029482-f7c0b335d868',
+                '1507133750040-4a8f57021571'
+            ];
+            const fallbackUrl = `https://images.unsplash.com/photo-${imgPool[Math.floor(Math.random() * imgPool.length)]}?w=600&h=200&fit=crop&auto=format`;
+
+            const tagsHtml = p.tags.map(t => {
+                const cls = {
+                    'vegetariano': 'vegetariano',
+                    'mas-vendido': 'mas-vendido',
+                    'premium': 'premium',
+                    'sin-gluten': 'sin-gluten',
+                    'nuevo': 'nuevo',
+                    'picante': 'picante',
+                    'chef': 'chef',
+                    'favorito': 'favorito'
+                } [t] || '';
+                const label = {
+                    'vegetariano': '🌱 Vegetariano',
+                    'mas-vendido': '⭐ Más vendido',
+                    'premium': '🏆 Premium',
+                    'sin-gluten': '🌾 Sin gluten',
+                    'nuevo': '🔥 Nuevo',
+                    'picante': '🌶️ Picante',
+                    'chef': '👨🏻‍🍳 Chef',
+                    'favorito': '❤️ Favorito',
+                    'maridaje': '🍷 Maridaje',
+                    'cerveza': '🍺 Cerveza',
+                    'bebida': '🥤 Bebida',
+                    'coctel': '🍸 Cóctel',
+                    'cafe': '☕ Café',
+                    'te': '🍵 Té',
+                    'carnes': '🥩 Carnes',
+                    'mariscos': '🦐 Mariscos',
+                    'dulces': '🍰 Dulces'
+                } [t] || t;
+                return `<span class="tag ${cls}">${label}</span>`;
+            }).join('');
+
+            const badgePopular = p.tags.includes('mas-vendido') ? `<span class="badge-popular"><i class="fas fa-fire"></i> ${Math.floor(Math.random()*500+100)} pedidos</span>` : '';
+            const badgeChef = p.tags.includes('chef') ? `<span class="badge-chef-choice">👨🏻‍🍳 Chef's Choice</span>` : '';
+            const maridajeHtml = p.maridaje ? `<div class="maridaje"><i class="fas fa-wine-glass-alt"></i> Marida con: ${p.maridaje}</div>` : '';
+            const dataAttrs = p.tags.map(t => `data-${t.replace(/-/g, '')}="true"`).join(' ');
+
+            return `
+                <div class="platillo-card" data-nombre="${p.nombre}" data-precio="${p.precio}" ${dataAttrs}>
+                    <div class="img-wrapper">
+                        <img class="platillo-img" src="${imgSrc}" alt="${p.nombre}" loading="lazy" onerror="this.src='${fallbackUrl}'" />
+                        ${badgeChef}
+                        ${badgePopular}
+                    </div>
+                    <div class="platillo-body">
+                        <div class="nombre-precio">
+                            <h4>${p.nombre}</h4>
+                            <span class="precio">$${p.precio}</span>
+                        </div>
+                        <div class="rating">
+                            <span class="stars">${stars}</span>
+                            <span class="puntos">${p.rating}</span>
+                            <span style="color: #8a7a6a;">${opinionesText}</span>
+                        </div>
+                        <div class="descripcion">${p.descripcion}</div>
+                        <div class="etiquetas">${tagsHtml}</div>
+                        <div class="info-extra">
+                            <span><i class="fas fa-clock"></i> ${p.tiempo}</span>
+                            <span><i class="fas fa-fire"></i> ${p.kcal} kcal</span>
+                            <span><i class="fas fa-weight"></i> ${p.peso}</span>
+                        </div>
+                        ${maridajeHtml}
+                        <a href="reservas.html" class="btn-ordenar">🛒 Ordenar</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMenuPage(pageId) {
+            const container = document.getElementById('dynamic-content');
+            if (!container) return;
+
+            let productos = [];
+            let titulo = '';
+            let icono = '';
+
+            const map = {
+                'entradas': { data: baseData.entradas, titulo: 'Entradas', icono: '🍽️' },
+                'fuertes': { data: baseData.fuertes, titulo: 'Platos Fuertes', icono: '🍖' },
+                'postres': { data: baseData.postres, titulo: 'Postres', icono: '🍰' },
+                'bebidas': { data: baseData.bebidas, titulo: 'Bebidas', icono: '🍹' },
+                'vegetarianos': { data: null, titulo: 'Vegetarianos', icono: '🌱' },
+                'carnes': { data: null, titulo: 'Carnes', icono: '🥩' },
+                'mariscos': { data: null, titulo: 'Mariscos', icono: '🐟' },
+                'dulces': { data: null, titulo: 'Dulces', icono: '🍰' },
+                'menos-150': { data: null, titulo: 'Menos de $150', icono: '💲' },
+                'mas-vendidos': { data: null, titulo: 'Más vendidos', icono: '🔥' },
+                'chef-page': { data: null, titulo: 'Recomendaciones del Chef', icono: '👨🏻‍🍳' },
+                'menu-dia-page': { data: null, titulo: 'Menú del Día', icono: '📅' }
+            };
+
+            const info = map[pageId];
+            if (!info) {
+                container.innerHTML =
+                    `<p style="text-align:center;font-family:'Segoe UI',sans-serif;color:#8a7a6a;padding:40px 0;">Página no encontrada</p>`;
+                return;
+            }
+            titulo = info.titulo;
+            icono = info.icono;
+
+            if (pageId === 'entradas' || pageId === 'fuertes' || pageId === 'postres' || pageId === 'bebidas') {
+                productos = info.data;
+            } else {
+                let all = [];
+                for (let key in baseData) {
+                    all = all.concat(baseData[key]);
+                }
+                if (pageId === 'vegetarianos') {
+                    productos = all.filter(p => p.tags.includes('vegetariano'));
+                } else if (pageId === 'carnes') {
+                    productos = all.filter(p => p.tags.includes('carnes'));
+                } else if (pageId === 'mariscos') {
+                    productos = all.filter(p => p.tags.includes('mariscos'));
+                } else if (pageId === 'dulces') {
+                    productos = all.filter(p => p.tags.includes('dulces'));
+                } else if (pageId === 'menos-150') {
+                    productos = all.filter(p => p.precio < 150);
+                } else if (pageId === 'mas-vendidos') {
+                    productos = all.filter(p => p.tags.includes('mas-vendido'));
+                } else if (pageId === 'chef-page') {
+                    productos = all.filter(p => p.tags.includes('chef'));
+                } else if (pageId === 'menu-dia-page') {
+                    const shuffled = all.sort(() => 0.5 - Math.random());
+                    productos = shuffled.slice(0, 30);
+                }
+                while (productos.length < 30) {
+                    const extra = all[Math.floor(Math.random() * all.length)];
+                    if (extra && !productos.includes(extra)) productos.push(extra);
+                    else productos.push(all[Math.floor(Math.random() * all.length)]);
+                }
+                productos = productos.slice(0, 30);
+            }
+
+            if (!productos || productos.length === 0) {
+                container.innerHTML =
+                    `<p style="text-align:center;font-family:'Segoe UI',sans-serif;color:#8a7a6a;padding:40px 0;">No hay productos para mostrar.</p>`;
+                return;
+            }
+
+            let html = '';
+            if (pageId === 'menu-dia-page') {
+                html += `
+                    <div class="menu-dia-page" style="padding:0 0 20px 0;">
+                        <div class="contenedor" style="max-width:100%;padding:0;">
+                            <div class="info-dia">
+                                <h2>Menú del <span>Día</span></h2>
+                                <div class="linea-oro"></div>
+                                <p>Una selección especial que cambia cada día, con los mejores ingredientes de temporada.</p>
+                                <div class="precio-dia">$299</div>
+                                <a href="reservas.html" class="btn-dia">📅 Reservar ahora</a>
+                            </div>
+                            <div class="items-dia">
+                                <div class="item-dia">
+                                    <img class="img-dia" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200&h=200&fit=crop&crop=center" alt="Ensalada mixta" />
+                                    <span class="icono">🥗</span>
+                                    <div class="nombre">Entrada</div>
+                                    <div class="detalle">Ensalada mixta</div>
+                                </div>
+                                <div class="item-dia">
+                                    <img class="img-dia" src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=200&h=200&fit=crop&crop=center" alt="Pollo a la parrilla" />
+                                    <span class="icono">🍖</span>
+                                    <div class="nombre">Plato fuerte</div>
+                                    <div class="detalle">Pollo a la parrilla</div>
+                                </div>
+                                <div class="item-dia">
+                                    <img class="img-dia" src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=200&h=200&fit=crop&crop=center" alt="Tarta de frutas" />
+                                    <span class="icono">🍰</span>
+                                    <div class="nombre">Postre</div>
+                                    <div class="detalle">Tarta de frutas</div>
+                                </div>
+                                <div class="item-dia">
+                                    <img class="img-dia" src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=200&h=200&fit=crop&crop=center" alt="Limonada natural" />
+                                    <span class="icono">🍹</span>
+                                    <div class="nombre">Bebida</div>
+                                    <div class="detalle">Limonada natural</div>
+                                </div>
+                                <div class="item-dia">
+                                    <img class="img-dia" src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=200&h=200&fit=crop&crop=center" alt="Crema de calabaza" />
+                                    <span class="icono">🥣</span>
+                                    <div class="nombre">Sopa</div>
+                                    <div class="detalle">Crema de calabaza</div>
+                                </div>
+                                <div class="item-dia">
+                                    <img class="img-dia" src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=200&h=200&fit=crop&crop=center" alt="Pan artesanal" />
+                                    <span class="icono">🍞</span>
+                                    <div class="nombre">Acompañamiento</div>
+                                    <div class="detalle">Pan artesanal</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top:30px;">
+                        <div class="categoria-header">
+                            <div>
+                                <h3>📅 <span>Menú del Día</span></h3>
+                                <div class="linea-oro"></div>
+                            </div>
+                            <span class="contador">${productos.length} platillos</span>
+                        </div>
+                        <div class="grid-platillos">
+                            ${productos.map(p => crearCardHTML(p)).join('')}
+                        </div>
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="categoria-header">
+                        <div>
+                            <h3>${icono} <span>${titulo}</span></h3>
+                            <div class="linea-oro"></div>
+                        </div>
+                        <span class="contador">${productos.length} platillos</span>
+                    </div>
+                    <div class="grid-platillos">
+                        ${productos.map(p => crearCardHTML(p)).join('')}
+                    </div>
+                    <div style="text-align:center;margin-top:30px;">
+                        <a href="reservas.html" style="color:#d4af37;text-decoration:none;font-family:'Segoe UI',sans-serif;font-size:16px;font-weight:500;">¿Te gustaron? Reserva ahora →</a>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+
+            document.querySelectorAll('.platillo-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (e.target.closest('.btn-ordenar')) return;
+                    abrirModal(this);
+                });
+            });
+
+            document.querySelectorAll('.categorias-pestanas .pestana').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.page === pageId);
+            });
+        }
+
+        function navigateMenu(pageId) {
+            if (!pageId) pageId = 'entradas';
+            renderMenuPage(pageId);
+            window.scrollTo(0, 0);
+        }
+
+        function generarPestanas() {
+            const contenedor = document.getElementById('categorias-pestanas');
+            if (!contenedor) return;
+
+            const categorias = [
+                { id: 'entradas', label: 'Entradas' },
+                { id: 'fuertes', label: 'Platos Fuertes' },
+                { id: 'postres', label: 'Postres' },
+                { id: 'bebidas', label: 'Bebidas' },
+                { id: 'vegetarianos', label: 'Vegetarianos' },
+                { id: 'carnes', label: 'Carnes' },
+                { id: 'mariscos', label: 'Mariscos' },
+                { id: 'dulces', label: 'Dulces' },
+                { id: 'menos-150', label: 'Menos de $150' },
+                { id: 'mas-vendidos', label: 'Más vendidos' },
+                { id: 'chef-page', label: 'Chef' },
+                { id: 'menu-dia-page', label: 'Menú del Día' }
+            ];
+
+            contenedor.innerHTML = '';
+            categorias.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'pestana';
+                btn.dataset.page = cat.id;
+                btn.textContent = cat.label;
+                btn.addEventListener('click', function() {
+                    navigateMenu(this.dataset.page);
+                });
+                contenedor.appendChild(btn);
+            });
+        }
+
+        // ============================================================
+        // BÚSQUEDA
+        // ============================================================
+        const buscador = document.getElementById('buscador');
+        const resultados = document.getElementById('resultadosBusqueda');
+        buscador.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            resultados.innerHTML = '';
+            if (query.length === 0) {
+                resultados.style.display = 'none';
+                return;
+            }
+            let all = [];
+            for (let key in baseData) {
+                all = all.concat(baseData[key]);
+            }
+            const coincidencias = all.filter(p => p.nombre.toLowerCase().includes(query));
+            if (coincidencias.length === 0) {
+                resultados.innerHTML = '<div style="padding:12px 20px;color:#8a7a6a;">No se encontraron platillos.</div>';
+                resultados.style.display = 'block';
+                return;
+            }
+            coincidencias.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'result-item';
+                const imgSrc = p.imagen || obtenerRutaImagen(p.nombre);
+                const fallback = `https://images.unsplash.com/photo-${['1585515323553-c4b7d1a44a5d','1546069901-ba9599a7e63c','1594510885478-118aeccb3c90'][Math.floor(Math.random()*3)]}?w=80&h=80&fit=crop&auto=format`;
+                div.innerHTML = `
+                    <img src="${imgSrc}" alt="${p.nombre}" onerror="this.src='${fallback}'" />
+                    <div>
+                        <div class="nombre">${p.nombre}</div>
+                        <div class="categoria">$${p.precio}</div>
+                    </div>
+                `;
+                div.addEventListener('click', () => {
+                    resultados.style.display = 'none';
+                    buscador.value = '';
+                });
+                resultados.appendChild(div);
+            });
+            resultados.style.display = 'block';
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.busqueda-wrapper')) {
+                resultados.style.display = 'none';
+            }
+        });
+
+        // ============================================================
+        // MODAL - SIN GALERÍA DE MINIATURAS
+        // ============================================================
+        const modal = document.getElementById('modalPlatillo');
+        const closeModal = document.getElementById('closeModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalNombre = document.getElementById('modalNombre');
+        const modalPrecio = document.getElementById('modalPrecio');
+        const modalEstrellas = document.getElementById('modalEstrellas');
+        const modalPuntos = document.getElementById('modalPuntos');
+        const modalOpiniones = document.getElementById('modalOpiniones');
+        const modalDescripcion = document.getElementById('modalDescripcion');
+        const modalDetalles = document.getElementById('modalDetalles');
+        const modalAlergenos = document.getElementById('modalAlergenos');
+        const modalMaridaje = document.getElementById('modalMaridaje');
+        const btnReservaModal = document.getElementById('btnModalReserva');
+        const compartirWhatsApp = document.getElementById('compartirWhatsApp');
+        const compartirFacebook = document.getElementById('compartirFacebook');
+        const compartirInstagram = document.getElementById('compartirInstagram');
+
+        function abrirModal(card) {
+            const nombre = card.dataset.nombre || '';
+            const precio = card.dataset.precio || '';
+            const img = card.querySelector('.platillo-img')?.src || '';
+            const descripcion = card.querySelector('.descripcion')?.textContent || '';
+            const ratingStars = card.querySelector('.rating .stars')?.textContent || '★★★★★';
+            const ratingPuntos = card.querySelector('.rating .puntos')?.textContent || '4.9';
+            const ratingOpiniones = card.querySelector('.rating span:last-child')?.textContent || '(0 opiniones)';
+            const maridaje = card.querySelector('.maridaje')?.textContent || '';
+
+            const tags = card.querySelectorAll('.etiquetas .tag');
+            let alergenos = [];
+            let picante = '';
+            tags.forEach(tag => {
+                const text = tag.textContent.trim();
+                if (text.includes('🌶️')) picante = text;
+                if (text.includes('Lácteos')) alergenos.push('🥛 Lácteos');
+                if (text.includes('Sin gluten')) alergenos.push('🌾 Sin gluten');
+                if (text.includes('Nueces')) alergenos.push('🥜 Nueces');
+                if (text.includes('Mariscos')) alergenos.push('🦐 Mariscos');
+            });
+
+            const infoExtra = card.querySelectorAll('.info-extra span');
+            let detallesHTML = '';
+            infoExtra.forEach(span => { detallesHTML += `<span>${span.innerHTML}</span>`; });
+            if (picante) detallesHTML += `<span>${picante}</span>`;
+
+            modalImg.src = img;
+            modalImg.alt = nombre;
+            modalNombre.textContent = nombre;
+            modalPrecio.textContent = `$${precio}`;
+            modalEstrellas.textContent = ratingStars;
+            modalPuntos.textContent = ratingPuntos;
+            modalOpiniones.textContent = ratingOpiniones;
+            modalDescripcion.textContent = descripcion;
+            modalDetalles.innerHTML = detallesHTML;
+
+            modalAlergenos.innerHTML = '';
+            alergenos.forEach(a => {
+                const span = document.createElement('span');
+                span.className = 'alergeno';
+                span.textContent = a;
+                modalAlergenos.appendChild(span);
+            });
+            modalMaridaje.textContent = maridaje;
+
+            // === GALERÍA DE MINIATURAS ELIMINADA ===
+            // Ya no se genera el contenido de modalGaleria
+
+            const nombreCodificado = encodeURIComponent(nombre);
+            const urlMenu = window.location.origin + '/menu.html';
+            const mensajeWhatsApp = `Hola, me gustaría reservar el platillo ${nombre} en La Mesa. ${urlMenu}`;
+
+            btnReservaModal.href = `reservas.html?platillo=${nombreCodificado}`;
+            compartirWhatsApp.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensajeWhatsApp)}`;
+            const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlMenu)}&quote=${encodeURIComponent(`Prueba el platillo ${nombre} en La Mesa`)}`;
+            compartirFacebook.href = facebookShareUrl;
+            const instagramLink = document.querySelector('.footer-col .social-icons a[aria-label="Instagram"]');
+            compartirInstagram.href = instagramLink ? instagramLink.href : 'https://www.instagram.com/';
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // ============================================================
+        // HEADER SCROLL
+        // ============================================================
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // ============================================================
+        // INICIALIZACIÓN
+        // ============================================================
+        generarPestanas();
+        navigateMenu('entradas');
+
+        // Animaciones fade-up
+        const fadeElements = document.querySelectorAll('.fade-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+        fadeElements.forEach(el => observer.observe(el));
+
+        console.log('✅ Menú con imágenes de entradas, fuertes, postres y bebidas configuradas correctamente.');
+    </script>
+</body>
+</html>

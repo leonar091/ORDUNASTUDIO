@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clínica Vital · Especialidades</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            color: #1e293b;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .contenedor {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        :root {
+            --verde: #0b8c5e;
+            --verde-claro: #e6f5f0;
+            --gris-claro: #f8fafc;
+            --gris-medio: #e9edf2;
+            --azul: #2563eb;
+            --naranja: #f97316;
+            --morado: #7c3aed;
+            --blanco: #ffffff;
+            --sombra: 0 10px 30px rgba(0, 0, 0, 0.06);
+            --sombra-fuerte: 0 20px 50px rgba(0, 0, 0, 0.12);
+            --radio: 24px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== TOPBAR ===== */
+        .topbar {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 8px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid #1e293b;
+        }
+        .topbar .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .topbar-izq {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+        .topbar-izq a, .topbar-izq span {
+            color: #cbd5e1;
+            transition: var(--transition);
+        }
+        .topbar-izq a:hover {
+            color: var(--verde);
+        }
+        .topbar-izq i {
+            color: var(--verde);
+            margin-right: 6px;
+            width: 18px;
+        }
+        .topbar-der {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .topbar-der a {
+            color: #cbd5e1;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        .topbar-der a:hover {
+            color: var(--verde);
+        }
+        .whatsapp-top {
+            background: #25d366;
+            color: #fff !important;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        .whatsapp-top:hover {
+            background: #1ebe5e !important;
+            color: #fff !important;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: var(--blanco);
+            padding: 12px 0;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #e9edf2;
+        }
+        header .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icono {
+            width: 44px;
+            height: 44px;
+            background: var(--verde);
+            color: #fff;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .logo h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .logo h1 span {
+            color: var(--verde);
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        nav a {
+            padding: 8px 14px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            color: #1e293b;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        nav a:hover,
+        nav a.activo {
+            color: var(--verde);
+            background: var(--verde-claro);
+        }
+        .btn-cita-header {
+            background: var(--verde);
+            color: #fff !important;
+            padding: 10px 22px !important;
+            border-radius: 40px !important;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(11, 140, 94, 0.3);
+            transition: var(--transition);
+        }
+        .btn-cita-header:hover {
+            background: #0a7a52 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(11, 140, 94, 0.4);
+            color: #fff !important;
+        }
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.3rem;
+            padding: 8px 10px;
+            border-radius: 30px;
+            transition: var(--transition);
+        }
+        .cart-icon:hover {
+            background: var(--gris-claro);
+        }
+        .cart-icon .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #ef4444;
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== BREADCRUMB ===== */
+        .breadcrumb {
+            background: var(--gris-claro);
+            padding: 12px 0;
+            font-size: 0.9rem;
+            color: #64748b;
+            border-bottom: 1px solid #e9edf2;
+        }
+        .breadcrumb span {
+            color: var(--verde);
+            font-weight: 600;
+        }
+        .breadcrumb i {
+            margin: 0 8px;
+            font-size: 0.7rem;
+            color: #94a3b8;
+        }
+
+        /* ===== HERO ESPECIALIDADES ===== */
+        .hero-especialidades {
+            background: linear-gradient(145deg, #f0f9f6 0%, #dceee7 100%);
+            padding: 50px 0 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-especialidades::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(11, 140, 94, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-especialidades .contenedor {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        .hero-especialidades h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+        .hero-especialidades h2 span {
+            color: var(--verde);
+        }
+        .hero-especialidades p {
+            font-size: 1.2rem;
+            color: #475569;
+            max-width: 600px;
+            margin: 0 auto 24px;
+        }
+        .hero-especialidades .boton-hero {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--verde);
+            color: #fff !important;
+            padding: 14px 36px;
+            border-radius: 60px;
+            font-weight: 700;
+            box-shadow: 0 4px 16px rgba(11, 140, 94, 0.3);
+            transition: var(--transition);
+        }
+        .hero-especialidades .boton-hero:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(11, 140, 94, 0.4);
+            background: #0a7a52;
+        }
+
+        /* ===== FILTROS ===== */
+        .filtros {
+            padding: 30px 0 20px;
+            background: var(--blanco);
+        }
+        .filtros .contenedor {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 14px;
+            justify-content: center;
+        }
+        .filtros .busqueda {
+            display: flex;
+            align-items: center;
+            background: var(--gris-claro);
+            border-radius: 60px;
+            padding: 4px 18px 4px 20px;
+            border: 1px solid #e9edf2;
+            flex: 1 1 260px;
+            max-width: 380px;
+            transition: var(--transition);
+        }
+        .filtros .busqueda:focus-within {
+            border-color: var(--verde);
+            box-shadow: 0 0 0 3px rgba(11, 140, 94, 0.15);
+        }
+        .filtros .busqueda i {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        .filtros .busqueda input {
+            border: none;
+            background: transparent;
+            padding: 10px 12px;
+            font-size: 0.95rem;
+            width: 100%;
+            outline: none;
+            font-family: inherit;
+        }
+        .filtros .botones-filtro {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .filtros .botones-filtro button {
+            padding: 8px 20px;
+            border-radius: 40px;
+            border: 1px solid #e9edf2;
+            background: var(--blanco);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: #475569;
+        }
+        .filtros .botones-filtro button:hover {
+            border-color: var(--verde);
+            color: var(--verde);
+        }
+        .filtros .botones-filtro button.activo {
+            background: var(--verde);
+            color: #fff;
+            border-color: var(--verde);
+        }
+
+        /* ===== GRID DE ESPECIALIDADES ===== */
+        .especialidades-grid {
+            padding: 30px 0 60px;
+            background: var(--gris-claro);
+        }
+        .grid-especialidades {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 28px;
+        }
+
+        /* ===== TARJETA ===== */
+        .especialidad-card {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            overflow: hidden;
+            box-shadow: var(--sombra);
+            transition: var(--transition);
+            border: 1px solid #e9edf2;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            cursor: pointer;
+        }
+        .especialidad-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--sombra-fuerte);
+            border-color: var(--verde);
+        }
+        .especialidad-card .foto {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease;
+            position: relative;
+        }
+        .especialidad-card:hover .foto {
+            transform: scale(1.04);
+        }
+        .especialidad-card .foto .etiqueta {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: var(--verde);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .especialidad-card .contenido {
+            padding: 20px 22px 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .especialidad-card .contenido .titulo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2px;
+        }
+        .especialidad-card .contenido .titulo h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        .especialidad-card .contenido .titulo .estrellas {
+            color: #f59e0b;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        .especialidad-card .medico {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 6px 0 8px;
+            font-size: 0.95rem;
+            color: #475569;
+        }
+        .especialidad-card .medico i {
+            color: var(--verde);
+            width: 18px;
+            text-align: center;
+        }
+        .especialidad-card .medico .nombre {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .especialidad-card .medico .experiencia {
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+        .especialidad-card .precio {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--verde);
+            margin: 4px 0 10px;
+        }
+        .especialidad-card .precio small {
+            font-weight: 400;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+        .especialidad-card .servicios {
+            list-style: none;
+            margin: 8px 0 14px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 12px;
+        }
+        .especialidad-card .servicios li {
+            font-size: 0.85rem;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .especialidad-card .servicios li i {
+            color: var(--verde);
+            font-size: 0.75rem;
+        }
+        .especialidad-card .modalidades {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 4px 0 12px;
+        }
+        .especialidad-card .modalidades span {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 30px;
+            border: 1px solid #e9edf2;
+            color: #475569;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .especialidad-card .modalidades span i {
+            font-size: 0.7rem;
+        }
+        .especialidad-card .modalidades .presencial {
+            background: #dbeafe;
+            border-color: #93c5fd;
+            color: #1d4ed8;
+        }
+        .especialidad-card .modalidades .virtual {
+            background: #ede9fe;
+            border-color: #c4b5fd;
+            color: #7c3aed;
+        }
+        .especialidad-card .modalidades .urgencias {
+            background: #fee2e2;
+            border-color: #fca5a5;
+            color: #dc2626;
+        }
+        .especialidad-card .disponibilidad {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #16a34a;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+        .especialidad-card .disponibilidad i {
+            font-size: 0.7rem;
+        }
+        .especialidad-card .botones-card {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+        .especialidad-card .botones-card .btn-agendar {
+            flex: 1;
+            background: var(--verde);
+            color: #fff !important;
+            padding: 10px 0;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            position: relative;
+            z-index: 2;
+        }
+        .especialidad-card .botones-card .btn-agendar:hover {
+            background: #0a7a52;
+            transform: scale(1.02);
+            box-shadow: 0 4px 14px rgba(11, 140, 94, 0.3);
+        }
+        .especialidad-card .botones-card .btn-detalles {
+            flex: 1;
+            background: transparent;
+            color: var(--verde) !important;
+            padding: 10px 0;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid var(--verde);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            position: relative;
+            z-index: 2;
+        }
+        .especialidad-card .botones-card .btn-detalles:hover {
+            background: var(--verde);
+            color: #fff !important;
+        }
+
+        /* ===== NO ENCUENTRAS ESPECIALIDAD ===== */
+        .no-especialidad {
+            padding: 50px 0;
+            background: var(--verde-claro);
+            text-align: center;
+        }
+        .no-especialidad h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .no-especialidad p {
+            color: #475569;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+        .no-especialidad .btn-contactar {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--verde);
+            color: #fff !important;
+            padding: 14px 40px;
+            border-radius: 60px;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+        .no-especialidad .btn-contactar:hover {
+            background: #0a7a52;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(11, 140, 94, 0.3);
+        }
+
+        /* ===== FAQ ===== */
+        .faq-especialidades {
+            padding: 60px 0;
+            background: var(--blanco);
+        }
+        .faq-especialidades h3 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .faq-especialidades .sub {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .faq-item {
+            background: var(--gris-claro);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #e9edf2;
+            transition: var(--transition);
+        }
+        .faq-item:hover {
+            border-color: var(--verde);
+        }
+        .faq-pregunta {
+            padding: 18px 22px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+        .faq-pregunta i {
+            color: var(--verde);
+            transition: var(--transition);
+        }
+        .faq-item.abierto .faq-pregunta i {
+            transform: rotate(180deg);
+        }
+        .faq-respuesta {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 22px;
+            color: #475569;
+        }
+        .faq-item.abierto .faq-respuesta {
+            max-height: 200px;
+            padding: 0 22px 20px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 50px 0 20px;
+            border-top: 4px solid var(--verde);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        .footer-logo span {
+            color: var(--verde);
+        }
+        .footer-desc {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            margin-bottom: 16px;
+            max-width: 300px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #1e293b;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .footer-social a:hover {
+            background: var(--verde);
+            color: #fff;
+        }
+        footer h4 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 14px;
+        }
+        footer ul {
+            list-style: none;
+        }
+        footer ul li {
+            margin-bottom: 8px;
+        }
+        footer ul a {
+            color: #94a3b8;
+            transition: var(--transition);
+        }
+        footer ul a:hover {
+            color: var(--verde);
+        }
+        .footer-cert {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .footer-cert span {
+            background: #1e293b;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #94a3b8;
+            border: 1px solid #334155;
+        }
+        .footer-copy {
+            border-top: 1px solid #1e293b;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 998;
+            background: #25d366;
+            color: #fff !important;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+            transition: var(--transition);
+            border: none;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 35px rgba(37, 211, 102, 0.6);
+            color: #fff !important;
+        }
+
+        /* ===== CHAT FLOTANTE ===== */
+        .chat-float {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+        .chat-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--verde);
+            color: #fff;
+            border: none;
+            font-size: 28px;
+            box-shadow: 0 6px 25px rgba(11, 140, 94, 0.4);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chat-toggle:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 35px rgba(11, 140, 94, 0.5);
+        }
+        .chat-ventana {
+            background: var(--blanco);
+            border-radius: 20px;
+            box-shadow: var(--sombra-fuerte);
+            width: 300px;
+            max-height: 420px;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            border: 1px solid #e9edf2;
+        }
+        .chat-ventana.abierto {
+            display: flex;
+        }
+        .chat-header {
+            background: var(--verde);
+            color: #fff;
+            padding: 14px 18px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header .cerrar-chat {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .chat-mensajes {
+            padding: 16px;
+            flex: 1;
+            overflow-y: auto;
+            max-height: 240px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .chat-mensaje {
+            background: var(--gris-claro);
+            padding: 10px 14px;
+            border-radius: 14px;
+            max-width: 85%;
+            font-size: 0.9rem;
+            align-self: flex-start;
+        }
+        .chat-mensaje.bot {
+            background: var(--verde-claro);
+            align-self: flex-end;
+        }
+        .chat-opciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 8px 16px 14px;
+            border-top: 1px solid #e9edf2;
+        }
+        .chat-opciones button {
+            background: var(--gris-claro);
+            border: none;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            color: #1e293b;
+        }
+        .chat-opciones button:hover {
+            background: var(--verde);
+            color: #fff;
+        }
+
+        /* ===== ANIMACIONES BÁSICAS ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease forwards;
+        }
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== MODAL DETALLES - CON MÚLTIPLES ANIMACIONES ===== */
+        .detalle-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .detalle-modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .detalle-modal {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            max-width: 750px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 32px 36px;
+            box-shadow: var(--sombra-fuerte);
+            position: relative;
+            will-change: transform, opacity;
+        }
+        .detalle-modal .close-modal {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 10;
+        }
+        .detalle-modal .close-modal:hover {
+            color: #1e293b;
+            transform: rotate(90deg);
+        }
+        .detalle-modal img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+        .detalle-modal h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+        .detalle-modal .sub-titulo {
+            color: var(--verde);
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .detalle-modal .medico-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #475569;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+        }
+        .detalle-modal .medico-info i {
+            color: var(--verde);
+        }
+        .detalle-modal .precio-modal {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--verde);
+            margin-bottom: 14px;
+        }
+        .detalle-modal .descripcion-completa {
+            color: #1e293b;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        .detalle-modal .descripcion-completa p {
+            margin-bottom: 12px;
+        }
+        .detalle-modal .lista-detalles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 20px;
+            list-style: none;
+            margin-bottom: 16px;
+        }
+        .detalle-modal .lista-detalles li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            color: #334155;
+        }
+        .detalle-modal .lista-detalles li i {
+            color: var(--verde);
+            width: 18px;
+        }
+        .detalle-modal .modalidades-modal {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .detalle-modal .modalidades-modal span {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 30px;
+            border: 1px solid #e9edf2;
+            color: #475569;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .detalle-modal .modalidades-modal .presencial {
+            background: #dbeafe;
+            border-color: #93c5fd;
+            color: #1d4ed8;
+        }
+        .detalle-modal .modalidades-modal .virtual {
+            background: #ede9fe;
+            border-color: #c4b5fd;
+            color: #7c3aed;
+        }
+        .detalle-modal .modalidades-modal .urgencias {
+            background: #fee2e2;
+            border-color: #fca5a5;
+            color: #dc2626;
+        }
+        .detalle-modal .btn-agendar-modal {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--verde);
+            color: #fff !important;
+            padding: 14px 36px;
+            border-radius: 60px;
+            font-weight: 700;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 8px;
+        }
+        .detalle-modal .btn-agendar-modal:hover {
+            background: #0a7a52;
+            transform: scale(1.02);
+            box-shadow: 0 4px 14px rgba(11, 140, 94, 0.3);
+        }
+
+        /* ===== ANIMACIONES DE ENTRADA PARA EL MODAL ===== */
+        .detalle-modal.anim-slide-up {
+            animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .detalle-modal.anim-slide-down {
+            animation: slideDown 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .detalle-modal.anim-zoom-in {
+            animation: zoomIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .detalle-modal.anim-rotate-in {
+            animation: rotateIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .detalle-modal.anim-flip-in {
+            animation: flipIn 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-60px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes rotateIn {
+            from {
+                opacity: 0;
+                transform: rotate(-12deg) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: rotate(0deg) scale(1);
+            }
+        }
+        @keyframes flipIn {
+            from {
+                opacity: 0;
+                transform: perspective(800px) rotateY(-30deg) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: perspective(800px) rotateY(0deg) scale(1);
+            }
+        }
+
+        /* ===== EFECTO DE CLICK EN LA TARJETA ===== */
+        .especialidad-card.clicked {
+            animation: cardClick 0.3s ease;
+        }
+        @keyframes cardClick {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.96); box-shadow: 0 0 0 4px var(--verde); }
+            100% { transform: scale(1); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero-especialidades h2 {
+                font-size: 2.2rem;
+            }
+            .grid-especialidades {
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            }
+            .detalle-modal {
+                max-width: 95%;
+                padding: 24px 20px;
+            }
+            .detalle-modal .lista-detalles {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            header .contenedor {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            nav ul {
+                width: 100%;
+                justify-content: center;
+                gap: 4px;
+            }
+            nav a {
+                font-size: 0.85rem;
+                padding: 6px 12px;
+            }
+            .btn-cita-header {
+                padding: 6px 16px !important;
+                font-size: 0.85rem;
+            }
+            .hero-especialidades h2 {
+                font-size: 1.8rem;
+            }
+            .hero-especialidades p {
+                font-size: 1rem;
+            }
+            .filtros .contenedor {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .filtros .busqueda {
+                max-width: 100%;
+            }
+            .filtros .botones-filtro {
+                justify-content: center;
+            }
+            .grid-especialidades {
+                grid-template-columns: 1fr;
+                max-width: 420px;
+                margin: 0 auto;
+            }
+            .especialidad-card .servicios {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .chat-ventana {
+                width: 280px;
+                right: 10px;
+            }
+            .chat-float {
+                right: 10px;
+                bottom: 100px;
+            }
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 26px;
+                bottom: 20px;
+                right: 20px;
+            }
+            .detalle-modal h2 {
+                font-size: 1.4rem;
+            }
+            .detalle-modal .lista-detalles {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOPBAR ===== -->
+    <div class="topbar">
+        <div class="contenedor">
+            <div class="topbar-izq">
+                <a href="tel:+525598765432"><i class="fas fa-phone-alt"></i> +52 55 9876 5432</a>
+                <a href="mailto:contacto@clinicavital.mx"><i class="fas fa-envelope"></i> contacto@clinicavital.mx</a>
+                <span><i class="fas fa-map-marker-alt"></i> Av. Salud #789, CDMX</span>
+            </div>
+            <div class="topbar-der">
+                <a href="https://wa.me/525598765432?text=Hola%2C%20quiero%20agendar%20una%20cita" class="whatsapp-top" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                <a href="citas.html" style="color: white; font-weight: 500;">Agendar cita</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="contenedor">
+            <div class="logo">
+                <div class="logo-icono"><i class="fas fa-heart-pulse"></i></div>
+                <h1><span>Clínica</span> Vital</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="especialidades.html" class="activo">Especialidades</a></li>
+                    <li><a href="medicos.html">Médicos</a></li>
+                    <li><a href="testimonios.html">Testimonios</a></li>
+                    <li><a href="farmacia.html"><i class="fas fa-prescription-bottle"></i> Farmacia</a></li>
+                    <li><a href="citas.html" class="btn-cita-header"><i class="fas fa-calendar-check"></i> Agendar cita</a></li>
+                    <li>
+                        <span class="cart-icon" id="cartIcon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge" id="cartBadge">0</span>
+                        </span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== BREADCRUMB ===== -->
+    <div class="breadcrumb">
+        <div class="contenedor">
+            <a href="index.html">Inicio</a> <i class="fas fa-chevron-right"></i> <span>Especialidades</span>
+        </div>
+    </div>
+
+    <!-- ===== HERO ESPECIALIDADES ===== -->
+    <section class="hero-especialidades">
+        <div class="contenedor">
+            <h2>Especialidades <span>Médicas</span></h2>
+            <p>Contamos con especialistas certificados y tecnología de última generación para brindarte la mejor atención.</p>
+            <a href="citas.html" class="boton-hero"><i class="fas fa-calendar-check"></i> Agenda una cita</a>
+        </div>
+    </section>
+
+    <!-- ===== FILTROS ===== -->
+    <section class="filtros">
+        <div class="contenedor">
+            <div class="busqueda">
+                <i class="fas fa-search"></i>
+                <input type="text" id="buscarEspecialidad" placeholder="🔍 Buscar especialidad..." />
+            </div>
+            <div class="botones-filtro" id="filtrosCategoria">
+                <button class="activo" data-categoria="todas">Todas</button>
+                <button data-categoria="adultos">Adultos</button>
+                <button data-categoria="infantil">Infantil</button>
+                <button data-categoria="diagnostico">Diagnóstico</button>
+                <button data-categoria="cirugia">Cirugía</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== GRID DE ESPECIALIDADES ===== -->
+    <section class="especialidades-grid" id="especialidadesGrid">
+        <div class="contenedor grid-especialidades" id="gridEspecialidades">
+            <!-- Las tarjetas se generan con JavaScript desde los datos -->
+        </div>
+    </section>
+
+    <!-- ===== NO ENCUENTRAS ESPECIALIDAD ===== -->
+    <section class="no-especialidad">
+        <div class="contenedor">
+            <h3>¿No encuentras la especialidad que buscas?</h3>
+            <p>Llámanos y agenda una valoración con nuestros especialistas.</p>
+            <a href="tel:+525598765432" class="btn-contactar"><i class="fas fa-phone-alt"></i> Contactar ahora</a>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="faq-especialidades">
+        <div class="contenedor">
+            <h3>Preguntas frecuentes</h3>
+            <p class="sub">Resolvemos tus dudas sobre nuestras especialidades</p>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-pregunta">¿Cuánto dura una consulta? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-respuesta">Las consultas generales duran entre 30 y 45 minutos. Las consultas de especialidad pueden extenderse hasta 1 hora dependiendo del caso.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-pregunta">¿Aceptan seguros? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-respuesta">Sí, trabajamos con AXA, GNP, MAPFRE, MetLife y Seguros Monterrey. Contáctanos para verificar tu cobertura.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-pregunta">¿Cómo agendo una cita? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-respuesta">Puedes agendar por teléfono, WhatsApp, o a través de nuestro formulario en línea. También atendemos sin cita en urgencias.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-pregunta">¿Qué debo llevar a mi consulta? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-respuesta">Identificación oficial, expedientes médicos previos, lista de medicamentos que tomas y, si es el caso, estudios de laboratorio o imágenes recientes.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="contenedor">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo"><i class="fas fa-heart-pulse" style="color: var(--verde);"></i> <span>Clínica</span> Vital</div>
+                    <div class="footer-desc">Cuidamos tu salud con excelencia y calidez humana. Más de 15 años brindando atención integral.</div>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="especialidades.html">Especialidades</a></li>
+                        <li><a href="medicos.html">Médicos</a></li>
+                        <li><a href="testimonios.html">Testimonios</a></li>
+                        <li><a href="farmacia.html">Farmacia</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                        <li><a href="admin.html">Admin</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Horario</h4>
+                    <ul>
+                        <li>Lun - Vie: 8:00 - 20:00</li>
+                        <li>Sábado: 8:00 - 14:00</li>
+                        <li>Domingo: Urgencias</li>
+                        <li style="margin-top:8px;"><a href="tel:+525598765432" style="color: #cbd5e1; text-decoration: none;"><i class="fas fa-phone-alt" style="color: var(--verde);"></i> +52 55 9876 5432</a></li>
+                        <li><a href="mailto:contacto@clinicavital.mx" style="color: #cbd5e1; text-decoration: none;"><i class="fas fa-envelope" style="color: var(--verde);"></i> contacto@clinicavital.mx</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Certificaciones</h4>
+                    <div class="footer-cert">
+                        <span>ISO 9001</span>
+                        <span>COFEPRIS</span>
+                        <span>Salud Responsable</span>
+                    </div>
+                    <div style="margin-top: 16px;">
+                        <h4 style="font-size:1rem;">Aviso de privacidad</h4>
+                        <ul>
+                            <li><a href="#">Preguntas frecuentes</a></li>
+                            <li><a href="#">Términos y condiciones</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copy">&copy; 2026 Clínica Vital · Tu salud es nuestra misión</div>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <a href="https://wa.me/525598765432?text=Hola%2C%20quiero%20agendar%20una%20cita" target="_blank" class="whatsapp-float" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- ===== CHAT FLOTANTE ===== -->
+    <div class="chat-float">
+        <div class="chat-ventana" id="chatVentana">
+            <div class="chat-header">
+                <span><i class="fas fa-comment-dots"></i> Clínica Vital</span>
+                <button class="cerrar-chat" id="cerrarChat"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="chat-mensajes" id="chatMensajes">
+                <div class="chat-mensaje bot">👋 ¡Hola! ¿Necesitas ayuda?</div>
+            </div>
+            <div class="chat-opciones">
+                <button data-resp="Me gustaría agendar una cita.">Agendar</button>
+                <button data-resp="Quiero conocer las especialidades.">Especialidades</button>
+                <button data-resp="¿Cuáles son sus horarios?">Horarios</button>
+                <button data-resp="¿Aceptan seguros?">Seguros</button>
+            </div>
+        </div>
+        <button class="chat-toggle" id="chatToggle"><i class="fas fa-comment-dots"></i></button>
+    </div>
+
+    <!-- ===== MODAL DE DETALLES ===== -->
+    <div class="detalle-modal-overlay" id="detalleModalOverlay">
+        <div class="detalle-modal" id="detalleModal">
+            <button class="close-modal" id="closeDetalleModal">&times;</button>
+            <div id="detalleModalContent">
+                <!-- Contenido dinámico generado por JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        // ============================================================
+        // DATOS DE ESPECIALIDADES CON IMÁGENES LOCALES
+        // ============================================================
+        const especialidadesData = [{
+            id: 1,
+            nombre: 'Medicina General',
+            categoria: 'adultos',
+            imagen: 'img/medicina-general.jpg.jpg',
+            estrellas: 4.8,
+            medico: 'Dr. Carlos López',
+            especialidad: 'Médico General',
+            experiencia: 12,
+            precio: 800,
+            servicios: ['Consulta integral', 'Chequeo anual', 'Seguimiento personalizado'],
+            modalidades: ['presencial', 'virtual'],
+            disponibilidad: true,
+            etiqueta: 'Popular',
+            descripcionCompleta: 'La Medicina General es la puerta de entrada al sistema de salud. Nuestro médico general realiza una evaluación integral del paciente, diagnostica y trata enfermedades comunes, y coordina el cuidado con otros especialistas cuando es necesario.',
+            detallesAdicionales: ['Atención primaria de calidad', 'Diagnóstico temprano', 'Coordinación con especialistas']
+        }, {
+            id: 2,
+            nombre: 'Cardiología',
+            categoria: 'adultos',
+            imagen: 'img/cardiologia.jpg.jpg',
+            estrellas: 4.9,
+            medico: 'Dra. María Torres',
+            especialidad: 'Cardióloga',
+            experiencia: 15,
+            precio: 1200,
+            servicios: ['Electrocardiograma', 'Ecocardiograma', 'Prueba de esfuerzo', 'Holter'],
+            modalidades: ['presencial', 'virtual'],
+            disponibilidad: true,
+            etiqueta: 'Destacado',
+            descripcionCompleta: 'La Cardiología se encarga del estudio, diagnóstico y tratamiento de las enfermedades del corazón y del sistema circulatorio. Nuestra cardióloga utiliza tecnología de punta para detectar arritmias, insuficiencia cardíaca, enfermedad coronaria y otros trastornos cardiovasculares.',
+            detallesAdicionales: ['Prevención de infartos', 'Control de hipertensión', 'Rehabilitación cardíaca']
+        }, {
+            id: 3,
+            nombre: 'Neurología',
+            categoria: 'diagnostico',
+            imagen: 'img/neurologia.jpg.jpg',
+            estrellas: 4.7,
+            medico: 'Dr. Luis Fernández',
+            especialidad: 'Neurólogo',
+            experiencia: 10,
+            precio: 1300,
+            servicios: ['Evaluación neurológica', 'Electroencefalograma', 'Terapia cognitiva'],
+            modalidades: ['presencial'],
+            disponibilidad: true,
+            etiqueta: '',
+            descripcionCompleta: 'La Neurología se especializa en el diagnóstico y tratamiento de trastornos del sistema nervioso, incluyendo el cerebro, la médula espinal y los nervios. Atendemos migrañas, epilepsia, enfermedad de Parkinson, esclerosis múltiple, y accidentes cerebrovasculares.',
+            detallesAdicionales: ['Tratamiento de migrañas', 'Rehabilitación neurológica', 'Prevención de ACV']
+        }, {
+            id: 4,
+            nombre: 'Odontología',
+            categoria: 'adultos',
+            imagen: 'img/odontologia.jpg.jpg',
+            estrellas: 4.6,
+            medico: 'Dra. Ana Martínez',
+            especialidad: 'Odontóloga',
+            experiencia: 8,
+            precio: 700,
+            servicios: ['Limpieza profunda', 'Blanqueamiento dental', 'Ortodoncia', 'Cirugía dental'],
+            modalidades: ['presencial'],
+            disponibilidad: true,
+            etiqueta: '',
+            descripcionCompleta: 'La Odontología abarca el cuidado de la salud bucal, desde la prevención hasta tratamientos complejos. Realizamos limpiezas profundas, blanqueamientos, ortodoncia y cirugías dentales con materiales de última generación.',
+            detallesAdicionales: ['Prevención de caries', 'Estética dental', 'Implantes y prótesis']
+        }, {
+            id: 5,
+            nombre: 'Pediatría',
+            categoria: 'infantil',
+            imagen: 'img/pediatria.jpg.jpg',
+            estrellas: 4.9,
+            medico: 'Dr. Javier Méndez',
+            especialidad: 'Pediatra',
+            experiencia: 14,
+            precio: 900,
+            servicios: ['Control de crecimiento', 'Vacunación', 'Desarrollo cognitivo', 'Nutrición infantil'],
+            modalidades: ['presencial', 'virtual'],
+            disponibilidad: true,
+            etiqueta: 'Favorito',
+            descripcionCompleta: 'La Pediatría se dedica al cuidado integral de la salud de niños y adolescentes. Nuestro pediatra realiza controles de crecimiento, vacunación, evaluación del desarrollo cognitivo y asesoría nutricional.',
+            detallesAdicionales: ['Vacunación completa', 'Detección temprana de problemas', 'Orientación a padres']
+        }, {
+            id: 6,
+            nombre: 'Traumatología',
+            categoria: 'cirugia',
+            imagen: 'img/traumatologia.jpg.jpg',
+            estrellas: 4.7,
+            medico: 'Dr. Roberto Vega',
+            especialidad: 'Traumatólogo',
+            experiencia: 11,
+            precio: 1100,
+            servicios: ['Fracturas', 'Lesiones deportivas', 'Rehabilitación', 'Terapia física'],
+            modalidades: ['presencial', 'urgencias'],
+            disponibilidad: true,
+            etiqueta: '',
+            descripcionCompleta: 'La Traumatología se enfoca en el diagnóstico y tratamiento de lesiones del sistema musculoesquelético, como fracturas, luxaciones, esguinces y lesiones deportivas.',
+            detallesAdicionales: ['Atención de urgencias', 'Rehabilitación integral', 'Medicina deportiva']
+        }, {
+            id: 7,
+            nombre: 'Dermatología',
+            categoria: 'adultos',
+            imagen: 'img/dermatologia.jpg.jpg',
+            estrellas: 4.5,
+            medico: 'Dra. Laura Gómez',
+            especialidad: 'Dermatóloga',
+            experiencia: 9,
+            precio: 1000,
+            servicios: ['Consulta dermatológica', 'Tratamientos faciales', 'Láser', 'Dermatología estética'],
+            modalidades: ['presencial', 'virtual'],
+            disponibilidad: true,
+            etiqueta: '',
+            descripcionCompleta: 'La Dermatología se ocupa de la salud de la piel, cabello y uñas. Diagnosticamos y tratamos afecciones como acné, dermatitis, psoriasis, cáncer de piel y problemas estéticos.',
+            detallesAdicionales: ['Tratamiento de acné', 'Detección de cáncer de piel', 'Procedimientos estéticos']
+        }, {
+            id: 8,
+            nombre: 'Ginecología',
+            categoria: 'adultos',
+            imagen: 'img/ginecologia.jpg.jpg',
+            estrellas: 4.8,
+            medico: 'Dra. Patricia Ríos',
+            especialidad: 'Ginecóloga',
+            experiencia: 13,
+            precio: 1100,
+            servicios: ['Consulta ginecológica', 'Ultrasonido', 'Papanicolaou', 'Planificación familiar'],
+            modalidades: ['presencial', 'virtual'],
+            disponibilidad: true,
+            etiqueta: 'Destacado',
+            descripcionCompleta: 'La Ginecología se especializa en la salud femenina, desde la adolescencia hasta la menopausia. Ofrecemos consultas integrales, ultrasonidos, pruebas de Papanicolaou, atención obstétrica y planificación familiar.',
+            detallesAdicionales: ['Salud reproductiva', 'Atención del embarazo', 'Prevención de cáncer']
+        }, {
+            id: 9,
+            nombre: 'Oftalmología',
+            categoria: 'diagnostico',
+            imagen: 'img/oftalmologia.jpg.jpg',
+            estrellas: 4.6,
+            medico: 'Dr. Hugo Castro',
+            especialidad: 'Oftalmólogo',
+            experiencia: 10,
+            precio: 950,
+            servicios: ['Examen de la vista', 'Lentes de contacto', 'Cirugía de cataratas', 'Tratamiento de glaucoma'],
+            modalidades: ['presencial'],
+            disponibilidad: false,
+            etiqueta: '',
+            descripcionCompleta: 'La Oftalmología se dedica al cuidado de la salud visual. Realizamos exámenes completos de la vista, prescripción de lentes de contacto, cirugía de cataratas y tratamiento de glaucoma.',
+            detallesAdicionales: ['Cirugía refractiva', 'Tratamiento de ojo seco', 'Control de enfermedades oculares']
+        }, {
+            id: 10,
+            nombre: 'Urología',
+            categoria: 'adultos',
+            imagen: 'img/urologia.jpg.jpg',
+            estrellas: 4.7,
+            medico: 'Dr. Fernando Núñez',
+            especialidad: 'Urólogo',
+            experiencia: 12,
+            precio: 1200,
+            servicios: ['Consulta urológica', 'Ultrasonido renal', 'Tratamiento de infecciones', 'Cirugía urológica'],
+            modalidades: ['presencial', 'urgencias'],
+            disponibilidad: true,
+            etiqueta: '',
+            descripcionCompleta: 'La Urología se especializa en el diagnóstico y tratamiento de enfermedades del sistema urinario y del aparato reproductor masculino. Atendemos infecciones urinarias, cálculos renales, hiperplasia prostática, disfunción eréctil y cáncer urológico.',
+            detallesAdicionales: ['Salud prostática', 'Tratamiento de cálculos', 'Cirugía mínimamente invasiva']
+        }, {
+            id: 11,
+            nombre: 'Psicología',
+            categoria: 'adultos',
+            imagen: 'img/psicologia.jpg.jpg',
+            estrellas: 4.9,
+            medico: 'Lic. Mariana Soto',
+            especialidad: 'Psicóloga',
+            experiencia: 8,
+            precio: 850,
+            servicios: ['Terapia cognitivo-conductual', 'Psicoterapia', 'Ansiedad y estrés', 'Depresión'],
+            modalidades: ['presencial', 'virtual'],
+            disponibilidad: true,
+            etiqueta: 'Favorito',
+            descripcionCompleta: 'La Psicología brinda apoyo emocional y psicológico para afrontar trastornos como ansiedad, depresión, estrés y problemas de pareja. Nuestra psicóloga utiliza enfoques basados en evidencia como la terapia cognitivo-conductual y la psicoterapia humanista.',
+            detallesAdicionales: ['Manejo del estrés', 'Terapia de pareja', 'Salud mental integral']
+        }, {
+            id: 12,
+            nombre: 'Nutrición',
+            categoria: 'adultos',
+            imagen: 'img/nutricion.jpg.jpg',
+            estrellas: 4.5,
+            medico: 'Lic. Pablo Flores',
+            especialidad: 'Nutriólogo',
+            experiencia: 7,
+            precio: 700,
+            servicios: ['Plan nutricional', 'Control de peso', 'Dietas especiales', 'Nutrición deportiva'],
+            modalidades: ['presencial', 'virtual'],
+            disponibilidad: true,
+            etiqueta: '',
+            descripcionCompleta: 'La Nutrición se enfoca en la alimentación saludable para prevenir y tratar enfermedades. Diseñamos planes nutricionales personalizados para control de peso, diabetes, hipertensión, alergias alimentarias y rendimiento deportivo.',
+            detallesAdicionales: ['Pérdida de peso saludable', 'Nutrición deportiva', 'Educación alimentaria']
+        }, {
+            id: 13,
+            nombre: 'Gastroenterología',
+            categoria: 'diagnostico',
+            imagen: 'img/gastroenterologia.jpg.jpg',
+            estrellas: 4.6,
+            medico: 'Dra. Cecilia Rangel',
+            especialidad: 'Gastroenteróloga',
+            experiencia: 11,
+            precio: 1300,
+            servicios: ['Consulta gastroenterológica', 'Endoscopia', 'Colonoscopia', 'Tratamiento de trastornos digestivos'],
+            modalidades: ['presencial'],
+            disponibilidad: true,
+            etiqueta: '',
+            descripcionCompleta: 'La Gastroenterología se dedica al estudio y tratamiento de enfermedades del aparato digestivo, incluyendo esófago, estómago, intestinos, hígado y páncreas. Realizamos endoscopias, colonoscopias y tratamientos para trastornos como reflujo, enfermedad inflamatoria intestinal, hepatitis y pancreatitis.',
+            detallesAdicionales: ['Prevención de cáncer digestivo', 'Tratamiento de reflujo', 'Cuidado hepático']
+        }, {
+            id: 14,
+            nombre: 'Neumología',
+            categoria: 'adultos',
+            imagen: 'img/neumologia.jpg.jpg',
+            estrellas: 4.7,
+            medico: 'Dr. Ricardo Mena',
+            especialidad: 'Neumólogo',
+            experiencia: 13,
+            precio: 1250,
+            servicios: ['Consulta neumológica', 'Espirometría', 'Tratamiento de EPOC', 'Asma'],
+            modalidades: ['presencial', 'virtual'],
+            disponibilidad: true,
+            etiqueta: '',
+            descripcionCompleta: 'La Neumología se especializa en el diagnóstico y tratamiento de enfermedades respiratorias. Atendemos asma, EPOC, neumonía, fibrosis pulmonar y apnea del sueño. Realizamos espirometrías y estudios de función pulmonar para evaluar la capacidad respiratoria.',
+            detallesAdicionales: ['Rehabilitación pulmonar', 'Control del asma', 'Detección de cáncer de pulmón']
+        }, {
+            id: 15,
+            nombre: 'Oncología',
+            categoria: 'adultos',
+            imagen: 'img/oncologia.jpg.jpg',
+            estrellas: 4.9,
+            medico: 'Dr. Arturo Vega',
+            especialidad: 'Oncólogo',
+            experiencia: 18,
+            precio: 1500,
+            servicios: ['Consulta oncológica', 'Quimioterapia', 'Radioterapia', 'Seguimiento y cuidados paliativos'],
+            modalidades: ['presencial', 'urgencias'],
+            disponibilidad: true,
+            etiqueta: 'Destacado',
+            descripcionCompleta: 'La Oncología se dedica al diagnóstico, tratamiento y seguimiento del cáncer. Ofrecemos consultas especializadas, quimioterapia, radioterapia y cuidados paliativos. Nuestro equipo multidisciplinario brinda apoyo emocional y físico a los pacientes y sus familias, acompañándolos en cada etapa del proceso oncológico con calidez y excelencia.',
+            detallesAdicionales: ['Detección temprana', 'Tratamiento integral', 'Acompañamiento emocional']
+        }];
+
+        // ============================================================
+        // RENDERIZADO DE TARJETAS
+        // ============================================================
+        const grid = document.getElementById('gridEspecialidades');
+        let filtroActual = 'todas';
+        let busquedaActual = '';
+
+        function renderizarEspecialidades() {
+            const filtradas = especialidadesData.filter(esp => {
+                const coincideCategoria = filtroActual === 'todas' || esp.categoria === filtroActual;
+                const coincideBusqueda = esp.nombre.toLowerCase().includes(busquedaActual.toLowerCase()) ||
+                    esp.medico.toLowerCase().includes(busquedaActual.toLowerCase());
+                return coincideCategoria && coincideBusqueda;
+            });
+
+            if (filtradas.length === 0) {
+                grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; padding:40px 0; color:#64748b;">No hay especialidades que coincidan con tu búsqueda.</p>`;
+                return;
+            }
+
+            grid.innerHTML = filtradas.map(esp => `
+                <div class="especialidad-card fade-in" data-id="${esp.id}">
+                    <div class="foto" style="background-image: url('${esp.imagen}');">
+                        ${esp.etiqueta ? `<span class="etiqueta">${esp.etiqueta}</span>` : ''}
+                    </div>
+                    <div class="contenido">
+                        <div class="titulo">
+                            <h3>${esp.nombre}</h3>
+                            <span class="estrellas">${'★'.repeat(Math.floor(esp.estrellas))}${esp.estrellas % 1 >= 0.5 ? '★' : ''} ${esp.estrellas}</span>
+                        </div>
+                        <div class="medico">
+                            <i class="fas fa-user-md"></i>
+                            <span class="nombre">${esp.medico}</span>
+                            <span class="experiencia">· ${esp.especialidad} · ${esp.experiencia} años</span>
+                        </div>
+                        <div class="precio">$${esp.precio} <small>MXN / consulta</small></div>
+                        <ul class="servicios">
+                            ${esp.servicios.map(s => `<li><i class="fas fa-check-circle"></i> ${s}</li>`).join('')}
+                        </ul>
+                        <div class="modalidades">
+                            ${esp.modalidades.includes('presencial') ? `<span class="presencial"><i class="fas fa-building"></i> Presencial</span>` : ''}
+                            ${esp.modalidades.includes('virtual') ? `<span class="virtual"><i class="fas fa-video"></i> Videoconsulta</span>` : ''}
+                            ${esp.modalidades.includes('urgencias') ? `<span class="urgencias"><i class="fas fa-ambulance"></i> Urgencias</span>` : ''}
+                        </div>
+                        <div class="disponibilidad">
+                            <i class="fas fa-circle" style="color: ${esp.disponibilidad ? '#16a34a' : '#ef4444'};"></i>
+                            ${esp.disponibilidad ? 'Disponible hoy' : 'Próxima cita disponible'}
+                        </div>
+                        <div class="botones-card">
+                            <a href="citas.html" class="btn-agendar"><i class="fas fa-calendar-check"></i> Agendar cita</a>
+                            <button class="btn-detalles" data-id="${esp.id}"><i class="fas fa-arrow-right"></i> Ver detalles</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Asignar eventos a los botones "Ver detalles"
+            document.querySelectorAll('.btn-detalles').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const id = parseInt(this.dataset.id);
+                    abrirDetalles(id);
+                });
+            });
+
+            // Asignar evento a toda la tarjeta (excepto el botón "Agendar cita")
+            document.querySelectorAll('.especialidad-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (e.target.closest('.btn-agendar')) return;
+                    const id = parseInt(this.dataset.id);
+                    // Efecto visual de clic en la tarjeta
+                    this.classList.add('clicked');
+                    setTimeout(() => this.classList.remove('clicked'), 300);
+                    abrirDetalles(id);
+                });
+            });
+        }
+
+        // ============================================================
+        // FILTROS Y BÚSQUEDA
+        // ============================================================
+        const filtrosBtns = document.querySelectorAll('#filtrosCategoria button');
+        filtrosBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filtrosBtns.forEach(b => b.classList.remove('activo'));
+                btn.classList.add('activo');
+                filtroActual = btn.dataset.categoria;
+                renderizarEspecialidades();
+            });
+        });
+
+        const busquedaInput = document.getElementById('buscarEspecialidad');
+        busquedaInput.addEventListener('input', (e) => {
+            busquedaActual = e.target.value;
+            renderizarEspecialidades();
+        });
+
+        // Render inicial
+        renderizarEspecialidades();
+
+        // ============================================================
+        // MODAL DE DETALLES CON ANIMACIONES
+        // ============================================================
+        const modalOverlay = document.getElementById('detalleModalOverlay');
+        const modal = document.getElementById('detalleModal');
+        const modalContent = document.getElementById('detalleModalContent');
+        const closeModalBtn = document.getElementById('closeDetalleModal');
+
+        const animaciones = ['anim-slide-up', 'anim-slide-down', 'anim-zoom-in', 'anim-rotate-in', 'anim-flip-in'];
+
+        function abrirDetalles(id) {
+            const esp = especialidadesData.find(e => e.id === id);
+            if (!esp) return;
+
+            const animIndex = (id - 1) % animaciones.length;
+            const animClass = animaciones[animIndex];
+
+            const modalidadesHtml = esp.modalidades.map(m => {
+                const clase = m === 'presencial' ? 'presencial' : m === 'virtual' ? 'virtual' : 'urgencias';
+                const icono = m === 'presencial' ? 'fa-building' : m === 'virtual' ? 'fa-video' : 'fa-ambulance';
+                const texto = m.charAt(0).toUpperCase() + m.slice(1);
+                return `<span class="${clase}"><i class="fas ${icono}"></i> ${texto}</span>`;
+            }).join('');
+
+            const detallesHtml = esp.detallesAdicionales.map(d => `
+                <li><i class="fas fa-check-circle"></i> ${d}</li>
+            `).join('');
+
+            modalContent.innerHTML = `
+                <img src="${esp.imagen}" alt="${esp.nombre}" loading="lazy" />
+                <h2>${esp.nombre}</h2>
+                <div class="sub-titulo">${esp.especialidad}</div>
+                <div class="medico-info">
+                    <i class="fas fa-user-md"></i> ${esp.medico} · ${esp.experiencia} años de experiencia
+                </div>
+                <div class="precio-modal">$${esp.precio} <small>MXN / consulta</small></div>
+                <div class="descripcion-completa">
+                    <p>${esp.descripcionCompleta}</p>
+                </div>
+                <ul class="lista-detalles">
+                    ${detallesHtml}
+                </ul>
+                <div class="modalidades-modal">
+                    ${modalidadesHtml}
+                </div>
+                <div class="disponibilidad" style="font-weight:600; margin-bottom:10px;">
+                    <i class="fas fa-circle" style="color: ${esp.disponibilidad ? '#16a34a' : '#ef4444'};"></i>
+                    ${esp.disponibilidad ? 'Disponible hoy' : 'Próxima cita disponible'}
+                </div>
+                <a href="citas.html" class="btn-agendar-modal"><i class="fas fa-calendar-check"></i> Agendar cita</a>
+            `;
+
+            modal.classList.remove(...animaciones);
+            void modal.offsetWidth;
+            modal.classList.add(animClass);
+
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarDetalles() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            modal.classList.remove(...animaciones);
+        }
+
+        closeModalBtn.addEventListener('click', cerrarDetalles);
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) cerrarDetalles();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                cerrarDetalles();
+            }
+        });
+
+        // ============================================================
+        // FAQ ACORDEÓN
+        // ============================================================
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.querySelector('.faq-pregunta').addEventListener('click', () => {
+                item.classList.toggle('abierto');
+            });
+        });
+
+        // ============================================================
+        // CHAT FLOTANTE
+        // ============================================================
+        const chatToggle = document.getElementById('chatToggle');
+        const chatVentana = document.getElementById('chatVentana');
+        const cerrarChat = document.getElementById('cerrarChat');
+        const chatMensajes = document.getElementById('chatMensajes');
+        const chatOpciones = document.querySelectorAll('.chat-opciones button');
+
+        chatToggle.addEventListener('click', () => {
+            chatVentana.classList.toggle('abierto');
+        });
+
+        cerrarChat.addEventListener('click', () => {
+            chatVentana.classList.remove('abierto');
+        });
+
+        chatOpciones.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const resp = btn.dataset.resp;
+                const msg = document.createElement('div');
+                msg.className = 'chat-mensaje';
+                msg.textContent = resp;
+                chatMensajes.appendChild(msg);
+                chatMensajes.scrollTop = chatMensajes.scrollHeight;
+                setTimeout(() => {
+                    const bot = document.createElement('div');
+                    bot.className = 'chat-mensaje bot';
+                    bot.textContent = '✅ ¡Gracias! Un asesor te contactará en breve.';
+                    chatMensajes.appendChild(bot);
+                    chatMensajes.scrollTop = chatMensajes.scrollHeight;
+                }, 600);
+            });
+        });
+
+        // ============================================================
+        // CARRITO (placeholder)
+        // ============================================================
+        document.getElementById('cartIcon').addEventListener('click', () => {
+            alert('Carrito de compras (Farmacia) - Próximamente');
+        });
+    </script>
+</body>
+</html>

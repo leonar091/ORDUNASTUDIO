@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORDUNA · Diseño web profesional</title>
+
+    <!-- Precarga de Font Awesome -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        /* ==========================================================
+                   RESET Y ESTILOS BASE
+                   ========================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #1a1a1a;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+            overflow-x: hidden;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        .contenedor {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ==========================================================
+                   TOP BAR (contacto rápido)
+                   ========================================================== */
+        .top-bar {
+            background: #1a1a1a;
+            color: #fff !important;
+            padding: 6px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            z-index: 10;
+        }
+        .top-bar .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .top-bar a {
+            color: #fff !important;
+            text-decoration: none;
+            margin: 0 12px;
+            transition: color 0.3s;
+        }
+        .top-bar a:hover {
+            color: #ff6b35 !important;
+        }
+        .top-bar .top-izquierda a {
+            margin-left: 0;
+        }
+        .top-bar .top-derecha a {
+            margin-right: 0;
+        }
+        .top-bar i {
+            margin-right: 6px;
+            color: #ff6b35;
+        }
+
+        /* ==========================================================
+                   HEADER
+                   ========================================================== */
+        header {
+            background: #ffffff;
+            padding: 12px 0;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        header.shrink {
+            padding: 6px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+        header .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        .logo-icono {
+            width: 44px;
+            height: 44px;
+            border: 2px solid #ff6b35;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 22px;
+            color: #ff6b35;
+            transition: all 0.3s ease;
+        }
+        .logo:hover .logo-icono {
+            transform: rotate(-8deg) scale(1.05);
+            background: #ff6b35;
+            color: #fff !important;
+        }
+        .logo-texto {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        .logo-texto .nombre {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #1a1a1a;
+        }
+        .logo-texto .subtitulo {
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #888;
+            font-weight: 600;
+        }
+
+        /* Menú */
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #1a1a1a;
+            padding: 5px 10px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: max-height 0.4s ease;
+            overflow: hidden;
+        }
+        nav a {
+            padding: 8px 14px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            color: #1a1a1a;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 0;
+            height: 2.5px;
+            background: #ff6b35;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        nav a:hover::after,
+        nav a.activo::after {
+            width: 60%;
+        }
+        nav a:hover {
+            color: #ff6b35 !important;
+        }
+        nav a.activo {
+            color: #ff6b35 !important;
+        }
+
+        .btn-cotizar {
+            background: #ff6b35;
+            color: #fff !important;
+            padding: 10px 24px !important;
+            border-radius: 30px !important;
+            font-weight: 700 !important;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(255,107,53,0.35);
+        }
+        .btn-cotizar:hover {
+            background: #e05a2a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,107,53,0.45);
+            color: #fff !important;
+        }
+        .btn-cotizar::after {
+            display: none !important;
+        }
+
+        .btn-agendar {
+            background: transparent;
+            border: 2px solid #ff6b35;
+            color: #ff6b35 !important;
+            padding: 8px 20px !important;
+            border-radius: 30px !important;
+            font-weight: 700 !important;
+            transition: all 0.3s ease;
+        }
+        .btn-agendar:hover {
+            background: #ff6b35;
+            color: #fff !important;
+            transform: translateY(-2px);
+        }
+        .btn-agendar::after {
+            display: none !important;
+        }
+
+        .separador-menu {
+            width: 1px;
+            height: 28px;
+            background: #e0e0e0;
+            margin: 0 6px;
+        }
+
+        /* ==========================================================
+                   HERO
+                   ========================================================== */
+        .hero {
+            position: relative;
+            background: linear-gradient(145deg, #f0f4fa, #e6ecf3);
+            padding: 120px 0 100px;
+            overflow: hidden;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Formas de fondo */
+        .hero-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .hero-shapes .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 107, 53, 0.08);
+            filter: blur(60px);
+        }
+        .hero-shapes .circle1 {
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            right: -100px;
+        }
+        .hero-shapes .circle2 {
+            width: 300px;
+            height: 300px;
+            bottom: -50px;
+            left: -50px;
+            background: rgba(255, 107, 53, 0.05);
+        }
+        .hero-shapes .line {
+            position: absolute;
+            background: rgba(255, 107, 53, 0.06);
+            height: 2px;
+            width: 200px;
+            transform: rotate(25deg);
+        }
+        .hero-shapes .line1 {
+            top: 20%;
+            right: 10%;
+            width: 150px;
+        }
+        .hero-shapes .line2 {
+            bottom: 30%;
+            left: 5%;
+            width: 250px;
+            transform: rotate(-15deg);
+        }
+        .hero-shapes .line3 {
+            top: 60%;
+            right: 20%;
+            width: 180px;
+            transform: rotate(45deg);
+        }
+
+        .hero .contenedor {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text {
+            animation: slideInLeft 0.8s ease forwards;
+        }
+        .hero-text h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+            color: #1a1a1a;
+        }
+        .hero-text h1 span {
+            color: #ff6b35;
+        }
+        .hero-text p {
+            font-size: 1.2rem;
+            color: #444;
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .hero-botones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .boton-hero {
+            display: inline-block;
+            background: #ff6b35;
+            color: #fff !important;
+            padding: 16px 45px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            box-shadow: 0 8px 30px rgba(255,107,53,0.4);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .boton-hero:hover {
+            background: #e05a2a;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(255,107,53,0.5);
+            color: #fff !important;
+        }
+
+        .hero-beneficios {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px 30px;
+            margin-top: 10px;
+        }
+        .hero-beneficios .beneficio {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #1a1a1a;
+            font-size: 0.95rem;
+        }
+        .hero-beneficios .beneficio i {
+            color: #ff6b35;
+            font-size: 1.1rem;
+        }
+
+        .hero-imagen {
+            animation: slideInRight 0.8s ease forwards;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .mockup-laptop {
+            position: relative;
+            width: 100%;
+            max-width: 550px;
+            aspect-ratio: 16/10;
+            background: #1a1a2e;
+            border-radius: 18px 18px 12px 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+            padding: 10px 10px 0 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .mockup-laptop .screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+            background: #fff;
+        }
+        .mockup-laptop .screen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .mockup-laptop .base {
+            height: 8px;
+            background: #2a2a3a;
+            margin: 0 auto;
+            width: 60%;
+            border-radius: 0 0 8px 8px;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero-wave {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            z-index: 3;
+            pointer-events: none;
+        }
+        .hero-wave svg {
+            display: block;
+            width: 100%;
+            height: 80px;
+        }
+
+        .hero-scroll {
+            position: relative;
+            z-index: 4;
+            text-align: center;
+            margin-top: -30px;
+            padding-bottom: 20px;
+        }
+        .hero-scroll a {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #888;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .hero-scroll a i {
+            font-size: 1.8rem;
+            color: #ff6b35;
+            animation: bounceDown 2s infinite;
+        }
+        .hero-scroll a:hover {
+            color: #ff6b35;
+        }
+        @keyframes bounceDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
+
+        /* ==========================================================
+                   SOBRE NOSOTROS (SIN ESTADÍSTICAS - VERSIÓN LIMPIA)
+                   ========================================================== */
+        #siguiente {
+            padding: 80px 0;
+            background: #ffffff;
+            border-bottom: 1px solid #eef1f5;
+        }
+        #siguiente .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .about-badge {
+            display: inline-block;
+            background: #ff6b35;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 5px 18px;
+            border-radius: 30px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+        .about-titulo {
+            font-size: 2.6rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 22px;
+            color: #1a1a1a;
+        }
+        .about-titulo span {
+            color: #ff6b35;
+        }
+        .about-texto {
+            color: #444;
+            font-size: 1.05rem;
+            margin-bottom: 18px;
+            line-height: 1.7;
+        }
+        .about-texto strong {
+            color: #1a1a1a;
+        }
+        .about-texto-secundario {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        .about-valores {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px 30px;
+            margin-bottom: 35px;
+        }
+        .about-valores .valor {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: #1a1a1a;
+            font-size: 0.95rem;
+        }
+        .about-valores .valor i {
+            color: #ff6b35;
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+        .btn-about {
+            display: inline-block;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 14px 44px;
+            border-radius: 60px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 2px solid #1a1a1a;
+            font-size: 1rem;
+        }
+        .btn-about:hover {
+            background: #ff6b35;
+            border-color: #ff6b35;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255,107,53,0.25);
+            color: #fff !important;
+        }
+
+        /* ==========================================================
+                   WHATSAPP FLOTANTE
+                   ========================================================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            background: #25d366;
+            color: #fff !important;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: none;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 35px rgba(37, 211, 102, 0.6);
+            color: #fff !important;
+        }
+
+        /* ==========================================================
+                   FOOTER
+                   ========================================================== */
+        footer {
+            background: #1a1a1a;
+            color: #fff !important;
+            padding: 40px 0 20px;
+            border-top: 3px solid #ff6b35;
+        }
+        footer * {
+            color: #fff !important;
+        }
+        .footer-contenido {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .footer-col h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #fff !important;
+        }
+        .footer-col p, .footer-col a, .footer-col li {
+            color: #ccc !important;
+            text-decoration: none;
+        }
+        .footer-col a:hover {
+            color: #ff6b35 !important;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 8px;
+        }
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            text-align: center;
+            color: #888 !important;
+        }
+
+        /* ==========================================================
+                   RESPONSIVE
+                   ========================================================== */
+        @media (max-width: 992px) {
+            .top-bar .contenedor {
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+            }
+            .top-bar .top-izquierda,
+            .top-bar .top-derecha {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+            }
+            .hero .contenedor {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+            .hero-text p {
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-botones {
+                justify-content: center;
+            }
+            .hero-beneficios {
+                justify-content: center;
+            }
+            .hero-text h1 {
+                font-size: 2.4rem;
+            }
+            .mockup-laptop {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .hero {
+                padding: 80px 0 60px;
+            }
+            .about-titulo {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            nav {
+                width: 100%;
+                order: 3;
+            }
+            nav ul {
+                flex-direction: column;
+                align-items: stretch;
+                max-height: 0;
+                gap: 6px;
+                padding-top: 0;
+                width: 100%;
+            }
+            nav.abierto ul {
+                max-height: 600px;
+                padding-top: 15px;
+                padding-bottom: 10px;
+            }
+            nav ul li {
+                width: 100%;
+                text-align: center;
+            }
+            nav a {
+                justify-content: center;
+                padding: 12px 0;
+                width: 100%;
+            }
+            nav a::after {
+                display: none;
+            }
+            .separador-menu {
+                display: none;
+            }
+            .btn-cotizar, .btn-agendar {
+                width: 100% !important;
+                justify-content: center;
+                padding: 12px !important;
+            }
+            .btn-agendar {
+                border-width: 2px;
+            }
+            header .contenedor {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .logo-texto .nombre {
+                font-size: 18px;
+            }
+            .hero-text h1 {
+                font-size: 1.8rem;
+            }
+            .hero-text p {
+                font-size: 1rem;
+            }
+            .hero-beneficios {
+                gap: 12px 20px;
+                flex-direction: column;
+                align-items: center;
+            }
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 26px;
+                bottom: 20px;
+                right: 20px;
+            }
+            .hero {
+                padding: 60px 0 40px;
+            }
+            .mockup-laptop {
+                max-width: 300px;
+            }
+            .hero-wave svg {
+                height: 40px;
+            }
+            #siguiente {
+                padding: 50px 0;
+            }
+            .about-titulo {
+                font-size: 1.6rem;
+            }
+            .about-valores {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== TOP BAR ========== -->
+    <div class="top-bar">
+        <div class="contenedor">
+            <div class="top-izquierda">
+                <a href="tel:+525660281521"><i class="fas fa-phone-alt"></i> +52 5660 2815 21</a>
+                <a href="mailto:ordunadigitalstudio@gmail.com"><i class="fas fa-envelope"></i> ordunadigitalstudio@gmail.com</a>
+            </div>
+            <div class="top-derecha">
+                <a href="#"><i class="fas fa-clock"></i> Lun - Vie: 9:00 - 19:00</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== HEADER ========== -->
+    <header id="mainHeader">
+        <div class="contenedor">
+            <a href="index.html" class="logo">
+                <div class="logo-icono">O</div>
+                <div class="logo-texto">
+                    <span class="nombre">ORDUNA</span>
+                    <span class="subtitulo">Digital Studio</span>
+                </div>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav id="navMenu">
+                <ul>
+                    <li><a href="index.html" class="activo"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="servicios.html"><i class="fas fa-laptop-code"></i> Servicios</a></li>
+                    <li><a href="portfolio.html"><i class="fas fa-images"></i> Portfolio</a></li>
+                    <li><a href="contacto.html"><i class="fas fa-envelope"></i> Contacto</a></li>
+                    <span class="separador-menu"></span>
+                    <li><a href="contacto.html" class="btn-cotizar"><i class="fas fa-paper-plane"></i> Solicitar Cotización</a></li>
+                    <li><a href="contacto.html" class="btn-agendar"><i class="fas fa-calendar-check"></i> Agenda una llamada</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero">
+        <div class="hero-shapes">
+            <div class="circle circle1"></div>
+            <div class="circle circle2"></div>
+            <div class="line line1"></div>
+            <div class="line line2"></div>
+            <div class="line line3"></div>
+        </div>
+
+        <div class="contenedor">
+            <div class="hero-text">
+                <h1>Diseñamos páginas web modernas que ayudan a tu negocio a <span>conseguir más clientes</span></h1>
+                <p>Impulsa tu negocio con un sitio web rápido, moderno y optimizado para convertir visitantes en nuevos clientes.</p>
+                <div class="hero-botones">
+                    <a href="contacto.html" class="boton-hero">SOLICITA TU PRESUPUESTO</a>
+                </div>
+                <div class="hero-beneficios">
+                    <span class="beneficio"><i class="fas fa-check-circle"></i> Diseño personalizado</span>
+                    <span class="beneficio"><i class="fas fa-check-circle"></i> SEO incluido</span>
+                    <span class="beneficio"><i class="fas fa-check-circle"></i> Soporte</span>
+                    <span class="beneficio"><i class="fas fa-check-circle"></i> Entrega rápida</span>
+                </div>
+            </div>
+
+            <div class="hero-imagen">
+                <div class="mockup-laptop">
+                    <div class="screen">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&fit=crop" alt="Proyecto web" loading="lazy">
+                    </div>
+                    <div class="base"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-wave">
+            <svg viewBox="0 0 1200 80" preserveAspectRatio="none">
+                <path d="M0,0 C300,80 600,0 900,60 C1050,80 1150,40 1200,50 L1200,80 L0,80 Z" fill="#ffffff" />
+            </svg>
+        </div>
+    </section>
+
+    <!-- ========== FLECHA "EXPLORAR" ========== -->
+    <div class="hero-scroll">
+        <a href="#siguiente" id="scrollBtn">
+            <i class="fas fa-chevron-down"></i>
+            Explorar
+        </a>
+    </div>
+
+    <!-- ========== SOBRE NOSOTROS (SIN ESTADÍSTICAS) ========== -->
+    <section id="siguiente">
+        <div class="contenedor">
+            <div class="about-content">
+                <span class="about-badge">Quiénes somos</span>
+                <h2 class="about-titulo">
+                    Creamos experiencias digitales que <span>impulsan negocios</span>
+                </h2>
+                <p class="about-texto">
+                    En <strong>ORDUNA</strong> desarrollamos soluciones digitales que combinan creatividad, innovación y tecnología para impulsar el crecimiento de empresas de todos los tamaños. Creamos sitios web, tiendas en línea y sistemas empresariales personalizados con un enfoque en rendimiento, seguridad y experiencia de usuario.
+                </p>
+                <p class="about-texto-secundario">
+                    Nuestro compromiso es ofrecer soluciones modernas, escalables y orientadas a resultados, ayudando a nuestros clientes a fortalecer su presencia digital y alcanzar sus objetivos de negocio.
+                </p>
+
+                <div class="about-valores">
+                    <span class="valor"><i class="fas fa-check-circle"></i> 100% personalizado</span>
+                    <span class="valor"><i class="fas fa-check-circle"></i> Enfoque en resultados</span>
+                    <span class="valor"><i class="fas fa-check-circle"></i> Soporte continuo</span>
+                    <span class="valor"><i class="fas fa-check-circle"></i> Entrega puntual</span>
+                </div>
+
+                <a href="servicios.html" class="btn-about">Conoce nuestros servicios →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <div class="contenedor">
+            <div class="footer-contenido">
+                <div class="footer-col">
+                    <h4>🚀 ORDUNA</h4>
+                    <p>Diseño web profesional para tu negocio.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Enlaces rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="servicios.html">Servicios</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <p>📧 <a href="mailto:ordunadigitalstudio@gmail.com">ordunadigitalstudio@gmail.com</a></p>
+                    <p>📞 <a href="tel:+525660281521">+52 5660 2815 21</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy;</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== WHATSAPP FLOTANTE ========== -->
+    <a href="https://wa.me/525660281521?text=Hola%20ORDUNA!%20Quiero%20solicitar%20información%20sobre%20sus%20servicios." target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script>
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navMenu').classList.toggle('abierto');
+        });
+
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 60) {
+                header.classList.add('shrink');
+            } else {
+                header.classList.remove('shrink');
+            }
+        });
+
+        document.getElementById('scrollBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    </script>
+</body>
+</html>
+

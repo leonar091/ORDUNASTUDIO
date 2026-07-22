@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ORDUNA · Servicios y Planes</title>
+
+    <!-- ===== OPTIMIZACIONES DE CARGA ===== -->
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200" fetchpriority="high" />
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" onload="this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" /></noscript>
+
+    <style>
+        /* ========== RESET & BASE ========== */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa; color: #1a1a1a; line-height:1.6;
+            opacity:0; animation:fadeIn .8s ease forwards;
+        }
+        @keyframes fadeIn { to { opacity:1; } }
+        .contenedor { width:90%; max-width:1200px; margin:0 auto; padding:0 20px; }
+
+        /* ========== TOP BAR ========== */
+        .top-bar { background:#1a1a1a; color:#fff; padding:6px 0; font-size:.85rem; border-bottom:1px solid rgba(255,255,255,.05); }
+        .top-bar .contenedor { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+        .top-bar a { color:#fff; text-decoration:none; margin:0 12px; transition:color .3s; }
+        .top-bar a:hover { color:#ff6b35; }
+        .top-bar .top-izquierda a { margin-left:0; }
+        .top-bar .top-derecha a { margin-right:0; }
+        .top-bar i { margin-right:6px; color:#ff6b35; }
+
+        /* ========== HEADER ========== */
+        header { background:#fff; padding:12px 0; box-shadow:0 2px 12px rgba(0,0,0,.06); position:sticky; top:0; z-index:1000; transition:all .3s; }
+        header.shrink { padding:6px 0; box-shadow:0 4px 20px rgba(0,0,0,.12); }
+        header .contenedor { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
+
+        /* ========== LOGO ========== */
+        .logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+        .logo-icono { width:44px; height:44px; border:2px solid #ff6b35; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:22px; color:#ff6b35; transition:all .3s; }
+        .logo:hover .logo-icono { transform:rotate(-8deg) scale(1.05); background:#ff6b35; color:#fff; }
+        .logo-texto { display:flex; flex-direction:column; line-height:1.2; }
+        .logo-texto .nombre { font-size:22px; font-weight:800; letter-spacing:1px; color:#1a1a1a; }
+        .logo-texto .subtitulo { font-size:9px; letter-spacing:3px; text-transform:uppercase; color:#888; font-weight:600; }
+
+        /* ========== MENÚ ========== */
+        .menu-toggle { display:none; font-size:28px; background:none; border:none; cursor:pointer; color:#1a1a1a; padding:5px 10px; }
+        nav ul { list-style:none; display:flex; align-items:center; gap:8px; transition:max-height .4s; overflow:hidden; }
+        nav a { padding:8px 14px; text-decoration:none; font-weight:600; font-size:15px; color:#1a1a1a; border-radius:8px; transition:all .3s; position:relative; display:inline-flex; align-items:center; gap:6px; }
+        nav a::after { content:""; position:absolute; left:50%; bottom:0; width:0; height:2.5px; background:#ff6b35; transition:all .3s; transform:translateX(-50%); border-radius:2px; }
+        nav a:hover::after, nav a.activo::after { width:60%; }
+        nav a:hover { color:#ff6b35; }
+        nav a.activo { color:#ff6b35; }
+
+        .btn-cotizar { background:#ff6b35; color:#fff; padding:10px 24px; border-radius:30px; font-weight:700; border:none; transition:all .3s; box-shadow:0 4px 14px rgba(255,107,53,.35); }
+        .btn-cotizar:hover { background:#e05a2a; transform:translateY(-2px); box-shadow:0 8px 25px rgba(255,107,53,.45); color:#fff; }
+        .btn-cotizar::after { display:none; }
+
+        .btn-agendar { background:transparent; border:2px solid #ff6b35; color:#ff6b35; padding:8px 20px; border-radius:30px; font-weight:700; transition:all .3s; }
+        .btn-agendar:hover { background:#ff6b35; color:#fff; transform:translateY(-2px); }
+        .btn-agendar::after { display:none; }
+
+        .separador-menu { width:1px; height:28px; background:#e0e0e0; margin:0 6px; }
+
+        /* ========== HERO ========== */
+        .hero {
+            position:relative; padding:120px 0 100px; text-align:center;
+            background:linear-gradient(135deg,#0f0f1a 0%,#1a1a2e 100%);
+            color:#fff; overflow:hidden; border-bottom:3px solid #ff6b35;
+        }
+        .hero::before {
+            content:""; position:absolute; inset:0;
+            background-image: image-set(
+                url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&fit=crop') 1x,
+                url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&fit=crop') 1.5x,
+                url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&fit=crop') 2x
+            );
+            background-size:cover; background-position:center; opacity:.15; z-index:0;
+            will-change:transform;
+        }
+        .hero .contenedor { position:relative; z-index:1; }
+        .hero h2 { font-size:3.2rem; font-weight:900; margin-bottom:16px; letter-spacing:-1px; line-height:1.1; }
+        .hero h2 span { color:#ff6b35; }
+        .hero p { font-size:1.3rem; color:#ccc; max-width:700px; margin:0 auto 30px; font-weight:300; }
+        .hero .boton-hero { display:inline-block; background:#ff6b35; color:#fff; padding:18px 50px; border-radius:50px; font-weight:700; font-size:1.2rem; text-decoration:none; box-shadow:0 8px 30px rgba(255,107,53,.4); transition:all .3s; }
+        .hero .boton-hero:hover { background:#e05a2a; transform:translateY(-3px); box-shadow:0 12px 40px rgba(255,107,53,.5); }
+
+        /* ========== NAVEGACIÓN RÁPIDA (CARPETA) ========== */
+        .navegacion-rapida {
+            background: #f8fafc;
+            border-bottom: 1px solid #e0e6ed;
+            padding: 16px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+        .navegacion-rapida .contenedor {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 12px 24px;
+        }
+        .navegacion-rapida .btn-rapido {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            border-radius: 60px;
+            background: #fff;
+            color: #1a1a1a;
+            font-weight: 700;
+            font-size: .95rem;
+            text-decoration: none;
+            border: 1px solid #e0e6ed;
+            transition: all .3s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            cursor: pointer;
+        }
+        .navegacion-rapida .btn-rapido i {
+            color: #ff6b35;
+            font-size: 1.2rem;
+        }
+        .navegacion-rapida .btn-rapido:hover {
+            background: #ff6b35;
+            color: #fff;
+            border-color: #ff6b35;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255,107,53,0.2);
+        }
+        .navegacion-rapida .btn-rapido:hover i {
+            color: #fff;
+        }
+        .navegacion-rapida .btn-rapido .flecha {
+            font-size: .8rem;
+            transition: transform .3s;
+        }
+        .navegacion-rapida .btn-rapido:hover .flecha {
+            transform: translateX(4px);
+        }
+        .navegacion-rapida .separador-nav {
+            color: #ccc;
+            font-size: 1.4rem;
+            font-weight: 300;
+        }
+
+        /* ========== PLANES ========== */
+        .planes { padding:70px 0 60px; background:linear-gradient(180deg,#fff 0%,#f4f7fb 40%,#eef3f8 100%); }
+        .planes h2 { text-align:center; font-size:2.5rem; font-weight:800; margin-bottom:10px; }
+        .planes .subtitulo { text-align:center; color:#666; font-size:1.1rem; margin-bottom:50px; }
+        .planes-grid { 
+            display:grid; 
+            grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); 
+            gap:30px; 
+            margin-bottom:50px; 
+        }
+
+        .plan-card {
+            background:rgba(255,255,255,.85); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+            border-radius:28px; 
+            padding: 24px 28px 30px;
+            box-shadow:0 8px 30px rgba(0,0,0,.04);
+            border:1px solid rgba(255,255,255,.6); 
+            transition:all .35s; 
+            display:flex; 
+            flex-direction:column; 
+            position:relative; 
+            overflow:hidden;
+        }
+        .plan-card:hover { transform:translateY(-12px); box-shadow:0 24px 60px rgba(0,0,0,.08); }
+
+        .plan-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            border-radius: 28px 28px 0 0;
+            z-index: 1;
+        }
+        .plan-card.esencial .plan-header { background: #27ae60; }
+        .plan-card.corporativo .plan-header { background: #ff6b35; }
+        .plan-card.ecommerce .plan-header { background: #e67e22; }
+        .plan-card.sistema .plan-header { background: #8e44ad; }
+
+        .plan-card.corporativo .badge {
+            background: #ff6b35;
+            font-size: .85rem;
+            padding: 6px 18px;
+            box-shadow: 0 4px 20px rgba(255,107,53,.5);
+        }
+
+        .plan-card.corporativo {
+            transform: scale(1.02);
+            border: 2px solid #ff6b35;
+            box-shadow: 0 16px 50px rgba(255,107,53,0.15);
+            z-index: 2;
+        }
+        .plan-card.corporativo:hover {
+            transform: scale(1.04) translateY(-8px);
+            box-shadow: 0 24px 70px rgba(255,107,53,0.25);
+        }
+
+        .plan-card.esencial { border-top: none; }
+        .plan-card.corporativo { border-top: none; }
+        .plan-card.ecommerce { border-top: none; }
+        .plan-card.sistema { border-top: none; background:#1a1a2e; border:2px solid #8e44ad; color:#fff; }
+
+        .plan-card.esencial ul li i { color:#27ae60; }
+        .plan-card.corporativo ul li i { color:#ff6b35; }
+        .plan-card.ecommerce ul li i { color:#e67e22; }
+        .plan-card.sistema ul li i { color:#8e44ad; }
+
+        .plan-card .badge {
+            position:absolute; top:16px; right:16px; background:#ff6b35; color:#fff;
+            font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.5px;
+            padding:5px 14px; border-radius:30px; box-shadow:0 4px 12px rgba(255,107,53,.3); z-index:2;
+        }
+        .plan-card .plan-precio { font-size:2.4rem; font-weight:800; margin-bottom:2px; color:#000; }
+        .plan-card .plan-precio small { font-size:1.2rem; font-weight:500; color:#888; }
+        .plan-card .badge-precio { background:#fbbf24; color:#1a1a1a; font-size:.75rem; font-weight:700; text-transform:uppercase; padding:3px 12px; border-radius:30px; display:inline-block; margin-left:8px; vertical-align:middle; }
+        .plan-card .plan-icono { font-size:2.8rem; margin-bottom:6px; display:block; margin-top: 8px; }
+        .plan-card .plan-nombre { font-size:2rem; font-weight:800; margin-bottom:2px; }
+        .plan-card .plan-desc { color:#666; font-size:.95rem; margin-bottom:12px; }
+        .plan-card .precio-anterior { font-size:1rem; color:#999; text-decoration:line-through; display:block; margin-bottom:6px; }
+
+        .plan-card.sistema .plan-nombre, 
+        .plan-card.sistema .plan-desc, 
+        .plan-card.sistema .plan-precio small,
+        .plan-card.sistema ul li, 
+        .plan-card.sistema .categoria-caract .cat-titulo { color:#fff; }
+        .plan-card.sistema .plan-desc { color:#ccc; }
+        .plan-card.sistema .precio-anterior { color:#aaa; }
+        .plan-card.sistema .meta-badges .badge-entrega { background:#8e44ad; }
+        .plan-card.sistema .meta-badges .badge-garantia { background:#10b981; }
+        .plan-card.sistema .meta-badges .badge-soporte { background:#6366f1; }
+        .plan-card.sistema .categoria-caract { border-top-color:rgba(255,255,255,.15); }
+        .plan-card.sistema .inclusiones-extra { background: rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.1); }
+        .plan-card.sistema .plan-precio { color:#fff; }
+        .plan-card.sistema .plan-precio small { color:#aaa; }
+
+        .plan-card.sistema .categoria-caract .cat-titulo {
+            background: rgba(255,255,255,0.15) !important;
+            color: #fff !important;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 16px;
+        }
+
+        .meta-badges { display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 18px; }
+        .meta-badges .badge-entrega, .meta-badges .badge-garantia, .meta-badges .badge-soporte {
+            font-size:.75rem; font-weight:700; padding:4px 14px; border-radius:30px; display:inline-flex; align-items:center; gap:4px;
+        }
+
+        .categoria-caract { 
+            margin-top: 20px; 
+            padding-top: 16px; 
+            border-top: 1px dashed #e0e6ed; 
+        }
+        .categoria-caract:first-of-type { border-top:none; padding-top:0; margin-top:0; }
+
+        .categoria-caract .cat-titulo { 
+            font-weight:700; 
+            font-size:.85rem; 
+            text-transform:uppercase; 
+            letter-spacing:.5px; 
+            color:#1a1a1a; 
+            margin-bottom:6px; 
+            display:inline-block; 
+            background: #eef1f5; 
+            padding: 2px 14px; 
+            border-radius: 30px; 
+            gap: 6px; 
+        }
+        .categoria-caract .cat-titulo i { font-size:.9rem; margin-right:6px; }
+
+        .plan-card ul { list-style:none; flex:1; margin-bottom:12px; }
+        .plan-card ul li { 
+            padding: 4px 0; 
+            display:flex; 
+            align-items:center; 
+            gap:10px; 
+            color:#333; 
+            font-size:.9rem; 
+            border-bottom: 1px solid rgba(0,0,0,0.02);
+        }
+        .plan-card ul li i { 
+            font-size:.9rem; 
+            width:18px; 
+            text-align:center; 
+            color:inherit; 
+            flex-shrink:0;
+        }
+        .plan-card ul li.extra-item { display: none; }
+        .plan-card.mostrar-todas ul li.extra-item { display: flex; }
+
+        .ver-todas-btn {
+            background: transparent;
+            border: none;
+            color: #ff6b35;
+            font-weight: 600;
+            font-size: .9rem;
+            cursor: pointer;
+            padding: 6px 0;
+            margin: 4px 0 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all .2s;
+        }
+        .ver-todas-btn:hover { color: #e05a2a; transform: translateX(4px); }
+        .plan-card.sistema .ver-todas-btn { color: #8e44ad; }
+        .plan-card.sistema .ver-todas-btn:hover { color: #a966c9; }
+
+        .plan-card .btn-plan {
+            display:inline-block; 
+            padding: 16px 0; 
+            text-align:center; 
+            border-radius:60px;
+            font-weight:700; 
+            text-decoration:none; 
+            transition:all .3s; 
+            font-size: 1.1rem; 
+            letter-spacing:.5px;
+            width:100%; 
+            border:none; 
+            color:#fff;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+        .plan-card .btn-plan:hover { 
+            transform: scale(1.04); 
+            box-shadow:0 12px 30px rgba(0,0,0,0.2); 
+            filter: brightness(1.05);
+        }
+
+        .plan-card.esencial .btn-plan { background:#27ae60; }
+        .plan-card.esencial .btn-plan:hover { background:#1e8449; }
+        .plan-card.corporativo .btn-plan { background:#ff6b35; }
+        .plan-card.corporativo .btn-plan:hover { background:#e05a2a; }
+        .plan-card.ecommerce .btn-plan { background:#e67e22; }
+        .plan-card.ecommerce .btn-plan:hover { background:#ca6f1e; }
+        .plan-card.sistema .btn-plan { background:#8e44ad; }
+        .plan-card.sistema .btn-plan:hover { background:#6c3483; }
+
+        /* ========== CONFIANZA ========== */
+        .confianza { display:flex; justify-content:center; flex-wrap:wrap; gap:40px; padding:20px 0 40px; text-align:center; }
+        .confianza-item { display:flex; align-items:center; gap:10px; font-weight:600; color:#444; }
+        .confianza-item i { color:#ff6b35; font-size:1.6rem; }
+        .confianza-item .estrellas { color:#f5b342; font-size:1.2rem; letter-spacing:2px; }
+
+        /* ========== TECNOLOGÍAS ========== */
+        .tecnologias { padding:70px 0; background:#fff; border-top:1px solid #e0e6ed; }
+        .tecnologias h3 { text-align:center; font-size:2rem; font-weight:800; margin-bottom:10px; }
+        .tecnologias .sub { text-align:center; color:#666; margin-bottom:40px; }
+        .tec-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .tec-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8fafc;
+            padding: 10px 22px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #1a1a1a;
+            border: 1px solid #eef1f5;
+            transition: all .25s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            cursor: default;
+        }
+        .tec-item:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: #ff6b35;
+            box-shadow: 0 8px 20px rgba(255,107,53,0.12);
+        }
+        .tec-item i { font-size: 1.6rem; color: #ff6b35; }
+
+        .tec-item::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: calc(100% + 12px);
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: #1a1a2e;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: .85rem;
+            white-space: nowrap;
+            max-width: 280px;
+            white-space: normal;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            opacity: 0;
+            pointer-events: none;
+            transition: all .25s ease;
+            z-index: 10;
+            line-height: 1.4;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .tec-item:hover::after {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        /* ========== PROCESO (con tooltips interactivos) ========== */
+        .proceso-nuevo { padding:70px 0; background:#f8fafc; border-top:1px solid #e0e6ed; border-bottom:1px solid #e0e6ed; }
+        .proceso-nuevo h3 { text-align:center; font-size:2rem; font-weight:800; margin-bottom:10px; }
+        .proceso-nuevo .sub { text-align:center; color:#666; margin-bottom:40px; }
+        .proceso-pasos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px 16px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .paso {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #fff;
+            padding: 16px 20px;
+            border-radius: 60px;
+            min-width: 110px;
+            border: 1px solid #eef1f5;
+            transition: all .25s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            position: relative;
+            cursor: pointer;
+        }
+        .paso:hover {
+            transform: translateY(-4px);
+            border-color: #ff6b35;
+            box-shadow: 0 8px 24px rgba(255,107,53,0.08);
+        }
+        .paso .num { font-size: 1.8rem; font-weight: 900; color: #ff6b35; line-height: 1; }
+        .paso .texto { font-weight: 600; font-size: .9rem; margin-top: 2px; text-align: center; }
+        .paso .icono { font-size: 1.6rem; margin-bottom: 2px; }
+
+        .paso-tooltip {
+            position: absolute;
+            bottom: calc(100% + 14px);
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: #1a1a2e;
+            color: #fff;
+            padding: 14px 18px;
+            border-radius: 14px;
+            font-weight: 400;
+            font-size: .9rem;
+            min-width: 220px;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+            opacity: 0;
+            pointer-events: none;
+            transition: all .3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 20;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .paso-tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: #1a1a2e;
+        }
+        .paso.active .paso-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+            pointer-events: auto;
+        }
+        .paso-tooltip-down {
+            bottom: auto;
+            top: calc(100% + 14px);
+        }
+        .paso-tooltip-down::after {
+            border-top-color: transparent;
+            border-bottom-color: #1a1a2e;
+            top: auto;
+            bottom: 100%;
+        }
+
+        .flecha-proceso {
+            font-size: 1.8rem;
+            color: #ccc;
+            font-weight: 300;
+        }
+
+        /* ========== ACORDEÓN (CARPETAS) ========== */
+        .acordeon-servicios {
+            padding: 60px 0;
+            background: #f8fafc;
+            border-top: 1px solid #e0e6ed;
+            border-bottom: 1px solid #e0e6ed;
+        }
+        .acordeon-servicios .contenedor {
+            max-width: 1000px;
+        }
+        .acordeon-item {
+            background: #fff;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            border: 1px solid #eef1f5;
+            overflow: hidden;
+            transition: all .3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .acordeon-item:hover {
+            border-color: #ff6b35;
+        }
+        .acordeon-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 28px;
+            cursor: pointer;
+            background: #fff;
+            transition: background .3s;
+            user-select: none;
+        }
+        .acordeon-header:hover {
+            background: #fafcfc;
+        }
+        .acordeon-header .titulo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #1a1a1a;
+        }
+        .acordeon-header .titulo i {
+            color: #ff6b35;
+            font-size: 1.5rem;
+        }
+        .acordeon-header .icono {
+            font-size: 1.4rem;
+            color: #aaa;
+            transition: transform .3s;
+        }
+        .acordeon-item.abierto .acordeon-header .icono {
+            transform: rotate(180deg);
+        }
+        .acordeon-contenido {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .5s cubic-bezier(0.34, 1.56, 0.64, 1), padding .3s ease;
+            padding: 0 28px;
+        }
+        .acordeon-item.abierto .acordeon-contenido {
+            max-height: 2000px; /* suficiente para todo el contenido */
+            padding: 0 28px 30px;
+        }
+
+        /* ===== NUEVOS ESTILOS PARA LOS VIDEOS (MEJORADOS) ===== */
+        .videos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 10px;
+        }
+        .video-item {
+            background: #f8fafc;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid #eef1f5;
+            transition: transform .3s ease, box-shadow .3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .video-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+        }
+        .video-item video {
+            width: 100%;
+            display: block;
+            background: #111; /* fondo oscuro mientras carga */
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            border-bottom: 2px solid #ff6b35;
+        }
+        .video-item .video-info {
+            padding: 14px 18px 18px;
+            background: #fff;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .video-item .video-titulo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .video-item .video-titulo i {
+            color: #ff6b35;
+            font-size: 1.2rem;
+        }
+        .video-item .error-msg {
+            font-size: .85rem;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .video-item .error-msg a {
+            color: #ff6b35;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .video-item .error-msg i {
+            color: #f1c40f;
+        }
+
+        @media (max-width: 768px) {
+            .videos-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        /* ========== ACORDEÓN CONTENIDO (comparativa y mantenimiento) ========== */
+        .acordeon-contenido .video-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0,0,0,.08);
+        }
+        .acordeon-contenido .video-wrapper iframe {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border: none;
+            display: block;
+        }
+        .acordeon-contenido .card-panel {
+            background: #f8fafc;
+            border-radius: 28px;
+            padding: 30px 30px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.04);
+            border: 1px solid #eef1f5;
+        }
+        .acordeon-contenido .card-panel .header-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .acordeon-contenido .card-panel h4 {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .acordeon-contenido .card-panel .sub-panel {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+        }
+        .acordeon-contenido .tabla-responsive { overflow-x:auto; }
+        .acordeon-contenido .tabla-comparativa { width:100%; border-collapse:collapse; font-size:.95rem; min-width:600px; }
+        .acordeon-contenido .tabla-comparativa th, .acordeon-contenido .tabla-comparativa td { padding:14px 18px; text-align:center; border-bottom:1px solid #eef1f5; }
+        .acordeon-contenido .tabla-comparativa th { background:#f8fafc; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:#1a1a1a; }
+        .acordeon-contenido .tabla-comparativa td:first-child { font-weight:600; text-align:left; color:#333; }
+        .acordeon-contenido .tabla-comparativa .check { color:#ff6b35; font-size:1.2rem; }
+        .acordeon-contenido .tabla-comparativa .cross { color:#ccc; font-size:1.2rem; }
+        .acordeon-contenido .tabla-comparativa .destacado-col { background:rgba(255,107,53,.04); border-left:2px solid #ff6b35; border-right:2px solid #ff6b35; }
+        .acordeon-contenido .btn-ver-tabla {
+            display: inline-block;
+            background: #ff6b35;
+            color: #fff;
+            padding: 14px 40px;
+            border-radius: 60px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all .3s;
+            margin-top: 25px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .acordeon-contenido .btn-ver-tabla:hover {
+            background: #e05a2a;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255,107,53,0.3);
+        }
+        .acordeon-contenido .footer-accion {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .acordeon-contenido .mantenimiento-grid { 
+            display:grid; 
+            grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); 
+            gap:30px; 
+        }
+        .acordeon-contenido .mantenimiento-card {
+            background:#fff; 
+            padding:30px 20px; 
+            border-radius:20px; 
+            text-align:center; 
+            box-shadow:0 4px 20px rgba(0,0,0,.02); 
+            border:1px solid #eef1f5; 
+            transition:all .4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .acordeon-contenido .mantenimiento-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,107,53,0.05) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.6s;
+            pointer-events: none;
+        }
+        .acordeon-contenido .mantenimiento-card:hover::before {
+            opacity: 1;
+        }
+        .acordeon-contenido .mantenimiento-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #ff6b35;
+            box-shadow: 0 16px 40px rgba(255,107,53,0.12);
+        }
+        .acordeon-contenido .mantenimiento-card.enterprise {
+            border: 2px solid #8e44ad;
+            background: linear-gradient(145deg, #ffffff 0%, #f8f4ff 100%);
+            box-shadow: 0 8px 30px rgba(142,68,173,0.15);
+            transform: scale(1.02);
+        }
+        .acordeon-contenido .mantenimiento-card.enterprise::after {
+            content: '⭐ Recomendado';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #8e44ad;
+            color: #fff;
+            font-size: .7rem;
+            font-weight: 800;
+            padding: 4px 14px;
+            border-radius: 30px;
+            letter-spacing: .5px;
+            box-shadow: 0 4px 12px rgba(142,68,173,0.3);
+        }
+        .acordeon-contenido .mantenimiento-card.enterprise:hover {
+            transform: scale(1.04) translateY(-8px);
+            border-color: #8e44ad;
+            box-shadow: 0 20px 50px rgba(142,68,173,0.25);
+        }
+        .acordeon-contenido .mantenimiento-card.enterprise .btn-mantenimiento {
+            background: #8e44ad;
+        }
+        .acordeon-contenido .mantenimiento-card.enterprise .btn-mantenimiento:hover {
+            background: #6c3483;
+        }
+        .acordeon-contenido .mantenimiento-card.enterprise .plan-icono {
+            color: #8e44ad;
+        }
+        .acordeon-contenido .mantenimiento-card.enterprise .plan-precio {
+            color: #8e44ad;
+        }
+        .acordeon-contenido .mantenimiento-card .plan-icono { font-size:2.5rem; display:block; margin-bottom:6px; }
+        .acordeon-contenido .mantenimiento-card .plan-nombre { font-size:1.6rem; font-weight:800; }
+        .acordeon-contenido .mantenimiento-card .plan-precio { font-size:2rem; font-weight:800; color:#ff6b35; margin:8px 0; }
+        .acordeon-contenido .mantenimiento-card ul { list-style:none; text-align:left; margin:16px 0 20px; }
+        .acordeon-contenido .mantenimiento-card ul li { padding:4px 0; display:flex; align-items:center; gap:8px; font-size:.95rem; }
+        .acordeon-contenido .mantenimiento-card ul li i { color:#ff6b35; width:18px; }
+        .acordeon-contenido .btn-mantenimiento { 
+            display:inline-block; 
+            background:#1a1a1a; 
+            color:#fff; 
+            padding: 14px 30px; 
+            border-radius:60px; 
+            font-weight:700; 
+            text-decoration:none; 
+            transition:all .3s; 
+            width:100%;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .acordeon-contenido .btn-mantenimiento:hover { background:#ff6b35; transform:scale(1.02); }
+
+        /* ========== FOOTER ========== */
+        footer { background:#1a1a1a; color:#fff; padding:40px 0 20px; border-top:3px solid #ff6b35; }
+        footer * { color:#fff; }
+        .footer-contenido { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:30px; margin-bottom:30px; }
+        .footer-col h4 { font-size:1.2rem; margin-bottom:15px; color:#fff; }
+        .footer-col p, .footer-col a, .footer-col li { color:#ccc; text-decoration:none; }
+        .footer-col a:hover { color:#ff6b35; }
+        .footer-col ul { list-style:none; }
+        .footer-col ul li { margin-bottom:8px; }
+        .footer-bottom { border-top:1px solid #333; padding-top:20px; text-align:center; color:#888; }
+
+        /* ========== MODAL ========== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(6px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeInModal .3s ease;
+        }
+        .modal-overlay.active { display: flex; }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-content {
+            background: #fff;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            border-radius: 28px;
+            padding: 40px 35px;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+        }
+        .modal-content::-webkit-scrollbar { width: 6px; }
+        .modal-content::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .modal-content::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 22px;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            transition: all .2s;
+            line-height: 1;
+        }
+        .modal-close:hover { color: #e05a2a; transform: rotate(90deg); }
+
+        .modal-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .modal-title .icono { font-size: 2.5rem; }
+        .modal-subtitle { color: #666; font-size: 1rem; margin-bottom: 8px; }
+        .modal-price { font-size: 2rem; font-weight: 800; color: #1a1a1a; margin: 8px 0 6px; }
+        .modal-price small { font-weight: 500; color: #888; font-size: 1.2rem; }
+        .modal-badges { display:flex; gap:12px; flex-wrap:wrap; margin:12px 0 24px; }
+        .modal-badge { font-size:.8rem; font-weight:700; padding:5px 16px; border-radius:30px; background:#eef1f5; color:#1a1a1a; display:inline-flex; align-items:center; gap:6px; }
+        .modal-badge i { font-size:.9rem; }
+
+        .modal-body { margin-top:10px; }
+        .modal-categoria { margin-top:24px; border-top:1px solid #e0e6ed; padding-top:20px; }
+        .modal-categoria:first-of-type { border-top:none; padding-top:0; margin-top:0; }
+        .modal-categoria .cat-titulo { font-weight:700; font-size:1rem; text-transform:uppercase; letter-spacing:.5px; color:#1a1a1a; margin-bottom:10px; display:inline-block; background:#eef1f5; padding:3px 18px; border-radius:30px; }
+        .modal-categoria .cat-titulo i { margin-right:8px; }
+        .modal-categoria ul { list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:4px 20px; }
+        .modal-categoria ul li { padding:4px 0; display:flex; align-items:center; gap:10px; font-size:.95rem; color:#333; border-bottom:1px solid rgba(0,0,0,0.02); }
+        .modal-categoria ul li i { color:#ff6b35; width:18px; text-align:center; flex-shrink:0; }
+
+        .modal-footer { margin-top:30px; display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
+        .modal-footer .btn-primary { background:#ff6b35; color:#fff; padding:14px 40px; border-radius:60px; font-weight:700; font-size:1.1rem; border:none; cursor:pointer; transition:all .3s; text-decoration:none; display:inline-block; }
+        .modal-footer .btn-primary:hover { background:#e05a2a; transform:scale(1.03); box-shadow:0 8px 25px rgba(255,107,53,0.3); }
+        .modal-footer .btn-secondary { background:transparent; border:2px solid #e0e6ed; color:#1a1a1a; padding:12px 30px; border-radius:60px; font-weight:600; cursor:pointer; transition:all .2s; }
+        .modal-footer .btn-secondary:hover { background:#f5f7fa; border-color:#bbb; }
+
+        .whatsapp-float {
+            position:fixed; bottom:30px; right:30px; z-index:999;
+            background:#25d366; color:#fff; width:60px; height:60px; border-radius:50%;
+            display:flex; align-items:center; justify-content:center; font-size:32px;
+            box-shadow:0 6px 25px rgba(37,211,102,.5); transition:all .3s; text-decoration:none;
+        }
+        .whatsapp-float:hover { transform:scale(1.1); box-shadow:0 10px 35px rgba(37,211,102,.6); color:#fff; }
+
+        .btn-agendar-fijo {
+            position:fixed; bottom:100px; right:30px; z-index:998;
+            background:#1a1a1a; color:#fff; padding:12px 22px; border-radius:60px;
+            font-weight:700; font-size:.9rem; text-decoration:none; box-shadow:0 6px 20px rgba(0,0,0,.2);
+            transition:all .3s; border:2px solid #ff6b35; display:flex; align-items:center; gap:8px;
+        }
+        .btn-agendar-fijo:hover { background:#ff6b35; transform:scale(1.05); box-shadow:0 8px 30px rgba(255,107,53,.4); }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width:992px) {
+            .top-bar .contenedor { flex-direction:column; align-items:center; gap:4px; }
+            .top-bar .top-izquierda, .top-bar .top-derecha { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; }
+            .hero h2 { font-size:2.4rem; }
+            .btn-agendar-fijo { bottom:90px; right:20px; padding:10px 16px; font-size:.8rem; }
+            .proceso-pasos { gap:8px; }
+            .paso { padding:12px 16px; min-width:80px; }
+            .flecha-proceso { font-size:1.2rem; }
+            .paso-tooltip { min-width:180px; max-width:260px; font-size:.8rem; }
+            .acordeon-contenido .card-panel { padding: 20px; }
+        }
+        @media (max-width:768px) {
+            .menu-toggle { display:block; }
+            nav { width:100%; order:3; }
+            nav ul { flex-direction:column; align-items:stretch; max-height:0; gap:6px; padding-top:0; width:100%; }
+            nav.abierto ul { max-height:600px; padding-top:15px; padding-bottom:10px; }
+            nav ul li { width:100%; text-align:center; }
+            nav a { justify-content:center; padding:12px 0; width:100%; }
+            nav a::after { display:none; }
+            .separador-menu { display:none; }
+            .btn-cotizar, .btn-agendar { width:100%; justify-content:center; padding:12px; }
+            .btn-agendar { border-width:2px; }
+            header .contenedor { flex-wrap:wrap; gap:10px; }
+            .logo-texto .nombre { font-size:18px; }
+            .hero { padding:80px 0 60px; }
+            .hero h2 { font-size:1.8rem; }
+            .planes h2 { font-size:2rem; }
+            .plan-card .plan-precio { font-size:1.8rem; }
+            .confianza { gap:20px; }
+            .btn-agendar-fijo { bottom:80px; right:16px; padding:8px 14px; font-size:.75rem; }
+            .whatsapp-float { width:50px; height:50px; font-size:26px; bottom:20px; right:20px; }
+            .tec-grid { gap:12px; }
+            .tec-item { padding:8px 16px; font-size:.85rem; }
+            .tec-item::after { white-space:normal; max-width:200px; font-size:.75rem; bottom:calc(100% + 8px); }
+            .proceso-pasos { flex-direction:column; align-items:center; }
+            .flecha-proceso { transform:rotate(90deg); }
+            .planes-grid { grid-template-columns:1fr; }
+            .plan-card.corporativo { transform: scale(1); }
+            .plan-card.corporativo:hover { transform: scale(1.02); }
+            .paso-tooltip { min-width:160px; max-width:220px; font-size:.75rem; padding:10px 14px; }
+            .acordeon-header .titulo { font-size:1.1rem; }
+            .acordeon-contenido .mantenimiento-grid { grid-template-columns:1fr; }
+            .acordeon-contenido .mantenimiento-card.enterprise { transform: scale(1); }
+            .acordeon-contenido .mantenimiento-card.enterprise:hover { transform: scale(1.02); }
+            .navegacion-rapida .contenedor { gap:10px; }
+            .navegacion-rapida .btn-rapido { padding:8px 16px; font-size:.85rem; }
+            .navegacion-rapida .separador-nav { display: none; }
+            .acordeon-contenido .card-panel { padding: 15px; }
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width:480px) {
+            .paso-tooltip { min-width:140px; max-width:190px; font-size:.7rem; padding:8px 12px; }
+            .navegacion-rapida .btn-rapido { padding:6px 14px; font-size:.8rem; }
+            .navegacion-rapida .btn-rapido i { font-size:1rem; }
+            .acordeon-header { padding:16px 18px; }
+            .acordeon-header .titulo { font-size:1rem; }
+            .acordeon-contenido { padding:0 18px; }
+            .acordeon-item.abierto .acordeon-contenido { padding:0 18px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== TOP BAR ========== -->
+    <div class="top-bar">
+        <div class="contenedor">
+            <div class="top-izquierda">
+                <a href="tel:+525660281521"><i class="fas fa-phone-alt"></i> +52 5660 2815 21</a>
+                <a href="mailto:ordunadigitalstudio@gmail.com"><i class="fas fa-envelope"></i> ordunadigitalstudio@gmail.com</a>
+            </div>
+            <div class="top-derecha">
+                <a href="#"><i class="fas fa-clock"></i> Lun - Vie: 9:00 - 19:00</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== HEADER ========== -->
+    <header id="mainHeader">
+        <div class="contenedor">
+            <a href="index.html" class="logo">
+                <div class="logo-icono">O</div>
+                <div class="logo-texto">
+                    <span class="nombre">ORDUNA</span>
+                    <span class="subtitulo">Digital Studio</span>
+                </div>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav id="navMenu">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="servicios.html" class="activo"><i class="fas fa-laptop-code"></i> Servicios</a></li>
+                    <li><a href="portfolio.html"><i class="fas fa-images"></i> Portfolio</a></li>
+                    <li><a href="contacto.html"><i class="fas fa-envelope"></i> Contacto</a></li>
+                    <span class="separador-menu"></span>
+                    <li><a href="contacto.html" class="btn-cotizar"><i class="fas fa-paper-plane"></i> Solicitar Cotización</a></li>
+                    <li><a href="contacto.html" class="btn-agendar"><i class="fas fa-calendar-check"></i> Agenda una llamada</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero">
+        <div class="contenedor">
+            <h2>Creamos páginas web que <span>generan clientes</span></h2>
+            <p>Diseño profesional, velocidad y posicionamiento para hacer crecer tu negocio.</p>
+            <a href="#planes" class="boton-hero">VER PLANES</a>
+        </div>
+    </section>
+
+    <!-- ========== NAVEGACIÓN RÁPIDA (CARPETA) ========== -->
+    <div class="navegacion-rapida">
+        <div class="contenedor">
+            <button class="btn-rapido" data-target="acordeon-video">
+                <i class="fas fa-play-circle"></i> Mira nuestro trabajo en acción
+                <span class="flecha">→</span>
+            </button>
+            <span class="separador-nav">|</span>
+            <button class="btn-rapido" data-target="acordeon-comparativa">
+                <i class="fas fa-chart-bar"></i> Compara los planes
+                <span class="flecha">→</span>
+            </button>
+            <span class="separador-nav">|</span>
+            <button class="btn-rapido" data-target="acordeon-mantenimiento">
+                <i class="fas fa-tools"></i> Planes de Mantenimiento
+                <span class="flecha">→</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ========== PLANES ========== -->
+    <section class="planes" id="planes">
+        <div class="contenedor">
+            <h2>Nuestros Planes</h2>
+            <p class="subtitulo">Elige el paquete ideal para tu proyecto, desde lo esencial hasta sistemas completos.</p>
+
+            <div class="confianza">
+                <div class="confianza-item">
+                    <span class="estrellas">★★★★★</span>
+                    <span>+80 proyectos realizados</span>
+                </div>
+                <div class="confianza-item">
+                    <i class="fas fa-smile"></i>
+                    <span>Clientes satisfechos</span>
+                </div>
+                <div class="confianza-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Garantía de calidad</span>
+                </div>
+            </div>
+
+            <div class="planes-grid">
+                <!-- ========== PLAN ESENCIAL ========== -->
+                <div class="plan-card esencial" data-plan="esencial">
+                    <div class="plan-header"></div>
+                    <span class="plan-icono">📄</span>
+                    <div class="plan-nombre">Plan Esencial</div>
+                    <div class="plan-desc">La solución perfecta para iniciar con una presencia digital profesional y atraer más clientes.</div>
+                    <div class="plan-precio">Desde $12,000 a 18,000<small>MXN</small> <span class="badge-precio">Precio variable</span></div>
+                    <span class="precio-anterior"></span>
+                    <div class="meta-badges">
+                        <span class="badge-entrega"><i class="fas fa-clock"></i> 15 días</span>
+                        <span class="badge-garantia"><i class="fas fa-shield-alt"></i> 30 días garantía</span>
+                        <span class="badge-soporte"><i class="fas fa-headset"></i> 1 año soporte</span>
+                    </div>
+
+                    <div class="categoria-caract">
+                        <div class="cat-titulo"><i class="fas fa-paint-brush"></i> Diseño</div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Diseño 100% personalizado</li>
+                            <li><i class="fas fa-check-circle"></i> Hasta 5 secciones</li>
+                            <li><i class="fas fa-check-circle"></i> Responsive (celular, tablet y computadora)</li>
+                            <li><i class="fas fa-check-circle"></i> Diseño moderno</li>
+                            <li><i class="fas fa-check-circle"></i> Optimización UX</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Animaciones suaves</li>
+                        </ul>
+                    </div>
+                    <div class="categoria-caract">
+                        <div class="cat-titulo"><i class="fas fa-plug"></i> Funcionalidad</div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Formulario de contacto</li>
+                            <li><i class="fas fa-check-circle"></i> Integración con WhatsApp</li>
+                            <li><i class="fas fa-check-circle"></i> Google Maps</li>
+                            <li><i class="fas fa-check-circle"></i> Redes sociales integradas</li>
+                            <li><i class="fas fa-check-circle"></i> Botón flotante de WhatsApp</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Botón de llamada</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Botón de correo</li>
+                        </ul>
+                    </div>
+                    <div class="categoria-caract">
+                        <div class="cat-titulo"><i class="fas fa-box"></i> Incluye</div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Dominio .com o .mx (1 año)</li>
+                            <li><i class="fas fa-check-circle"></i> Hosting SSD (1 año)</li>
+                            <li><i class="fas fa-check-circle"></i> Certificado SSL</li>
+                            <li><i class="fas fa-check-circle"></i> 1 correo empresarial</li>
+                            <li><i class="fas fa-check-circle"></i> Optimización SEO básica</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Capacitación de 1 hora</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> 2 rondas de cambios sin costo</li>
+                        </ul>
+                    </div>
+
+                    <button class="ver-todas-btn" onclick="toggleExtra(this)">+ Ver todas las características</button>
+                    <button class="btn-plan" onclick="openPlanModal('esencial')">🚀 Elegir este plan</button>
+                </div>
+
+                <!-- ========== PLAN CORPORATIVO ========== -->
+                <div class="plan-card corporativo" data-plan="corporativo">
+                    <div class="plan-header"></div>
+                    <span class="badge">⭐ Más vendido</span>
+                    <span class="plan-icono">🏢</span>
+                    <div class="plan-nombre">Plan Corporativo</div>
+                    <div class="plan-desc">Diseñado para empresas que desean fortalecer su presencia digital, generar confianza y destacar frente a su competencia.</div>
+                    <div class="plan-precio">$18,900 a 27,500 <small>MXN</small></div>
+                    <div class="meta-badges">
+                        <span class="badge-entrega"><i class="fas fa-clock"></i> 20 días</span>
+                        <span class="badge-garantia"><i class="fas fa-shield-alt"></i> 60 días garantía</span>
+                        <span class="badge-soporte"><i class="fas fa-headset"></i> 1 año soporte</span>
+                    </div>
+
+                    <div class="categoria-caract">
+                        <div class="cat-titulo"><i class="fas fa-paint-brush"></i> Diseño</div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Hasta 15 páginas</li>
+                            <li><i class="fas fa-check-circle"></i> Blog administrable</li>
+                            <li><i class="fas fa-check-circle"></i> Panel administrador</li>
+                            <li><i class="fas fa-check-circle"></i> Animaciones Premium</li>
+                        </ul>
+                    </div>
+                    <div class="categoria-caract">
+                        <div class="cat-titulo"><i class="fas fa-chart-line"></i> SEO y Analytics</div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> SEO On Page completo</li>
+                            <li><i class="fas fa-check-circle"></i> Google Analytics + Search Console</li>
+                            <li><i class="fas fa-check-circle"></i> Optimización de velocidad</li>
+                        </ul>
+                    </div>
+                    <div class="categoria-caract">
+                        <div class="cat-titulo"><i class="fas fa-plug"></i> Funcionalidad</div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Chat de WhatsApp</li>
+                            <li><i class="fas fa-check-circle"></i> Formularios avanzados</li>
+                            <li><i class="fas fa-check-circle"></i> Galería de imágenes</li>
+                            <li><i class="fas fa-check-circle"></i> Integración con Facebook Pixel</li>
+                            <li><i class="fas fa-check-circle"></i> Integración con Instagram</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Google Tag Manager</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Calendario de citas</li>
+                        </ul>
+                    </div>
+                    <div class="categoria-caract">
+                        <div class="cat-titulo"><i class="fas fa-box"></i> Incluye</div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Correos empresariales ilimitados</li>
+                            <li><i class="fas fa-check-circle"></i> Copias de seguridad automáticas</li>
+                            <li><i class="fas fa-check-circle"></i> Protección anti spam</li>
+                            <li><i class="fas fa-check-circle"></i> Capacitación personalizada</li>
+                            <li><i class="fas fa-check-circle"></i> 1 Año de soporte</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> 5 rondas de cambios</li>
+                        </ul>
+                    </div>
+
+                    <button class="ver-todas-btn" onclick="toggleExtra(this)">+ Ver todas las características</button>
+                    <button class="btn-plan" onclick="openPlanModal('corporativo')">🚀 Elegir este plan</button>
+                </div>
+
+                <!-- ========== PLAN E-COMMERCE ========== -->
+                <div class="plan-card ecommerce" data-plan="ecommerce">
+                    <div class="plan-header"></div>
+                    <span class="plan-icono">🛒</span>
+                    <div class="plan-nombre">Plan E-commerce</div>
+                    <div class="plan-desc">Todo lo necesario para vender en línea de forma segura, administrar tus productos y hacer crecer tu negocio las 24 horas del día.</div>
+                    <div class="plan-precio">Desde $34,000 a 44,500<small>MXN</small> <span class="badge-precio">Precio variable</span></div>
+                    <span class="precio-anterior"></span>
+                    <div class="meta-badges">
+                        <span class="badge-entrega"><i class="fas fa-clock"></i> 25 días</span>
+                        <span class="badge-garantia"><i class="fas fa-shield-alt"></i> 30 días garantía</span>
+                        <span class="badge-soporte"><i class="fas fa-headset"></i> 1 año soporte</span>
+                    </div>
+
+                    <div class="categoria-caract">
+                        <div class="cat-titulo"><i class="fas fa-store"></i> Tienda</div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Tienda en línea completa</li>
+                            <li><i class="fas fa-check-circle"></i> Productos ilimitados</li>
+                            <li><i class="fas fa-check-circle"></i> Categorías y variantes</li>
+                            <li><i class="fas fa-check-circle"></i> Inventario gestionable</li>
+                            <li><i class="fas fa-check-circle"></i> Carrito de compras</li>
+                        </ul>
+                    </div>
+                    <div class="categoria-caract">
+                        <div class="cat-titulo"><i class="fas fa-credit-card"></i> Pagos y envíos</div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Mercado Pago / PayPal / Stripe</li>
+                            <li><i class="fas fa-check-circle"></i> Checkout profesional</li>
+                            <li><i class="fas fa-check-circle"></i> Cupones y descuentos</li>
+                            <li><i class="fas fa-check-circle"></i> Cálculo de envíos</li>
+                            <li><i class="fas fa-check-circle"></i> Estados de pedido</li>
+                        </ul>
+                    </div>
+                    <div class="categoria-caract">
+                        <div class="cat-titulo"><i class="fas fa-chart-bar"></i> Administración</div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Panel administrativo</li>
+                            <li><i class="fas fa-check-circle"></i> Dashboard de ventas</li>
+                            <li><i class="fas fa-check-circle"></i> Gestión de clientes</li>
+                            <li><i class="fas fa-check-circle"></i> Gestión de pedidos</li>
+                            <li><i class="fas fa-check-circle"></i> Reportes y estadísticas</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Productos destacados y relacionados</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Buscador inteligente</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Lista de deseos y reseñas</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Recuperación de carrito</li>
+                        </ul>
+                    </div>
+                    <div class="categoria-caract">
+                        <div class="cat-titulo"><i class="fas fa-box"></i> Incluye</div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Capacitación completa</li>
+                            <li><i class="fas fa-check-circle"></i> 1 Año de soporte</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> SEO para productos</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Google Shopping (si aplica)</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Facebook Pixel</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Google Analytics</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Dominio</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Hosting</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Correos empresariales</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Search Console</li>
+                        </ul>
+                    </div>
+
+                    <button class="ver-todas-btn" onclick="toggleExtra(this)">+ Ver todas las características</button>
+                    <button class="btn-plan" onclick="openPlanModal('ecommerce')">🚀 Elegir este plan</button>
+                </div>
+
+                <!-- ========== PLAN SISTEMA WEB ========== -->
+                <div class="plan-card sistema" data-plan="sistema">
+                    <div class="plan-header"></div>
+                    <span class="plan-icono">⚙️</span>
+                    <div class="plan-nombre">Plan Sistema Empresarial</div>
+                    <div class="plan-desc">Desarrollamos sistemas administrativos personalizados para automatizar procesos, optimizar la gestión de tu empresa y mejorar la productividad mediante soluciones adaptadas a tus necesidades.</div>
+                    <div class="plan-desc">El precio puede variar dependiendo el Sistema Solicitado Puede Subir mas o Bajar.</div>
+                    <div class="plan-precio">$50,900 a 80,000<small>MXN (Desde)</small></div>
+                    <div class="meta-badges">
+                        <span class="badge-entrega"><i class="fas fa-clock"></i> 25-30 días</span>
+                        <span class="badge-garantia"><i class="fas fa-shield-alt"></i> 60 días garantía</span>
+                        <span class="badge-soporte"><i class="fas fa-headset"></i> 1 año soporte</span>
+                    </div>
+
+                    <div class="categoria-caract">
+                        <div class="cat-titulo"><i class="fas fa-cogs"></i> Gestión</div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Todo el plan E-commerce</li>
+                            <li><i class="fas fa-check-circle"></i> Sistema administrativo a medida</li>
+                            <li><i class="fas fa-check-circle"></i> Gestión de usuarios y roles</li>
+                            <li><i class="fas fa-check-circle"></i> Dashboard ejecutivo</li>
+                        </ul>
+                    </div>
+                    <div class="categoria-caract">
+                        <div class="cat-titulo"><i class="fas fa-database"></i> Datos y reportes</div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Inventario avanzado</li>
+                            <li><i class="fas fa-check-circle"></i> Compras, ventas y clientes</li>
+                            <li><i class="fas fa-check-circle"></i> Proveedores y facturación</li>
+                            <li><i class="fas fa-check-circle"></i> Reportes PDF personalizados</li>
+                            <li><i class="fas fa-check-circle"></i> Estadísticas en tiempo real</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Exportar Excel y PDF</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Gráficas</li>
+                        </ul>
+                    </div>
+                    <div class="categoria-caract">
+                        <div class="cat-titulo"><i class="fas fa-code"></i> Desarrollo</div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> API para integraciones</li>
+                            <li><i class="fas fa-check-circle"></i> Base de datos optimizada</li>
+                            <li><i class="fas fa-check-circle"></i> Respaldos automáticos</li>
+                            <li><i class="fas fa-check-circle"></i> Registro de actividad (Logs)</li>
+                            <li><i class="fas fa-check-circle"></i> Multiusuario y multi sucursal</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Módulos personalizados</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Integraciones con otros sistemas</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Notificaciones por correo</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Notificaciones por WhatsApp</li>
+                        </ul>
+                    </div>
+                    <div class="categoria-caract">
+                        <div class="cat-titulo"><i class="fas fa-box"></i> Incluye</div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Capacitación completa</li>
+                            <li><i class="fas fa-check-circle"></i> 1 año de soporte</li>
+                            <li><i class="fas fa-check-circle"></i> Respaldos automáticos</li>
+                            <li><i class="fas fa-check-circle"></i> Control de permisos</li>
+                            <li><i class="fas fa-check-circle"></i> Historial de actividad</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Autenticación segura</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Manual del sistema</li>
+                            <li class="extra-item"><i class="fas fa-check-circle"></i> Instalación</li>
+                        </ul>
+                    </div>
+
+                    <button class="ver-todas-btn" onclick="toggleExtra(this)">+ Ver todas las características</button>
+                    <button class="btn-plan" onclick="openPlanModal('sistema')">🚀 Elegir este plan</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== MODAL ========== -->
+    <div class="modal-overlay" id="planModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- ========== TECNOLOGÍAS ========== -->
+    <section class="tecnologias">
+        <div class="contenedor">
+            <h3>Tecnologías que utilizamos</h3>
+            <p class="sub">Herramientas modernas para construir soluciones robustas y escalables</p>
+            <div class="tec-grid">
+                <span class="tec-item" data-tooltip="Estructura semántica y accesible de todas nuestras páginas web."><i class="fab fa-html5"></i> HTML5</span>
+                <span class="tec-item" data-tooltip="Diseño visual atractivo, responsive y animaciones con CSS3."><i class="fab fa-css3-alt"></i> CSS3</span>
+                <span class="tec-item" data-tooltip="Interactividad, validaciones, efectos dinámicos y lógica front-end."><i class="fab fa-js"></i> JavaScript</span>
+                <span class="tec-item" data-tooltip="Backend robusto para la lógica de servidor y procesamiento de datos."><i class="fab fa-php"></i> PHP</span>
+                <span class="tec-item" data-tooltip="Framework PHP moderno para aplicaciones seguras y escalables."><i class="fab fa-laravel"></i> Laravel</span>
+                <span class="tec-item" data-tooltip="Desarrollo de interfaces reactivas y rápidas (SPA)."><i class="fab fa-react"></i> React</span>
+                <span class="tec-item" data-tooltip="Base de datos relacional para gestionar información estructurada."><i class="fas fa-database"></i> MySQL</span>
+                <span class="tec-item" data-tooltip="Base de datos avanzada con soporte para consultas complejas."><i class="fas fa-database"></i> PostgreSQL</span>
+                <span class="tec-item" data-tooltip="Framework CSS para crear interfaces modernas y responsivas."><i class="fab fa-bootstrap"></i> Bootstrap</span>
+                <span class="tec-item" data-tooltip="Control de versiones y colaboración en equipo para proyectos."><i class="fab fa-github"></i> GitHub</span>
+                <span class="tec-item" data-tooltip="Red de entrega de contenido (CDN) y protección contra ataques DDoS."><i class="fas fa-cloud"></i> Cloudflare</span>
+                <span class="tec-item" data-tooltip="Análisis de tráfico, comportamiento de usuarios y conversiones."><i class="fas fa-chart-line"></i> Google Analytics</span>
+                <span class="tec-item" data-tooltip="Segmentación de anuncios y seguimiento de conversiones para campañas."><i class="fas fa-ad"></i> Meta Pixel</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PROCESO (CON TOOLTIPS) ========== -->
+    <section class="proceso-nuevo">
+        <div class="contenedor">
+            <h3>Nuestro proceso</h3>
+            <p class="sub">Te acompañamos en cada etapa para garantizar el éxito de tu proyecto</p>
+            <div class="proceso-pasos">
+                <div class="paso" data-info="Entendemos tus necesidades, objetivos y visión. Realizamos una reunión inicial para conocer tu negocio, tu público objetivo y tus metas. Definimos el alcance del proyecto y establecemos un plan de acción claro.">
+                    <span class="icono">1️⃣</span>
+                    <span class="texto">Reunión</span>
+                    <div class="paso-tooltip"></div>
+                </div>
+                <span class="flecha-proceso">→</span>
+                <div class="paso" data-info="Creamos wireframes y prototipos interactivos que definen la estructura y el flujo de tu sitio. Nos enfocamos en la experiencia de usuario (UX) y en una interfaz atractiva (UI) que refleje la identidad de tu marca.">
+                    <span class="icono">2️⃣</span>
+                    <span class="texto">Diseño UX/UI</span>
+                    <div class="paso-tooltip"></div>
+                </div>
+                <span class="flecha-proceso">→</span>
+                <div class="paso" data-info="Transformamos los diseños en código funcional. Utilizamos tecnologías modernas para construir un sitio rápido, seguro y escalable. Implementamos todas las funcionalidades acordadas y aseguramos que el sitio sea responsive.">
+                    <span class="icono">3️⃣</span>
+                    <span class="texto">Desarrollo</span>
+                    <div class="paso-tooltip"></div>
+                </div>
+                <span class="flecha-proceso">→</span>
+                <div class="paso" data-info="Presentamos el sitio en un entorno de prueba para que lo revises. Realizamos ajustes y correcciones hasta que quedes completamente satisfecho. Tu opinión es clave en esta etapa.">
+                    <span class="icono">4️⃣</span>
+                    <span class="texto">Revisión</span>
+                    <div class="paso-tooltip"></div>
+                </div>
+                <span class="flecha-proceso">→</span>
+                <div class="paso" data-info="Lanzamos tu sitio web a producción. Configuramos el hosting, el dominio, el SSL y todos los aspectos técnicos para que tu sitio esté disponible para el mundo.">
+                    <span class="icono">5️⃣</span>
+                    <span class="texto">Publicación</span>
+                    <div class="paso-tooltip"></div>
+                </div>
+                <span class="flecha-proceso">→</span>
+                <div class="paso" data-info="Te brindamos capacitación para que puedas gestionar tu sitio fácilmente. Además, ofrecemos soporte continuo para resolver dudas, realizar actualizaciones y garantizar el buen funcionamiento.">
+                    <span class="icono">6️⃣</span>
+                    <span class="texto">Soporte</span>
+                    <div class="paso-tooltip"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ACORDEÓN DE SERVICIOS ========== -->
+    <section class="acordeon-servicios" id="acordeonServicios">
+        <div class="contenedor">
+
+           <div class="videos-grid">
+    <!-- Video Clínica -->
+    <div class="video-item">
+        <video controls preload="metadata" width="100%" playsinline>
+            <source src="videos-serv/video-clínica.mp4.mp4" type="video/mp4">
+            Tu navegador no soporta videos HTML5.
+        </video>
+        <div class="video-info">
+            <div class="video-titulo"><i class="fas fa-video"></i> Clínica</div>
+        </div>
+    </div>
+
+    <!-- Video Mesa -->
+    <div class="video-item">
+        <video controls preload="metadata" width="100%" playsinline>
+            <source src="videos-serv/video-la-mesa.mp4.mp4" type="video/mp4">
+            Tu navegador no soporta videos HTML5.
+        </video>
+        <div class="video-info">
+            <div class="video-titulo"><i class="fas fa-video"></i> La Mesa</div>
+        </div>
+    </div>
+</div>
+
+            <!-- CARPETA 2: COMPARATIVA -->
+            <div class="acordeon-item" id="acordeon-comparativa">
+                <div class="acordeon-header" onclick="toggleAcordeon(this)">
+                    <span class="titulo"><i class="fas fa-chart-bar"></i> Compara los planes</span>
+                    <span class="icono"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="acordeon-contenido">
+                    <div class="card-panel">
+                        <span class="header-icon">📊</span>
+                        <h4>Compara los planes</h4>
+                        <p class="sub-panel">Elige el que mejor se adapte a tu negocio</p>
+                        <div class="tabla-responsive">
+                            <table class="tabla-comparativa">
+                                <thead>
+                                    <tr>
+                                        <th>Característica</th>
+                                        <th>Esencial</th>
+                                        <th class="destacado-col">Corporativo</th>
+                                        <th>E-commerce</th>
+                                        <th>Sistema Web</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Diseño personalizado</td><td><span class="check">✔</span></td><td class="destacado-col"><span class="check">✔</span></td><td><span class="check">✔</span></td><td><span class="check">✔</span></td></tr>
+                                    <tr><td>Responsive</td><td><span class="check">✔</span></td><td class="destacado-col"><span class="check">✔</span></td><td><span class="check">✔</span></td><td><span class="check">✔</span></td></tr>
+                                    <tr><td>Dominio + Hosting + SSL</td><td><span class="check">✔</span></td><td class="destacado-col"><span class="check">✔</span></td><td><span class="check">✔</span></td><td><span class="check">✔</span></td></tr>
+                                    <tr><td>Páginas</td><td>Hasta 5</td><td class="destacado-col">Hasta 15</td><td>Ilimitadas</td><td>Ilimitadas</td></tr>
+                                    <tr><td>Blog</td><td><span class="cross">✘</span></td><td class="destacado-col"><span class="check">✔</span></td><td><span class="check">✔</span></td><td><span class="check">✔</span></td></tr>
+                                    <tr><td>SEO / Google Analytics</td><td><span class="cross">✘</span></td><td class="destacado-col"><span class="check">✔</span></td><td><span class="check">✔</span></td><td><span class="check">✔</span></td></tr>
+                                    <tr><td>Tienda online / Carrito</td><td><span class="cross">✘</span></td><td class="destacado-col"><span class="cross">✘</span></td><td><span class="check">✔</span></td><td><span class="check">✔</span></td></tr>
+                                    <tr><td>Inventario / Cupones</td><td><span class="cross">✘</span></td><td class="destacado-col"><span class="cross">✘</span></td><td><span class="check">✔</span></td><td><span class="check">✔</span></td></tr>
+                                    <tr><td>Panel administrativo</td><td><span class="cross">✘</span></td><td class="destacado-col"><span class="check">✔</span></td><td><span class="check">✔</span></td><td><span class="check">✔</span></td></tr>
+                                    <tr><td>Sistema interno / API</td><td><span class="cross">✘</span></td><td class="destacado-col"><span class="cross">✘</span></td><td><span class="cross">✘</span></td><td><span class="check">✔</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="footer-accion">
+                            <a href="contacto.html" class="btn-ver-tabla">📩 Solicitar cotización</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARPETA 3: MANTENIMIENTO -->
+            <div class="acordeon-item" id="acordeon-mantenimiento">
+                <div class="acordeon-header" onclick="toggleAcordeon(this)">
+                    <span class="titulo"><i class="fas fa-tools"></i> Planes de Mantenimiento</span>
+                    <span class="icono"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="acordeon-contenido">
+                    <div class="card-panel">
+                        <span class="header-icon">🛠️</span>
+                        <h4>Planes de Mantenimiento</h4>
+                        <p class="sub-panel">Mantén tu sitio actualizado y seguro con nuestros servicios mensuales</p>
+                        <div class="mantenimiento-grid">
+                            <!-- Essential Care -->
+                            <div class="mantenimiento-card">
+                                <span class="plan-icono">🛡️</span>
+                                <div class="plan-nombre">Essential Care</div>
+                                <div class="plan-precio">$850<small>/ mes</small></div>
+                                <ul>
+                                    <li><i class="fas fa-check"></i> Respaldo semanal</li>
+                                    <li><i class="fas fa-check"></i> Actualizaciones de seguridad</li>
+                                    <li><i class="fas fa-check"></i> Soporte por correo</li>
+                                    <li><i class="fas fa-check"></i> Hasta 3 cambios de texto o imágenes al mes.</li>
+                                    <li><i class="fas fa-check"></i> Monitoreo del sitio (si se cae, detectarlo).</li>
+                                    <li><i class="fas fa-check"></i> Revisión mensual del funcionamiento.</li>
+                                    <li><i class="fas fa-check"></i> Optimización básica de velocidad.</li>
+                                    <li><i class="fas fa-check"></i> Protección contra malware.</li>
+                                    <li><i class="fas fa-check"></i> Reporte mensual de mantenimiento.</li>
+                                </ul>
+                                <a href="contacto.html" class="btn-mantenimiento">Contratar</a>
+                            </div>
+
+                            <!-- Business Care -->
+                            <div class="mantenimiento-card" style="border:2px solid #ff6b35;">
+                                <span class="plan-icono">⭐</span>
+                                <div class="plan-nombre">Business Care</div>
+                                <div class="plan-precio">$1500 <small>/ mes</small></div>
+                                <ul>
+                                    <li><i class="fas fa-check"></i> Todo el plan Básico</li>
+                                    <li><i class="fas fa-check"></i> SEO mensual</li>
+                                    <li><i class="fas fa-check"></i> Optimización de velocidad.</li>
+                                    <li><i class="fas fa-check"></i> Copias de seguridad diarias.</li>
+                                    <li><i class="fas fa-check"></i> Hosting incluido.</li>
+                                    <li><i class="fas fa-check"></i> Dominio incluido</li>
+                                    <li><i class="fas fa-check"></i> Soporte por WhatsApp.</li>
+                                    <li><i class="fas fa-check"></i> Tiempo de respuesta menor a 2 horas.</li>
+                                    <li><i class="fas fa-check"></i> Hasta 8 horas de trabajo mensual.</li>
+                                    <li><i class="fas fa-check"></i> Monitoreo 24/7.</li>
+                                    <li><i class="fas fa-check"></i> Reporte mensual.</li>
+                                    <li><i class="fas fa-check"></i> Restauración inmediata en caso de fallas.</li>
+                                    <li><i class="fas fa-check"></i> Cambios ilimitados (razonables)</li>
+                                </ul>
+                                <a href="contacto.html" class="btn-mantenimiento">Contratar</a>
+                            </div>
+
+                            <!-- Enterprise Care -->
+                            <div class="mantenimiento-card enterprise">
+                                <span class="plan-icono">🚀</span>
+                                <div class="plan-nombre">Enterprise Care</div>
+                                <div class="plan-precio">$2,499 <small>/ mes</small></div>
+                                <ul>
+                                    <li><i class="fas fa-check"></i> Todo el plan Business Care</li>
+                                    <li><i class="fas fa-check"></i> Desarrollo de nuevas funciones</li>
+                                    <li><i class="fas fa-check"></i> Cambios prioritarios</li>
+                                    <li><i class="fas fa-check"></i> Optimización SEO avanzada</li>
+                                    <li><i class="fas fa-check"></i> Optimización de base de datos</li>
+                                    <li><i class="fas fa-check"></i> Integración con APIs</li>
+                                    <li><i class="fas fa-check"></i> Consultoría mensual</li>
+                                    <li><i class="fas fa-check"></i> Atención por WhatsApp</li>
+                                    <li><i class="fas fa-check"></i> Tiempo de respuesta menor a 1 hora</li>
+                                    <li><i class="fas fa-check"></i> Reunión mensual</li>
+                                    <li><i class="fas fa-check"></i> Reportes completos</li>
+                                    <li><i class="fas fa-check"></i> Monitoreo 24/7</li>
+                                </ul>
+                                <a href="contacto.html" class="btn-mantenimiento">Contratar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <div class="contenedor">
+            <div class="footer-contenido">
+                <div class="footer-col">
+                    <h4>🚀 ORDUNA</h4>
+                    <p>Diseño web profesional para tu negocio.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Enlaces rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="servicios.html">Servicios</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <p>📧 <a href="mailto:ordunadigitalstudio@gmail.com">ordunadigitalstudio@gmail.com</a></p>
+                    <p>📞 <a href="tel:+525660281521">+52 5660 2815 21</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy;  ORDUNA. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== BOTONES FLOTANTES ========== -->
+    <a href="contacto.html" class="btn-agendar-fijo">
+        <i class="fas fa-calendar-check"></i> Agenda videollamada
+    </a>
+    <a href="https://wa.me/525660281521?text=Hola%20ORDUNA!%20Quiero%20solicitar%20información%20sobre%20sus%20servicios." target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script>
+        // ===== MENÚ HAMBURGUESA =====
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navMenu').classList.toggle('abierto');
+        });
+
+        // ===== HEADER SHRINK =====
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 60) {
+                header.classList.add('shrink');
+            } else {
+                header.classList.remove('shrink');
+            }
+        });
+
+        // ===== VER TODAS LAS CARACTERÍSTICAS (PLANES) =====
+        function toggleExtra(btn) {
+            const card = btn.closest('.plan-card');
+            card.classList.toggle('mostrar-todas');
+            btn.textContent = card.classList.contains('mostrar-todas') 
+                ? '− Ocultar características' 
+                : '+ Ver todas las características';
+        }
+
+        // ===== MODAL DE PLANES =====
+        const modalOverlay = document.getElementById('planModal');
+        const modalBody = document.getElementById('modalBody');
+
+        function openPlanModal(planId) {
+            const card = document.querySelector(`.plan-card[data-plan="${planId}"]`);
+            if (!card) return;
+
+            const icono = card.querySelector('.plan-icono')?.textContent || '📄';
+            const nombre = card.querySelector('.plan-nombre')?.textContent || 'Plan';
+            const desc = card.querySelector('.plan-desc')?.textContent || '';
+            const precio = card.querySelector('.plan-precio')?.innerHTML || '';
+            const badges = card.querySelectorAll('.meta-badges .badge-entrega, .meta-badges .badge-garantia, .meta-badges .badge-soporte');
+            const badgeHtml = Array.from(badges).map(b => b.outerHTML).join('');
+
+            const categorias = card.querySelectorAll('.categoria-caract');
+            let categoriasHtml = '';
+            categorias.forEach(cat => {
+                const titulo = cat.querySelector('.cat-titulo')?.innerHTML || '';
+                const items = cat.querySelectorAll('ul li');
+                let itemsHtml = '';
+                items.forEach(item => {
+                    const clone = item.cloneNode(true);
+                    clone.classList.remove('extra-item');
+                    itemsHtml += clone.outerHTML;
+                });
+                if (itemsHtml) {
+                    categoriasHtml += `
+                        <div class="modal-categoria">
+                            <div class="cat-titulo">${titulo}</div>
+                            <ul>${itemsHtml}</ul>
+                        </div>
+                    `;
+                }
+            });
+
+            modalBody.innerHTML = `
+                <div class="modal-title">
+                    <span class="icono">${icono}</span>
+                    ${nombre}
+                </div>
+                <div class="modal-subtitle">${desc}</div>
+                <div class="modal-price">${precio}</div>
+                <div class="modal-badges">${badgeHtml}</div>
+                <div class="modal-body">${categoriasHtml}</div>
+                <div class="modal-footer">
+                    <a href="contacto.html" class="btn-primary">📩 Solicitar cotización</a>
+                    <button class="btn-secondary" onclick="closeModal()">Cerrar</button>
+                </div>
+            `;
+
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // ===== TOOLTIPS PARA EL PROCESO =====
+        document.querySelectorAll('.paso').forEach(function(paso) {
+            const info = paso.getAttribute('data-info');
+            if (!info) return;
+
+            const tooltip = paso.querySelector('.paso-tooltip');
+            if (!tooltip) return;
+
+            tooltip.textContent = info;
+
+            function ajustarTooltip() {
+                const rect = paso.getBoundingClientRect();
+                const tooltipRect = tooltip.getBoundingClientRect();
+                if (rect.top < 120) {
+                    tooltip.classList.add('paso-tooltip-down');
+                } else {
+                    tooltip.classList.remove('paso-tooltip-down');
+                }
+                if (tooltipRect.left < 10) {
+                    tooltip.style.left = '0%';
+                    tooltip.style.transform = 'translateX(0)';
+                } else if (tooltipRect.right > window.innerWidth - 10) {
+                    tooltip.style.left = '100%';
+                    tooltip.style.transform = 'translateX(-100%)';
+                } else {
+                    tooltip.style.left = '50%';
+                    tooltip.style.transform = 'translateX(-50%)';
+                }
+            }
+
+            paso.addEventListener('mouseenter', function() {
+                paso.classList.add('active');
+                ajustarTooltip();
+            });
+
+            paso.addEventListener('mouseleave', function() {
+                paso.classList.remove('active');
+            });
+
+            paso.addEventListener('click', function(e) {
+                if (e.target.closest('.paso-tooltip')) return;
+                const wasActive = paso.classList.contains('active');
+                document.querySelectorAll('.paso.active').forEach(function(p) {
+                    if (p !== paso) p.classList.remove('active');
+                });
+                if (wasActive) {
+                    paso.classList.remove('active');
+                } else {
+                    paso.classList.add('active');
+                    ajustarTooltip();
+                }
+            });
+
+            window.addEventListener('scroll', function() {
+                document.querySelectorAll('.paso.active').forEach(function(p) {
+                    p.classList.remove('active');
+                });
+            });
+
+            window.addEventListener('resize', function() {
+                document.querySelectorAll('.paso.active').forEach(function(p) {
+                    ajustarTooltip();
+                });
+            });
+        });
+
+        // ===== ACORDEÓN DE SERVICIOS (CARPETAS) =====
+        function toggleAcordeon(header) {
+            const item = header.closest('.acordeon-item');
+            if (!item) return;
+            item.classList.toggle('abierto');
+        }
+
+        // ===== ABRIR CARPETA DESDE LA NAVEGACIÓN RÁPIDA =====
+        document.querySelectorAll('.btn-rapido[data-target]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetId = this.dataset.target;
+                const targetItem = document.getElementById(targetId);
+                if (targetItem) {
+                    document.querySelectorAll('.acordeon-item.abierto').forEach(el => {
+                        el.classList.remove('abierto');
+                    });
+                    targetItem.classList.add('abierto');
+                    targetItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        });
+
+        // ===== ABRIR PRIMERA CARPETA POR DEFECTO (opcional) =====
+        // Descomenta la línea siguiente si quieres que al cargar la página se vea la carpeta de videos abierta.
+        // document.getElementById('acordeon-video')?.classList.add('abierto');
+    </script>
+</body>
+</html>

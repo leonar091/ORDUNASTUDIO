@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clínica Vital · Agendar cita</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== RESET Y VARIABLES ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --verde: #0f9d58;
+            --azul: #1a73e8;
+            --naranja: #f9ab00;
+            --gris-claro: #f8fafc;
+            --gris-medio: #e2e8f0;
+            --gris-oscuro: #475569;
+            --sombra: 0 8px 30px rgba(0,0,0,0.08);
+            --radius: 16px;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #f8fafc 0%, #ffffff 100%);
+            color: #1a202c;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .contenedor {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+
+        /* ===== TOP BAR ===== */
+        .topbar {
+            background: #0b1a2e;
+            color: #fff;
+            padding: 8px 0;
+            font-size: 0.85rem;
+            border-bottom: 2px solid var(--verde);
+        }
+        .topbar .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .topbar-izq span { margin-right: 20px; }
+        .topbar-izq i { color: var(--verde); margin-right: 6px; }
+        .topbar-der a { margin-left: 16px; color: #cbd5e1; transition: color .3s; }
+        .topbar-der a:hover { color: #fff; }
+        .topbar-der .whatsapp-top { color: #25d366; font-weight: 600; }
+
+        /* ===== HEADER ===== */
+        header {
+            background: #fff;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 12px 0;
+        }
+        header .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icono {
+            width: 44px;
+            height: 44px;
+            background: var(--verde);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+        .logo h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+        .logo h1 span { color: var(--verde); }
+
+        nav ul {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            list-style: none;
+        }
+        nav a {
+            padding: 8px 14px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border-radius: 30px;
+            transition: all .3s;
+            color: #1a202c;
+        }
+        nav a:hover { background: #f1f5f9; color: var(--verde); }
+        .btn-cita-header {
+            background: var(--verde);
+            color: #fff !important;
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(15,157,88,0.3);
+        }
+        .btn-cita-header:hover { background: #0b8043; transform: translateY(-2px); }
+        .btn-cita-header.activo { background: var(--verde); color: #fff !important; }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.3rem;
+            padding: 6px 10px;
+            border-radius: 30px;
+            transition: background .3s;
+        }
+        .cart-icon:hover { background: #f1f5f9; }
+        .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #ef4444;
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, #0b1a2e 0%, #1a365d 100%);
+            color: #fff;
+            padding: 60px 0 80px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 0;
+        }
+        .hero .contenedor {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-texto {
+            flex: 1;
+        }
+        .hero-texto h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        .hero-texto h2 span { color: var(--verde); }
+        .hero-texto p {
+            font-size: 1.15rem;
+            color: #cbd5e1;
+            max-width: 500px;
+            margin-bottom: 28px;
+        }
+        .hero-texto .btn-hero {
+            background: var(--verde);
+            color: #fff;
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            display: inline-block;
+            transition: all .3s;
+            box-shadow: 0 8px 30px rgba(15,157,88,0.4);
+        }
+        .hero-texto .btn-hero:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(15,157,88,0.5);
+        }
+        .hero-imagen {
+            flex: 1;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .hero-imagen img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(15,157,88,0.15), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ===== SECCIÓN CITAS ===== */
+        .citas-section {
+            padding: 60px 0 40px;
+        }
+        .citas-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* imagen lateral */
+        .citas-imagen {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--sombra);
+            position: sticky;
+            top: 100px;
+        }
+        .citas-imagen img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        /* formulario */
+        .citas-form {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 32px 30px;
+            box-shadow: var(--sombra);
+            border: 1px solid var(--gris-medio);
+        }
+
+        /* ===== BARRA DE PASOS ===== */
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gris-medio);
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gris-oscuro);
+            position: relative;
+            z-index: 1;
+            background: #fff;
+            padding: 0 8px;
+            cursor: pointer;
+            transition: all .3s;
+        }
+        .step .num {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gris-medio);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #fff;
+            transition: all .3s;
+        }
+        .step.active .num { background: var(--verde); }
+        .step.active { color: var(--verde); }
+        .step.completed .num { background: var(--verde); }
+        .step.completed { color: var(--verde); }
+
+        /* ===== FORMULARIO ===== */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .campo {
+            margin-bottom: 16px;
+        }
+        .campo label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            color: #1a202c;
+        }
+        .campo input, .campo select, .campo textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid var(--gris-medio);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all .3s;
+            background: #fff;
+        }
+        .campo input:focus, .campo select:focus, .campo textarea:focus {
+            outline: none;
+            border-color: var(--verde);
+            box-shadow: 0 0 0 4px rgba(15,157,88,0.12);
+        }
+        .campo textarea { min-height: 80px; resize: vertical; }
+        .campo .icon-input {
+            position: relative;
+        }
+        .campo .icon-input i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gris-oscuro);
+        }
+        .campo .icon-input input, .campo .icon-input select {
+            padding-left: 40px;
+        }
+
+        /* ===== MÉDICOS ===== */
+        .medicos-container {
+            margin-top: 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .medico-card {
+            background: var(--gris-claro);
+            border-radius: 12px;
+            padding: 14px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all .3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .medico-card:hover { border-color: var(--verde); }
+        .medico-card.selected { border-color: var(--verde); background: #e6f7ee; }
+        .medico-card .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--verde);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .medico-card .info { flex: 1; }
+        .medico-card .info h4 { font-size: 0.95rem; }
+        .medico-card .info .stars { color: var(--naranja); font-size: 0.8rem; }
+        .medico-card .info .disp { font-size: 0.75rem; font-weight: 600; color: var(--verde); }
+        .medico-card .info .disp.manana { color: #f59e0b; }
+
+        /* ===== HORARIOS ===== */
+        .horarios-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .hora-item {
+            padding: 8px 16px;
+            border-radius: 30px;
+            background: var(--gris-claro);
+            border: 2px solid transparent;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all .3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .hora-item:hover { border-color: var(--verde); }
+        .hora-item.disponible { border-color: var(--verde); background: #e6f7ee; }
+        .hora-item.ocupado { background: #fee2e2; color: #991b1b; cursor: not-allowed; opacity: 0.6; }
+        .hora-item.selected { background: var(--verde); color: #fff; border-color: var(--verde); }
+        .hora-item .icono { font-size: 0.8rem; }
+
+        /* ===== TIPO CONSULTA ===== */
+        .tipo-consulta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .tipo-consulta label {
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 2px solid var(--gris-medio);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tipo-consulta label:hover { border-color: var(--verde); }
+        .tipo-consulta input:checked + label { border-color: var(--verde); background: #e6f7ee; }
+        .tipo-consulta input { display: none; }
+
+        /* ===== CALENDARIO ===== */
+        .calendario {
+            background: #fff;
+            border-radius: 12px;
+            padding: 16px;
+            border: 2px solid var(--gris-medio);
+            margin-bottom: 16px;
+        }
+        .calendario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .calendario-header button {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 4px 12px;
+            border-radius: 8px;
+            transition: background .3s;
+        }
+        .calendario-header button:hover { background: var(--gris-claro); }
+        .calendario-header .mes {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .calendario-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            text-align: center;
+        }
+        .calendario-grid .dia-nombre {
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: var(--gris-oscuro);
+            padding: 4px 0;
+        }
+        .calendario-grid .dia {
+            padding: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all .2s;
+            font-weight: 500;
+        }
+        .calendario-grid .dia:hover { background: var(--gris-claro); }
+        .calendario-grid .dia.seleccionado { background: var(--verde); color: #fff; }
+        .calendario-grid .dia.otro-mes { color: #cbd5e1; }
+        .calendario-grid .dia.hoy { border: 2px solid var(--verde); }
+
+        /* ===== BOTÓN Y SEGURIDAD ===== */
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: var(--verde);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all .3s;
+            box-shadow: 0 8px 25px rgba(15,157,88,0.3);
+        }
+        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(15,157,88,0.4); }
+
+        .seguridad {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 14px;
+            font-size: 0.9rem;
+            color: var(--gris-oscuro);
+            justify-content: center;
+        }
+        .seguridad i { color: var(--verde); }
+
+        .tiempo-estimado {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: var(--gris-oscuro);
+        }
+        .tiempo-estimado span i { color: var(--verde); margin-right: 4px; }
+
+        /* ===== BENEFICIOS ===== */
+        .beneficios {
+            margin-top: 40px;
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--sombra);
+            border: 1px solid var(--gris-medio);
+        }
+        .beneficios h3 {
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .beneficios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
+        .beneficio-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+        .beneficio-item i { color: var(--verde); font-size: 1.2rem; }
+
+        /* ===== URGENCIAS ===== */
+        .urgencias {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border-radius: var(--radius);
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 30px;
+            border-left: 6px solid #dc2626;
+        }
+        .urgencias .info h4 { font-size: 1.1rem; font-weight: 700; color: #991b1b; }
+        .urgencias .info p { color: #7f1d1d; }
+        .urgencias .btn-llamar {
+            background: #dc2626;
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all .3s;
+        }
+        .urgencias .btn-llamar:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(220,38,38,0.3); }
+
+        /* ===== MAPA ===== */
+        .mapa-section {
+            padding: 60px 0;
+            background: #fff;
+            border-top: 1px solid var(--gris-medio);
+        }
+        .mapa-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .mapa-section .sub {
+            text-align: center;
+            color: var(--gris-oscuro);
+            margin-bottom: 30px;
+        }
+        .mapa-wrapper {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--sombra);
+            position: relative;
+        }
+        .mapa-wrapper iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            display: block;
+        }
+        .mapa-wrapper .btn-maps {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: #fff;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            transition: all .3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .mapa-wrapper .btn-maps:hover { transform: scale(1.04); }
+
+        /* ===== FAQ ===== */
+        .faq-section {
+            padding: 60px 0;
+            background: var(--gris-claro);
+        }
+        .faq-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .faq-section .sub {
+            text-align: center;
+            color: var(--gris-oscuro);
+            margin-bottom: 30px;
+        }
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .faq-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 16px 22px;
+            border: 1px solid var(--gris-medio);
+            cursor: pointer;
+            transition: all .3s;
+        }
+        .faq-item:hover { border-color: var(--verde); }
+        .faq-item .pregunta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+        .faq-item .pregunta i { transition: transform .3s; color: var(--verde); }
+        .faq-item .respuesta {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .4s, padding .3s;
+            color: var(--gris-oscuro);
+        }
+        .faq-item.open .respuesta {
+            max-height: 200px;
+            padding-top: 12px;
+        }
+        .faq-item.open .pregunta i { transform: rotate(180deg); }
+
+        /* ===== MÉTODOS DE PAGO ===== */
+        .metodos-pago-footer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 20px 0;
+            border-top: 1px solid var(--gris-medio);
+            margin-top: 20px;
+        }
+        .metodos-pago-footer i {
+            font-size: 2rem;
+            color: var(--gris-oscuro);
+            transition: all .3s;
+            opacity: 0.6;
+        }
+        .metodos-pago-footer i:hover { opacity: 1; color: #1a202c; }
+
+        /* ===== BOTONES FLOTANTES ===== */
+        .floating-buttons {
+            position: fixed;
+            right: 24px;
+            bottom: 100px;
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .floating-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: #fff;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            transition: all .3s;
+            border: none;
+            cursor: pointer;
+        }
+        .floating-btn:hover { transform: scale(1.08); }
+        .floating-btn.whatsapp { background: #25d366; }
+        .floating-btn.llamar { background: #1a73e8; }
+
+        /* ===== MODAL CONFIRMACIÓN ===== */
+        .modal-confirm {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-confirm.open { display: flex; }
+        .modal-confirm .content {
+            background: #fff;
+            border-radius: 24px;
+            padding: 40px 50px;
+            max-width: 480px;
+            text-align: center;
+            animation: fadeUp .5s ease;
+        }
+        .modal-confirm .content .icono {
+            font-size: 4rem;
+            color: var(--verde);
+            margin-bottom: 12px;
+        }
+        .modal-confirm .content h3 { font-size: 1.8rem; margin-bottom: 8px; }
+        .modal-confirm .content p { color: var(--gris-oscuro); margin-bottom: 20px; }
+        .modal-confirm .content .btn-cerrar {
+            background: var(--verde);
+            color: #fff;
+            padding: 12px 40px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all .3s;
+        }
+        .modal-confirm .content .btn-cerrar:hover { transform: scale(1.04); }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0b1a2e;
+            color: #cbd5e1;
+            padding: 40px 0 20px;
+            border-top: 3px solid var(--verde);
+        }
+        footer .contenedor {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        footer h4 { color: #fff; margin-bottom: 12px; font-size: 1.1rem; }
+        footer ul { list-style: none; }
+        footer ul li { margin-bottom: 6px; }
+        footer a { color: #cbd5e1; transition: color .3s; }
+        footer a:hover { color: var(--verde); }
+        .footer-logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .footer-logo span { color: var(--verde); }
+        .footer-desc { margin: 12px 0; font-size: 0.9rem; }
+        .footer-social { display: flex; gap: 12px; }
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .3s;
+            color: #cbd5e1;
+        }
+        .footer-social a:hover { background: var(--verde); color: #fff; }
+        .footer-mapa iframe {
+            width: 100%;
+            height: 150px;
+            border-radius: 12px;
+            border: none;
+        }
+        .footer-copy {
+            grid-column: 1 / -1;
+            text-align: center;
+            border-top: 1px solid #1e293b;
+            padding-top: 20px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* ===== ANIMACIONES ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .citas-grid { grid-template-columns: 1fr; }
+            .citas-imagen { display: none; }
+            .hero .contenedor { flex-direction: column; text-align: center; }
+            .hero-texto p { margin: 0 auto 20px; }
+            .hero-imagen { width: 100%; }
+            .hero-imagen img { height: 200px; }
+            .form-row { grid-template-columns: 1fr; }
+            .medicos-container { grid-template-columns: 1fr; }
+            .topbar-izq span { display: block; margin-right: 0; }
+        }
+        @media (max-width: 640px) {
+            .hero-texto h2 { font-size: 2rem; }
+            .steps { font-size: 0.65rem; }
+            .step .num { width: 30px; height: 30px; font-size: 0.8rem; }
+            .citas-form { padding: 20px; }
+            .urgencias { flex-direction: column; text-align: center; }
+            .floating-buttons { right: 12px; bottom: 80px; }
+            .floating-btn { width: 48px; height: 48px; font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="topbar">
+        <div class="contenedor">
+            <div class="topbar-izq">
+                <span><i class="fas fa-phone-alt"></i> +52 55 9876 5432</span>
+                <span><i class="far fa-clock"></i> Lun-Sáb 8:00 - 20:00</span>
+                <span><i class="fas fa-map-marker-alt"></i> Av. Salud #789, CDMX</span>
+            </div>
+            <div class="topbar-der">
+                <a href="#" class="whatsapp-top"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                <a href="citas.html" style="color: white; font-weight: 500;">Agendar cita</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="contenedor">
+            <div class="logo">
+                <div class="logo-icono"><i class="fas fa-heart-pulse"></i></div>
+                <h1><span>Clínica</span> Vital</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="especialidades.html">Especialidades</a></li>
+                    <li><a href="medicos.html">Médicos</a></li>
+                    <li><a href="testimonios.html">Testimonios</a></li>
+                    <li><a href="tienda.html">Tienda</a></li>
+                    <li><a href="citas.html" class="btn-cita-header activo"><i class="fas fa-calendar-check"></i> Agendar cita</a></li>
+                    <li>
+                        <span class="cart-icon" id="cartIcon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge" id="cartBadge">0</span>
+                        </span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="contenedor">
+            <div class="hero-texto">
+                <h2>Tu salud es <span>nuestra prioridad</span></h2>
+                <p>Especialistas certificados disponibles. Agenda tu cita médica hoy mismo.</p>
+                <a href="#citas-form" class="btn-hero"><i class="fas fa-calendar-check"></i> Agendar ahora</a>
+            </div>
+            <div class="hero-imagen">
+                <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600&h=400&fit=crop" alt="Doctor atendiendo paciente" loading="lazy" />
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECCIÓN CITAS ===== -->
+    <section class="citas-section" id="citas-form">
+        <div class="contenedor">
+            <div class="citas-grid">
+                <!-- Imagen lateral -->
+                <div class="citas-imagen fade-in">
+                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=700&fit=crop" alt="Doctor con paciente" loading="lazy" />
+                </div>
+
+                <!-- Formulario -->
+                <div class="citas-form fade-in" id="formCitas">
+                    <!-- Barra de pasos -->
+                    <div class="steps" id="stepsBar">
+                        <div class="step active" data-step="1"><span class="num">1</span> Información</div>
+                        <div class="step" data-step="2"><span class="num">2</span> Especialidad</div>
+                        <div class="step" data-step="3"><span class="num">3</span> Fecha</div>
+                        <div class="step" data-step="4"><span class="num">4</span> Confirmar</div>
+                    </div>
+
+                    <form id="citaForm">
+                        <!-- Paso 1: Información -->
+                        <div class="step-content" data-step="1">
+                            <div class="form-row">
+                                <div class="campo">
+                                    <label><i class="fas fa-user" style="color:var(--verde);"></i> Nombre completo</label>
+                                    <input type="text" id="nombre" placeholder="Ej. Juan Pérez" required />
+                                </div>
+                                <div class="campo">
+                                    <label><i class="fas fa-phone" style="color:var(--verde);"></i> Teléfono</label>
+                                    <input type="tel" id="telefono" placeholder="55 1234 5678" required />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="campo">
+                                    <label><i class="fas fa-envelope" style="color:var(--verde);"></i> Correo electrónico</label>
+                                    <input type="email" id="correo" placeholder="correo@ejemplo.com" required />
+                                </div>
+                                <div class="campo">
+                                    <label><i class="fas fa-stethoscope" style="color:var(--verde);"></i> Especialidad</label>
+                                    <select id="especialidad" required>
+                                        <option value="">Selecciona...</option>
+                                        <option value="general">Medicina General</option>
+                                        <option value="cardiologia">Cardiología</option>
+                                        <option value="neurologia">Neurología</option>
+                                        <option value="odontologia">Odontología</option>
+                                        <option value="pediatria">Pediatría</option>
+                                        <option value="traumatologia">Traumatología</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="campo">
+                                <label><i class="fas fa-comment" style="color:var(--verde);"></i> Comentarios adicionales</label>
+                                <textarea id="comentarios" placeholder="Ej. Prefiero consulta virtual, alergias, etc."></textarea>
+                            </div>
+                            <button type="button" class="btn-submit" style="background:var(--azul);" id="step1Next">Siguiente →</button>
+                        </div>
+
+                        <!-- Paso 2: Especialidad y médicos -->
+                        <div class="step-content" data-step="2" style="display:none;">
+                            <div class="campo">
+                                <label><i class="fas fa-user-md" style="color:var(--verde);"></i> Médicos disponibles</label>
+                                <div class="medicos-container" id="medicosContainer">
+                                    <!-- se llena con JS -->
+                                </div>
+                            </div>
+                            <div style="display:flex; gap:12px; margin-top:16px;">
+                                <button type="button" class="btn-submit" style="background:var(--gris-oscuro); flex:1;" id="step2Back">← Atrás</button>
+                                <button type="button" class="btn-submit" style="flex:1;" id="step2Next">Siguiente →</button>
+                            </div>
+                        </div>
+
+                        <!-- Paso 3: Fecha y hora -->
+                        <div class="step-content" data-step="3" style="display:none;">
+                            <div class="campo">
+                                <label><i class="fas fa-calendar-day" style="color:var(--verde);"></i> Selecciona fecha</label>
+                                <div class="calendario" id="calendarioContainer">
+                                    <div class="calendario-header">
+                                        <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                                        <span class="mes" id="mesActual">Enero 2025</span>
+                                        <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                                    </div>
+                                    <div class="calendario-grid" id="calendarioGrid"></div>
+                                </div>
+                            </div>
+                            <div class="campo">
+                                <label><i class="fas fa-clock" style="color:var(--verde);"></i> Horario disponible</label>
+                                <div class="horarios-grid" id="horariosGrid">
+                                    <!-- se llena con JS -->
+                                </div>
+                            </div>
+                            <div class="campo">
+                                <label><i class="fas fa-video" style="color:var(--verde);"></i> Tipo de consulta</label>
+                                <div class="tipo-consulta" id="tipoConsulta">
+                                    <input type="radio" name="tipo" value="presencial" id="tipoPresencial" checked />
+                                    <label for="tipoPresencial"><i class="fas fa-hospital-user"></i> Presencial</label>
+                                    <input type="radio" name="tipo" value="virtual" id="tipoVirtual" />
+                                    <label for="tipoVirtual"><i class="fas fa-video"></i> Videollamada</label>
+                                    <input type="radio" name="tipo" value="domicilio" id="tipoDomicilio" />
+                                    <label for="tipoDomicilio"><i class="fas fa-home"></i> Domicilio</label>
+                                </div>
+                            </div>
+                            <div style="display:flex; gap:12px; margin-top:16px;">
+                                <button type="button" class="btn-submit" style="background:var(--gris-oscuro); flex:1;" id="step3Back">← Atrás</button>
+                                <button type="button" class="btn-submit" style="flex:1;" id="step3Next">Siguiente →</button>
+                            </div>
+                        </div>
+
+                        <!-- Paso 4: Confirmar -->
+                        <div class="step-content" data-step="4" style="display:none;">
+                            <div style="background:var(--gris-claro); border-radius:16px; padding:20px; margin-bottom:20px;">
+                                <h4 style="margin-bottom:12px;">Resumen de tu cita</h4>
+                                <div id="resumenCita"></div>
+                            </div>
+                            <button type="submit" class="btn-submit"><i class="fas fa-check-circle"></i> Confirmar cita</button>
+                            <div class="seguridad">
+                                <i class="fas fa-lock"></i> Tus datos están protegidos. Cumplimos con estándares de seguridad.
+                            </div>
+                            <div class="tiempo-estimado">
+                                <span><i class="fas fa-check-circle"></i> Confirmación inmediata</span>
+                                <span><i class="fas fa-clock"></i> Respuesta menor a 15 min</span>
+                                <span><i class="fas fa-wallet"></i> Sin costo por reservar</span>
+                            </div>
+                            <button type="button" class="btn-submit" style="background:var(--gris-oscuro); margin-top:12px;" id="step4Back">← Atrás</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Beneficios -->
+            <div class="beneficios fade-in">
+                <h3>¿Por qué reservar con nosotros?</h3>
+                <div class="beneficios-grid">
+                    <div class="beneficio-item"><i class="fas fa-clock"></i> Sin filas</div>
+                    <div class="beneficio-item"><i class="fas fa-bolt"></i> Atención rápida</div>
+                    <div class="beneficio-item"><i class="fas fa-user-md"></i> Médicos certificados</div>
+                    <div class="beneficio-item"><i class="fas fa-microscope"></i> Equipo moderno</div>
+                    <div class="beneficio-item"><i class="fas fa-file-medical"></i> Historial clínico digital</div>
+                </div>
+            </div>
+
+            <!-- Urgencias -->
+            <div class="urgencias fade-in">
+                <div class="info">
+                    <h4><i class="fas fa-triangle-exclamation" style="color:#dc2626;"></i> ¿Es una emergencia?</h4>
+                    <p>Llama ahora, atención 24 horas los 7 días de la semana.</p>
+                </div>
+                <a href="tel:+525598765432" class="btn-llamar"><i class="fas fa-phone"></i> 55 9876 5432</a>
+            </div>
+
+            <!-- Ilustraciones decorativas -->
+            <div style="display:flex; justify-content:center; gap:30px; padding:30px 0 10px; flex-wrap:wrap; font-size:2.2rem; opacity:0.3;">
+                <span>🩺</span>
+                <span>💊</span>
+                <span>❤️</span>
+                <span>🏥</span>
+                <span>🧬</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MAPA ===== -->
+    <section class="mapa-section fade-in">
+        <div class="contenedor">
+            <h2>¿Cómo llegar?</h2>
+            <p class="sub">Encuentranos fácilmente. Estamos en el corazón de la ciudad.</p>
+            <div class="mapa-wrapper">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.5!2d-99.1332!3d19.4326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1f92a3e8b3b9f%3A0x7b8e3b7b7b7b7b7b!2sAv.%20Salud%20%23789%2C%20CDMX!5e0!3m2!1ses!2smx!4v1700000000000" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <a href="https://www.google.com/maps/dir//Av.+Salud+%23789,+CDMX" target="_blank" class="btn-maps">
+                    <i class="fas fa-map-pin"></i> Abrir en Google Maps
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="faq-section fade-in">
+        <div class="contenedor">
+            <h2>Preguntas frecuentes</h2>
+            <p class="sub">Resolvemos tus dudas más comunes</p>
+            <div class="faq-grid" id="faqGrid">
+                <div class="faq-item">
+                    <div class="pregunta"><span>¿Puedo cancelar mi cita?</span> <i class="fas fa-chevron-down"></i></div>
+                    <div class="respuesta">Sí, puedes cancelar sin costo hasta 2 horas antes de la cita. Contáctanos por teléfono o WhatsApp.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="pregunta"><span>¿Aceptan seguros médicos?</span> <i class="fas fa-chevron-down"></i></div>
+                    <div class="respuesta">Sí, trabajamos con la mayoría de los seguros médicos. Consulta nuestra lista de aseguradoras al agendar.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="pregunta"><span>¿Cuánto dura una consulta?</span> <i class="fas fa-chevron-down"></i></div>
+                    <div class="respuesta">El tiempo promedio es de 40 minutos, incluyendo diagnóstico y receta médica.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="pregunta"><span>¿Puedo cambiar la fecha de mi cita?</span> <i class="fas fa-chevron-down"></i></div>
+                    <div class="respuesta">Sí, con al menos 24 horas de anticipación. Puedes hacerlo llamando o enviando un mensaje.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="contenedor">
+            <div>
+                <div class="footer-logo"><i class="fas fa-heart-pulse" style="color:var(--verde);"></i> <span>Clínica</span> Vital</div>
+                <div class="footer-desc">Cuidamos tu salud con excelencia y calidez humana. Más de 15 años brindando atención integral.</div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="especialidades.html">Especialidades</a></li>
+                    <li><a href="medicos.html">Médicos</a></li>
+                    <li><a href="testimonios.html">Testimonios</a></li>
+                    <li><a href="tienda.html">Tienda</a></li>
+                    <li><a href="citas.html">Contacto</a></li>
+                    <li><a href="admin.html">Admin</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Horario</h4>
+                <ul>
+                    <li>Lun - Vie: 8:00 - 20:00</li>
+                    <li>Sábado: 8:00 - 14:00</li>
+                    <li>Domingo: Urgencias</li>
+                    <li style="margin-top:8px;"><i class="fas fa-phone-alt" style="color:var(--verde);"></i> +52 55 9876 5432</li>
+                    <li><i class="fas fa-envelope" style="color:var(--verde);"></i> contacto@clinicavital.mx</li>
+                </ul>
+            </div>
+            <div class="footer-mapa">
+                <h4>Ubicación</h4>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.5!2d-99.1332!3d19.4326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1f92a3e8b3b9f%3A0x7b8e3b7b7b7b7b7b!2sAv.%20Salud%20%23789%2C%20CDMX!5e0!3m2!1ses!2smx!4v1700000000000" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <div style="font-size:13px; color:#94A3B8; margin-top:6px;">Av. Salud #789, CDMX</div>
+            </div>
+            <!-- Métodos de pago -->
+            <div class="metodos-pago-footer" style="grid-column:1/-1;">
+                <i class="fab fa-cc-visa" title="Visa"></i>
+                <i class="fab fa-cc-mastercard" title="Mastercard"></i>
+                <i class="fab fa-cc-amex" title="American Express"></i>
+                <i class="fab fa-cc-paypal" title="PayPal"></i>
+                <i class="fab fa-mercadopago" title="MercadoPago"></i>
+                <i class="fas fa-credit-card" style="font-size:1.8rem;" title="Tarjetas locales"></i>
+            </div>
+            <div class="footer-copy">&copy; 2026 Clínica Vital · Tu salud es nuestra misión</div>
+        </div>
+    </footer>
+
+    <!-- ===== BOTONES FLOTANTES ===== -->
+    <div class="floating-buttons">
+        <a href="tel:+525598765432" class="floating-btn llamar" aria-label="Llamar"><i class="fas fa-phone"></i></a>
+        <a href="https://wa.me/525598765432?text=Hola%2C%20quiero%20agendar%20una%20cita" target="_blank" class="floating-btn whatsapp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+    <!-- ===== MODAL CONFIRMACIÓN ===== -->
+    <div class="modal-confirm" id="modalConfirm">
+        <div class="content">
+            <div class="icono"><i class="fas fa-check-circle"></i></div>
+            <h3>¡Cita confirmada!</h3>
+            <p>Tu cita fue enviada exitosamente. Te contactaremos en unos minutos para confirmar los detalles.</p>
+            <button class="btn-cerrar" id="cerrarModal">Entendido</button>
+        </div>
+    </div>
+
+    <script>
+        // ===== DATOS =====
+        const medicosPorEspecialidad = {
+            general: [
+                { nombre: 'Dr. Carlos López', rating: 5, disponible: 'Hoy', avatar: 'CL' },
+                { nombre: 'Dra. Andrea García', rating: 5, disponible: 'Mañana', avatar: 'AG' },
+                { nombre: 'Dr. Miguel Torres', rating: 4, disponible: 'Hoy', avatar: 'MT' }
+            ],
+            cardiologia: [
+                { nombre: 'Dr. Ricardo Mena', rating: 5, disponible: 'Hoy', avatar: 'RM' },
+                { nombre: 'Dra. Sofía Herrera', rating: 5, disponible: 'Mañana', avatar: 'SH' }
+            ],
+            neurologia: [
+                { nombre: 'Dr. Pablo Ortiz', rating: 4, disponible: 'Hoy', avatar: 'PO' },
+                { nombre: 'Dra. Laura Núñez', rating: 5, disponible: 'Mañana', avatar: 'LN' }
+            ],
+            odontologia: [
+                { nombre: 'Dra. Ana Rojas', rating: 5, disponible: 'Hoy', avatar: 'AR' },
+                { nombre: 'Dr. Luis Castro', rating: 4, disponible: 'Mañana', avatar: 'LC' }
+            ],
+            pediatria: [
+                { nombre: 'Dr. Javier Flores', rating: 5, disponible: 'Hoy', avatar: 'JF' },
+                { nombre: 'Dra. Mariana Soto', rating: 5, disponible: 'Mañana', avatar: 'MS' }
+            ],
+            traumatologia: [
+                { nombre: 'Dr. Eduardo Rivas', rating: 4, disponible: 'Hoy', avatar: 'ER' },
+                { nombre: 'Dra. Patricia Díaz', rating: 5, disponible: 'Mañana', avatar: 'PD' }
+            ]
+        };
+
+        const horariosDisponibles = [
+            { hora: '8:00', disponible: true },
+            { hora: '9:00', disponible: true },
+            { hora: '10:00', disponible: false },
+            { hora: '11:00', disponible: true },
+            { hora: '12:00', disponible: true },
+            { hora: '13:00', disponible: false },
+            { hora: '16:00', disponible: true },
+            { hora: '17:00', disponible: true },
+            { hora: '18:00', disponible: false }
+        ];
+
+        // ===== ELEMENTOS =====
+        const form = document.getElementById('citaForm');
+        const steps = document.querySelectorAll('.step');
+        const stepContents = document.querySelectorAll('.step-content');
+        const step1Next = document.getElementById('step1Next');
+        const step2Next = document.getElementById('step2Next');
+        const step3Next = document.getElementById('step3Next');
+        const step2Back = document.getElementById('step2Back');
+        const step3Back = document.getElementById('step3Back');
+        const step4Back = document.getElementById('step4Back');
+        const especialidadSelect = document.getElementById('especialidad');
+        const medicosContainer = document.getElementById('medicosContainer');
+        const horariosGrid = document.getElementById('horariosGrid');
+        const calendarioGrid = document.getElementById('calendarioGrid');
+        const mesActual = document.getElementById('mesActual');
+        const prevMonth = document.getElementById('prevMonth');
+        const nextMonth = document.getElementById('nextMonth');
+        const resumenCita = document.getElementById('resumenCita');
+        const modalConfirm = document.getElementById('modalConfirm');
+        const cerrarModal = document.getElementById('cerrarModal');
+
+        let currentStep = 1;
+        let selectedMedico = null;
+        let selectedDate = null;
+        let selectedHora = null;
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+
+        // ===== PASOS =====
+        function goToStep(step) {
+            currentStep = step;
+            steps.forEach((s, i) => {
+                const num = i + 1;
+                s.classList.remove('active', 'completed');
+                if (num === step) s.classList.add('active');
+                else if (num < step) s.classList.add('completed');
+            });
+            stepContents.forEach(c => {
+                c.style.display = parseInt(c.dataset.step) === step ? 'block' : 'none';
+            });
+            if (step === 4) actualizarResumen();
+            window.scrollTo({ top: document.getElementById('formCitas').offsetTop - 20, behavior: 'smooth' });
+        }
+
+        step1Next.addEventListener('click', () => {
+            const nombre = document.getElementById('nombre').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+            const correo = document.getElementById('correo').value.trim();
+            const especialidad = especialidadSelect.value;
+            if (!nombre || !telefono || !correo || !especialidad) {
+                alert('Por favor completa todos los campos obligatorios.');
+                return;
+            }
+            goToStep(2);
+            cargarMedicos(especialidad);
+        });
+
+        step2Back.addEventListener('click', () => goToStep(1));
+        step2Next.addEventListener('click', () => {
+            if (!selectedMedico) {
+                alert('Selecciona un médico.');
+                return;
+            }
+            goToStep(3);
+            renderCalendario();
+            renderHorarios();
+        });
+
+        step3Back.addEventListener('click', () => goToStep(2));
+        step3Next.addEventListener('click', () => {
+            if (!selectedDate) {
+                alert('Selecciona una fecha.');
+                return;
+            }
+            if (!selectedHora) {
+                alert('Selecciona una hora.');
+                return;
+            }
+            goToStep(4);
+        });
+
+        step4Back.addEventListener('click', () => goToStep(3));
+
+        // ===== MÉDICOS =====
+        function cargarMedicos(especialidad) {
+            const medicos = medicosPorEspecialidad[especialidad] || [];
+            medicosContainer.innerHTML = '';
+            if (medicos.length === 0) {
+                medicosContainer.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--gris-oscuro);">No hay médicos disponibles para esta especialidad.</p>';
+                return;
+            }
+            medicos.forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'medico-card';
+                card.innerHTML = `
+                    <div class="avatar">${m.avatar}</div>
+                    <div class="info">
+                        <h4>${m.nombre}</h4>
+                        <div class="stars">${'★'.repeat(m.rating)}${'☆'.repeat(5-m.rating)}</div>
+                        <div class="disp ${m.disponible === 'Hoy' ? '' : 'manana'}">${m.disponible === 'Hoy' ? '✔ Disponible hoy' : '⏳ Disponible mañana'}</div>
+                    </div>
+                `;
+                card.dataset.nombre = m.nombre;
+                card.addEventListener('click', () => {
+                    document.querySelectorAll('.medico-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    selectedMedico = m.nombre;
+                });
+                medicosContainer.appendChild(card);
+            });
+            // Auto-select primero
+            if (medicos.length > 0) {
+                medicosContainer.firstChild.classList.add('selected');
+                selectedMedico = medicos[0].nombre;
+            }
+        }
+
+        // ===== CALENDARIO =====
+        function renderCalendario() {
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const today = new Date();
+            const todayDate = today.getDate();
+            const todayMonth = today.getMonth();
+            const todayYear = today.getFullYear();
+
+            const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            mesActual.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+            let html = '';
+            const diasSemana = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+            diasSemana.forEach(d => html += `<div class="dia-nombre">${d}</div>`);
+
+            // Días del mes anterior
+            const prevMonthDays = new Date(currentYear, currentMonth, 0).getDate();
+            for (let i = firstDay - 1; i >= 0; i--) {
+                html += `<div class="dia otro-mes">${prevMonthDays - i}</div>`;
+            }
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                let clases = 'dia';
+                if (d === todayDate && currentMonth === todayMonth && currentYear === todayYear) clases += ' hoy';
+                if (selectedDate === d) clases += ' seleccionado';
+                html += `<div class="${clases}" data-dia="${d}">${d}</div>`;
+            }
+
+            calendarioGrid.innerHTML = html;
+            document.querySelectorAll('.dia:not(.otro-mes)').forEach(el => {
+                el.addEventListener('click', () => {
+                    document.querySelectorAll('.dia').forEach(d => d.classList.remove('seleccionado'));
+                    el.classList.add('seleccionado');
+                    selectedDate = parseInt(el.dataset.dia);
+                });
+            });
+        }
+
+        prevMonth.addEventListener('click', () => {
+            currentMonth--;
+            if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+            renderCalendario();
+        });
+        nextMonth.addEventListener('click', () => {
+            currentMonth++;
+            if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+            renderCalendario();
+        });
+
+        // ===== HORARIOS =====
+        function renderHorarios() {
+            horariosGrid.innerHTML = '';
+            horariosDisponibles.forEach(h => {
+                const div = document.createElement('div');
+                div.className = `hora-item ${h.disponible ? 'disponible' : 'ocupado'}`;
+                div.innerHTML = `${h.hora} ${h.disponible ? '<span class="icono">✔</span>' : '<span class="icono">❌</span>'}`;
+                if (!h.disponible) {
+                    div.style.cursor = 'not-allowed';
+                } else {
+                    div.addEventListener('click', () => {
+                        document.querySelectorAll('.hora-item').forEach(el => el.classList.remove('selected'));
+                        div.classList.add('selected');
+                        selectedHora = h.hora;
+                    });
+                }
+                horariosGrid.appendChild(div);
+            });
+        }
+
+        // ===== RESUMEN =====
+        function actualizarResumen() {
+            const nombre = document.getElementById('nombre').value;
+            const telefono = document.getElementById('telefono').value;
+            const correo = document.getElementById('correo').value;
+            const especialidad = especialidadSelect.options[especialidadSelect.selectedIndex]?.text || '';
+            const tipo = document.querySelector('input[name="tipo"]:checked')?.value || '';
+            const tipoLabel = tipo === 'presencial' ? 'Presencial' : tipo === 'virtual' ? 'Videollamada' : 'Domicilio';
+            const mes = mesActual.textContent;
+            resumenCita.innerHTML = `
+                <p><strong>Paciente:</strong> ${nombre}</p>
+                <p><strong>Teléfono:</strong> ${telefono}</p>
+                <p><strong>Correo:</strong> ${correo}</p>
+                <p><strong>Especialidad:</strong> ${especialidad}</p>
+                <p><strong>Médico:</strong> ${selectedMedico || 'No seleccionado'}</p>
+                <p><strong>Fecha:</strong> ${selectedDate ? `${selectedDate} de ${mes}` : 'No seleccionada'}</p>
+                <p><strong>Hora:</strong> ${selectedHora || 'No seleccionada'}</p>
+                <p><strong>Tipo:</strong> ${tipoLabel}</p>
+            `;
+        }
+
+        // ===== ENVÍO =====
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Mostrar modal de confirmación
+            modalConfirm.classList.add('open');
+            // Opcional: reiniciar formulario después de un tiempo
+        });
+
+        cerrarModal.addEventListener('click', () => {
+            modalConfirm.classList.remove('open');
+            // Resetear formulario y pasos
+            form.reset();
+            selectedMedico = null;
+            selectedDate = null;
+            selectedHora = null;
+            goToStep(1);
+            document.querySelectorAll('.medico-card').forEach(c => c.classList.remove('selected'));
+            document.querySelectorAll('.hora-item').forEach(h => h.classList.remove('selected'));
+            document.querySelectorAll('.dia').forEach(d => d.classList.remove('seleccionado'));
+        });
+
+        // Cerrar modal haciendo clic fuera
+        modalConfirm.addEventListener('click', function(e) {
+            if (e.target === this) {
+                modalConfirm.classList.remove('open');
+            }
+        });
+
+        // ===== FAQ ACORDEÓN =====
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('open');
+            });
+        });
+
+        // ===== ANIMACIONES FADE IN =====
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // ===== INICIALIZAR =====
+        // Mostrar primer paso
+        goToStep(1);
+
+        // Cargar médicos por defecto (general) si especialidad ya tiene valor
+        if (especialidadSelect.value) {
+            cargarMedicos(especialidadSelect.value);
+        }
+
+        // Al cambiar especialidad, actualizar médicos
+        especialidadSelect.addEventListener('change', function() {
+            if (this.value) cargarMedicos(this.value);
+        });
+
+        // ===== CARRITO (simple) =====
+        document.getElementById('cartIcon').addEventListener('click', function() {
+            alert('Carrito de compras - Funcionalidad en desarrollo.');
+        });
+
+        console.log('✅ Todas las mejoras implementadas: hero, pasos, calendario, médicos, horarios, confirmación, seguridad, urgencias, mapa, FAQ, animaciones, etc.');
+    </script>
+</body>
+</html>

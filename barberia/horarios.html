@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbería Style · Horarios</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET Y BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0b0b;
+            color: #e5e5e5;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .contenedor {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        :root {
+            --dorado: #d4a743;
+            --dorado-oscuro: #b8922f;
+            --negro: #0b0b0b;
+            --gris-oscuro: #1a1a1a;
+            --gris-medio: #2a2a2a;
+            --blanco: #f5f5f5;
+            --sombra: 0 10px 30px rgba(0, 0, 0, 0.6);
+            --sombra-dorada: 0 8px 25px rgba(212, 167, 67, 0.25);
+            --radio: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== TOPBAR ===== */
+        .topbar {
+            background: #0f0f0f;
+            color: #aaa;
+            padding: 6px 0;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .topbar .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .topbar a {
+            color: #aaa;
+            transition: color 0.3s;
+        }
+        .topbar a:hover {
+            color: var(--dorado);
+        }
+        .topbar i {
+            color: var(--dorado);
+            margin-right: 4px;
+            width: 16px;
+        }
+        .topbar .separador {
+            color: #333;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: rgba(11, 11, 11, 0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(212, 167, 67, 0.15);
+            transition: all 0.3s ease;
+        }
+        header.shrink {
+            padding: 6px 0;
+            background: rgba(11, 11, 11, 0.98);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+        }
+        header .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icono {
+            width: 42px;
+            height: 42px;
+            border: 2px solid var(--dorado);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 20px;
+            color: var(--dorado);
+            transition: all 0.3s ease;
+        }
+        .logo:hover .logo-icono {
+            transform: rotate(-10deg) scale(1.05);
+            background: var(--dorado);
+            color: #0b0b0b;
+        }
+        .logo-texto {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+        .logo-texto .nombre {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+        .logo-texto .nombre span {
+            color: var(--dorado);
+        }
+        .logo-texto .subtitulo {
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #888;
+            font-weight: 600;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: max-height 0.4s ease;
+            overflow: hidden;
+        }
+        nav a {
+            padding: 8px 14px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+            color: #ccc;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid transparent;
+        }
+        nav a:hover,
+        nav a.activo {
+            color: var(--dorado);
+            border-color: rgba(212, 167, 67, 0.2);
+            background: rgba(212, 167, 67, 0.06);
+        }
+
+        /* ===== SECCIONES ===== */
+        section {
+            padding: 70px 0;
+        }
+        .section-titulo {
+            text-align: center;
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        .section-titulo span {
+            color: var(--dorado);
+        }
+        .section-sub {
+            text-align: center;
+            color: #999;
+            font-size: 1.05rem;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .bg-gris {
+            background: var(--gris-oscuro);
+        }
+        .bg-negro {
+            background: var(--negro);
+        }
+
+        /* ===== HORARIOS Y UBICACIÓN (MEJORADO) ===== */
+        .horario-ubicacion-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        /* TARJETA DE HORARIOS */
+        .horario-card {
+            background: var(--gris-medio);
+            border-radius: var(--radio);
+            padding: 30px;
+            border: 1px solid #2a2a2a;
+            box-shadow: var(--sombra);
+            transition: box-shadow 0.3s;
+        }
+        .horario-card:hover {
+            box-shadow: var(--sombra-dorada);
+        }
+
+        .horario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        .horario-header h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+        }
+
+        /* Badge de estado */
+        .estado-abierto .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            animation: pulseBadge 2s infinite;
+        }
+        .estado-abierto .badge.abierto {
+            background: #2e7d32;
+            color: #fff;
+        }
+        .estado-abierto .badge.cerrado {
+            background: #c62828;
+            color: #fff;
+            animation: none;
+        }
+        .estado-abierto .badge i {
+            font-size: 0.5rem;
+        }
+        @keyframes pulseBadge {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+            }
+        }
+
+        /* Lista de horarios */
+        .horario-lista .dia {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #2a2a2a;
+            transition: background 0.2s, padding-left 0.2s;
+            border-radius: 4px;
+        }
+        .horario-lista .dia:last-child {
+            border-bottom: none;
+        }
+        .horario-lista .dia .nombre i {
+            color: var(--dorado);
+            margin-right: 8px;
+            width: 20px;
+        }
+        .horario-lista .dia .hora {
+            font-weight: 600;
+            color: #ccc;
+        }
+        .horario-lista .dia.domingo .hora {
+            color: #666;
+        }
+        .horario-lista .dia.destacado {
+            background: rgba(212, 167, 67, 0.08);
+            border-left: 3px solid var(--dorado);
+            padding-left: 12px;
+            border-radius: 4px;
+        }
+        .horario-lista .dia.destacado .hora {
+            color: var(--dorado);
+        }
+
+        .horario-nota {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: #aaa;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 167, 67, 0.04);
+            padding: 8px 14px;
+            border-radius: 8px;
+        }
+
+        /* TARJETA DE UBICACIÓN */
+        .ubicacion-card {
+            background: var(--gris-medio);
+            border-radius: var(--radio);
+            padding: 30px;
+            border: 1px solid #2a2a2a;
+            box-shadow: var(--sombra);
+            transition: box-shadow 0.3s;
+        }
+        .ubicacion-card:hover {
+            box-shadow: var(--sombra-dorada);
+        }
+        .ubicacion-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+        .ubicacion-card .direccion {
+            color: #ccc;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .ubicacion-card .direccion i {
+            color: var(--dorado);
+        }
+        .ubicacion-card .mapa {
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            aspect-ratio: 16/9;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+        }
+        .ubicacion-card .mapa iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .ubicacion-acciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .btn-como-llegar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--dorado);
+            color: #0b0b0b;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            transition: var(--transition);
+            flex: 1;
+            justify-content: center;
+        }
+        .btn-como-llegar:hover {
+            background: var(--dorado-oscuro);
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp-ubicacion {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #25d366;
+            color: #fff !important;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+            transition: var(--transition);
+            flex: 1;
+            justify-content: center;
+        }
+        .btn-whatsapp-ubicacion:hover {
+            background: #1ebe5e;
+            transform: translateY(-2px);
+        }
+
+        /* ===== CONTACTO RÁPIDO ===== */
+        .contacto-rapido {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .contacto-rapido p {
+            color: #ccc;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+        .contacto-rapido .btn-contacto-rapido {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gris-medio);
+            color: #ccc;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid #2a2a2a;
+            margin: 0 4px;
+        }
+        .contacto-rapido .btn-contacto-rapido:hover {
+            background: var(--dorado);
+            color: #0b0b0b;
+            border-color: var(--dorado);
+            transform: translateY(-2px);
+        }
+        .contacto-rapido .btn-contacto-rapido.whatsapp:hover {
+            background: #25d366;
+            color: #fff;
+            border-color: #25d366;
+        }
+        .contacto-rapido .btn-contacto-rapido.email:hover {
+            background: #1a73e8;
+            color: #fff;
+            border-color: #1a73e8;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0a0a0a;
+            border-top: 1px solid #1a1a1a;
+            padding: 40px 0 20px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .footer-logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .footer-logo span {
+            color: var(--dorado);
+        }
+        .footer-desc {
+            color: #999;
+            font-size: 0.95rem;
+            max-width: 300px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .footer-social a:hover {
+            background: var(--dorado);
+            color: #0b0b0b;
+        }
+        footer h4 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 14px;
+        }
+        footer ul {
+            list-style: none;
+        }
+        footer ul li {
+            margin-bottom: 8px;
+        }
+        footer ul a {
+            color: #999;
+            transition: color 0.3s;
+        }
+        footer ul a:hover {
+            color: var(--dorado);
+        }
+        .footer-copy {
+            border-top: 1px solid #1a1a1a;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        .footer-copy a {
+            color: #888;
+            transition: color 0.3s;
+        }
+        .footer-copy a:hover {
+            color: var(--dorado);
+        }
+
+        /* ===== BOTONES FLOTANTES ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            background: #25d366;
+            color: #fff !important;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            color: #fff !important;
+        }
+
+        .btn-subir {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            z-index: 998;
+            background: var(--dorado);
+            color: #0b0b0b;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            box-shadow: var(--sombra-dorada);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+        .btn-subir.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .btn-subir:hover {
+            background: var(--dorado-oscuro);
+            transform: scale(1.08);
+        }
+
+        /* ===== REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .horario-ubicacion-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            nav {
+                width: 100%;
+                order: 3;
+            }
+            nav ul {
+                flex-direction: column;
+                align-items: stretch;
+                max-height: 0;
+                gap: 6px;
+                padding-top: 0;
+                width: 100%;
+            }
+            nav.abierto ul {
+                max-height: 600px;
+                padding-top: 15px;
+                padding-bottom: 10px;
+            }
+            nav a {
+                justify-content: center;
+                padding: 12px;
+                width: 100%;
+                border: none;
+            }
+            .section-titulo {
+                font-size: 1.8rem;
+            }
+            .horario-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .ubicacion-acciones {
+                flex-direction: column;
+            }
+            .btn-como-llegar,
+            .btn-whatsapp-ubicacion {
+                flex: unset;
+                width: 100%;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 26px;
+                bottom: 20px;
+                right: 20px;
+            }
+            .btn-subir {
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+                bottom: 80px;
+                right: 20px;
+            }
+            .contacto-rapido .btn-contacto-rapido {
+                flex: 1;
+                justify-content: center;
+                margin: 2px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .topbar .contenedor {
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+            }
+            .contacto-rapido .btn-contacto-rapido {
+                flex: 1 1 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOPBAR ===== -->
+    <div class="topbar">
+        <div class="contenedor">
+            <div>
+                <a href="tel:+525512345678"><i class="fas fa-phone-alt"></i> +52 55 1234 5678</a>
+                <span class="separador">|</span>
+                <a href="mailto:info@barberiastyle.com"><i class="fas fa-envelope"></i> info@barberiastyle.com</a>
+                <span class="separador">|</span>
+                <span><i class="fas fa-map-marker-alt"></i> Av. Principal #123, CDMX</span>
+            </div>
+            <div>
+                <a href="https://wa.me/525512345678" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header id="mainHeader">
+        <div class="contenedor">
+            <a href="index.html" class="logo">
+                <div class="logo-icono">✂</div>
+                <div class="logo-texto">
+                    <span class="nombre">Barbería <span>Style</span></span>
+                    <span class="subtitulo">Tu estilo comienza aquí</span>
+                </div>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="navMenu">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="precios.html">Precios</a></li>
+                    <li><a href="trabajos.html">Galería</a></li>
+                    <li><a href="horarios.html" class="activo">Horarios</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== HORARIOS Y UBICACIÓN (MEJORADO) ===== -->
+    <section class="horario-ubicacion bg-gris" id="ubicacion">
+        <div class="contenedor">
+            <h2 class="section-titulo">Horarios y <span>ubicación</span></h2>
+            <p class="section-sub">Ven a conocernos</p>
+
+            <div class="horario-ubicacion-grid reveal">
+
+                <!-- TARJETA DE HORARIOS -->
+                <div class="horario-card">
+                    <div class="horario-header">
+                        <h3><i class="fas fa-clock" style="color: var(--dorado);"></i> Horario de atención</h3>
+                        <div id="estadoActual" class="estado-abierto">
+                            <span class="badge abierto"><i class="fas fa-circle"></i> Abierto ahora</span>
+                        </div>
+                    </div>
+                    <div class="horario-lista" id="horarioLista">
+                        <div class="dia" data-dia="lunes">
+                            <span class="nombre"><i class="fas fa-calendar-day"></i> Lunes - Viernes</span>
+                            <span class="hora">10:00 – 20:00</span>
+                        </div>
+                        <div class="dia" data-dia="sabado">
+                            <span class="nombre"><i class="fas fa-calendar-day"></i> Sábado</span>
+                            <span class="hora">9:00 – 18:00</span>
+                        </div>
+                        <div class="dia domingo" data-dia="domingo">
+                            <span class="nombre"><i class="fas fa-calendar-day"></i> Domingo</span>
+                            <span class="hora"><i class="fas fa-times-circle"></i> Cerrado</span>
+                        </div>
+                    </div>
+                    <div class="horario-nota">
+                        <i class="fas fa-info-circle" style="color: var(--dorado);"></i>
+                        Última atención 30 min antes del cierre.
+                    </div>
+                </div>
+
+                <!-- TARJETA DE UBICACIÓN -->
+                <div class="ubicacion-card">
+                    <h3><i class="fas fa-map-pin" style="color: var(--dorado);"></i> Ubicación</h3>
+                    <div class="direccion">
+                        <i class="fas fa-map-marker-alt" style="color: var(--dorado);"></i>
+                        Av. Principal #123, Col. Centro, CDMX, México
+                    </div>
+                    <div class="mapa">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.5078870756834!2d-99.1332107!3d19.4326077!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1f92a5a5b3b5f%3A0x8f7b9a3b3c7a3b3b!2sZ%C3%B3calo%2C%20Centro%20Hist%C3%B3rico%2C%20Ciudad%20de%20M%C3%A9xico!5e0!3m2!1ses!2smx!4v1712345678901!5m2!1ses!2smx"
+                            loading="lazy"
+                            allowfullscreen
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    <div class="ubicacion-acciones">
+                        <a href="https://www.google.com/maps/dir//Av.+Principal+%23123,+Centro,+CDMX" target="_blank" class="btn-como-llegar">
+                            <i class="fas fa-directions"></i> Cómo llegar
+                        </a>
+                        <a href="https://wa.me/525512345678?text=Hola%2C%20necesito%20indicaciones%20para%20llegar" target="_blank" class="btn-whatsapp-ubicacion">
+                            <i class="fab fa-whatsapp"></i> Indicaciones por WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CONTACTO RÁPIDO -->
+            <div class="contacto-rapido reveal">
+                <p>📞 ¿Necesitas ayuda? Contáctanos directamente</p>
+                <div>
+                    <a href="tel:+525512345678" class="btn-contacto-rapido"><i class="fas fa-phone-alt"></i> Llamar</a>
+                    <a href="https://wa.me/525512345678" target="_blank" class="btn-contacto-rapido whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    <a href="mailto:info@barberiastyle.com" class="btn-contacto-rapido email"><i class="fas fa-envelope"></i> Correo</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="contenedor">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">✂ Barbería <span>Style</span></div>
+                    <div class="footer-desc">Tu estilo comienza aquí. Expertos en cortes y barba con atención personalizada.</div>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Enlaces rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="servicios.html">Servicios</a></li>
+                        <li><a href="precios.html">Precios</a></li>
+                        <li><a href="trabajos.html">Galería</a></li>
+                        <li><a href="horarios.html">Horarios</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Horario</h4>
+                    <ul>
+                        <li>Lun-Vie: 10:00 - 20:00</li>
+                        <li>Sáb: 9:00 - 18:00</li>
+                        <li>Dom: Cerrado</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><a href="tel:+525512345678"><i class="fas fa-phone-alt" style="color: var(--dorado);"></i> +52 55 1234 5678</a></li>
+                        <li><a href="mailto:info@barberiastyle.com"><i class="fas fa-envelope" style="color: var(--dorado);"></i> info@barberiastyle.com</a></li>
+                        <li><i class="fas fa-map-marker-alt" style="color: var(--dorado);"></i> Av. Principal #123, CDMX</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-copy">
+                &copy; 2026 Barbería Style. Todos los derechos reservados.
+                <span style="margin: 0 8px;">·</span>
+                <a href="#">Aviso de privacidad</a>
+                <span style="margin: 0 8px;">·</span>
+                <a href="#">Términos y condiciones</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOTANTE ===== -->
+    <a href="https://wa.me/525512345678?text=Hola%2C%20quiero%20agendar%20una%20cita" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ===== BOTÓN SUBIR ===== -->
+    <button class="btn-subir" id="btnSubir" aria-label="Volver arriba">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        // ===== MENÚ HAMBURGUESA =====
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        menuToggle.addEventListener('click', () => navMenu.classList.toggle('abierto'));
+
+        // ===== HEADER SHRINK =====
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 80) header.classList.add('shrink');
+            else header.classList.remove('shrink');
+        });
+
+        // ===== REVEAL ANIMATION =====
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.15 });
+        revealElements.forEach(el => observer.observe(el));
+
+        // ===== BOTÓN SUBIR =====
+        const btnSubir = document.getElementById('btnSubir');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) btnSubir.classList.add('visible');
+            else btnSubir.classList.remove('visible');
+        });
+        btnSubir.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // ===== CERRAR MENÚ AL HACER CLIC =====
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => navMenu.classList.remove('abierto'));
+        });
+
+        // ============================================================
+        //  INDICADOR "ABIERTO / CERRADO" EN TIEMPO REAL
+        // ============================================================
+        (function horarioActual() {
+            const ahora = new Date();
+            const diaSemana = ahora.getDay(); // 0=domingo, 1=lunes, ..., 6=sábado
+            const hora = ahora.getHours();
+            const minutos = ahora.getMinutes();
+            const horaCompleta = hora + minutos / 60;
+
+            let abierto = false;
+            let mensaje = '';
+
+            // Definir horarios
+            if (diaSemana >= 1 && diaSemana <= 5) { // Lunes a Viernes
+                if (horaCompleta >= 10 && horaCompleta < 20) {
+                    abierto = true;
+                    mensaje = 'Abierto ahora';
+                } else {
+                    mensaje = 'Cerrado · Horario: 10:00 - 20:00';
+                }
+            } else if (diaSemana === 6) { // Sábado
+                if (horaCompleta >= 9 && horaCompleta < 18) {
+                    abierto = true;
+                    mensaje = 'Abierto ahora';
+                } else {
+                    mensaje = 'Cerrado · Horario: 9:00 - 18:00';
+                }
+            } else { // Domingo
+                mensaje = 'Cerrado · Descansamos los domingos';
+            }
+
+            const badge = document.querySelector('#estadoActual .badge');
+            if (badge) {
+                badge.textContent = mensaje;
+                badge.className = 'badge ' + (abierto ? 'abierto' : 'cerrado');
+                badge.innerHTML = '<i class="fas fa-circle"></i> ' + mensaje;
+            }
+
+            // Resaltar el día actual en la lista
+            const diasMap = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+            const diaActual = diasMap[diaSemana];
+            document.querySelectorAll('.horario-lista .dia').forEach(el => {
+                if (el.dataset.dia === diaActual) {
+                    el.classList.add('destacado');
+                }
+            });
+        })();
+
+        console.log('✅ Barbería Style · Horarios mejorado cargado correctamente');
+    </script>
+</body>
+</html>

@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clínica Vital · Nuestros Médicos</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            color: #1e293b;
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-top: 80px; /* espacio para el header fijo */
+        }
+        .contenedor {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        :root {
+            --verde: #0b8c5e;
+            --verde-claro: #e6f5f0;
+            --gris-claro: #f8fafc;
+            --gris-medio: #e9edf2;
+            --blanco: #ffffff;
+            --sombra: 0 10px 30px rgba(0, 0, 0, 0.06);
+            --sombra-fuerte: 0 20px 50px rgba(0, 0, 0, 0.12);
+            --radio: 24px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== TOPBAR ===== */
+        .topbar {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 6px 0;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #1e293b;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+        }
+        .topbar .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .topbar-izq {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+        .topbar-izq a, .topbar-izq span {
+            color: #cbd5e1;
+            transition: var(--transition);
+        }
+        .topbar-izq a:hover {
+            color: var(--verde);
+        }
+        .topbar-izq i {
+            color: var(--verde);
+            margin-right: 4px;
+            width: 16px;
+        }
+        .topbar-der {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .topbar-der a {
+            color: #cbd5e1;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        .topbar-der a:hover {
+            color: var(--verde);
+        }
+        .whatsapp-top {
+            background: #25d366;
+            color: #fff !important;
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+        .whatsapp-top:hover {
+            background: #1ebe5e !important;
+            color: #fff !important;
+        }
+
+        /* ===== HEADER FLOTANTE (Glassmorphism) ===== */
+        header {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            padding: 10px 0;
+            position: fixed;
+            top: 32px; /* debajo de la topbar */
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+        header.shrink {
+            top: 0;
+            padding: 6px 0;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+            background: rgba(255, 255, 255, 0.92);
+        }
+        header .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icono {
+            width: 40px;
+            height: 40px;
+            background: var(--verde);
+            color: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .logo h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .logo h1 span {
+            color: var(--verde);
+        }
+
+        /* Menú de navegación estilo "lista flotante" */
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        nav a {
+            padding: 8px 16px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+            color: #1e293b;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            border: 1px solid transparent;
+        }
+        nav a:hover,
+        nav a.activo {
+            color: var(--verde);
+            background: rgba(11, 140, 94, 0.08);
+            border-color: rgba(11, 140, 94, 0.15);
+            box-shadow: 0 4px 12px rgba(11, 140, 94, 0.08);
+        }
+        .btn-cita-header {
+            background: var(--verde);
+            color: #fff !important;
+            padding: 8px 20px !important;
+            border-radius: 40px !important;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(11, 140, 94, 0.25);
+            border: none !important;
+        }
+        .btn-cita-header:hover {
+            background: #0a7a52 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(11, 140, 94, 0.35);
+            color: #fff !important;
+        }
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 6px 10px;
+            border-radius: 30px;
+            transition: var(--transition);
+        }
+        .cart-icon:hover {
+            background: rgba(0,0,0,0.04);
+        }
+        .cart-icon .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #ef4444;
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== BREADCRUMB ===== */
+        .breadcrumb {
+            background: var(--gris-claro);
+            padding: 12px 0;
+            font-size: 0.9rem;
+            color: #64748b;
+            border-bottom: 1px solid #e9edf2;
+            margin-top: 12px;
+        }
+        .breadcrumb span {
+            color: var(--verde);
+            font-weight: 600;
+        }
+        .breadcrumb i {
+            margin: 0 8px;
+            font-size: 0.7rem;
+            color: #94a3b8;
+        }
+
+        /* ===== HERO MÉDICOS ===== */
+        .hero-medicos {
+            background: linear-gradient(145deg, #f0f9f6 0%, #dceee7 100%);
+            padding: 40px 0 50px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .hero-medicos::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(11, 140, 94, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-medicos .contenedor {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        .hero-medicos h2 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+        .hero-medicos h2 span {
+            color: var(--verde);
+        }
+        .hero-medicos p {
+            font-size: 1.15rem;
+            color: #475569;
+            max-width: 600px;
+            margin: 0 auto 18px;
+        }
+        .hero-medicos .boton-hero {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--verde);
+            color: #fff !important;
+            padding: 12px 32px;
+            border-radius: 60px;
+            font-weight: 700;
+            box-shadow: 0 4px 16px rgba(11, 140, 94, 0.3);
+            transition: var(--transition);
+        }
+        .hero-medicos .boton-hero:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(11, 140, 94, 0.4);
+            background: #0a7a52;
+        }
+
+        /* ===== FILTROS CON DISEÑO DE PESTAÑAS ===== */
+        .filtros-medicos {
+            padding: 20px 0 10px;
+            background: var(--blanco);
+            border-bottom: 1px solid #e9edf2;
+        }
+        .filtros-medicos .contenedor {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+            justify-content: center;
+        }
+        .filtros-medicos .busqueda {
+            display: flex;
+            align-items: center;
+            background: var(--gris-claro);
+            border-radius: 60px;
+            padding: 4px 18px 4px 20px;
+            border: 1px solid #e9edf2;
+            flex: 1 1 240px;
+            max-width: 340px;
+            transition: var(--transition);
+        }
+        .filtros-medicos .busqueda:focus-within {
+            border-color: var(--verde);
+            box-shadow: 0 0 0 3px rgba(11, 140, 94, 0.15);
+        }
+        .filtros-medicos .busqueda i {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        .filtros-medicos .busqueda input {
+            border: none;
+            background: transparent;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            width: 100%;
+            outline: none;
+            font-family: inherit;
+        }
+        /* Pestañas de filtros */
+        .filtros-pestanas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            position: relative;
+        }
+        .filtros-pestanas button {
+            padding: 6px 18px;
+            border-radius: 40px;
+            border: none;
+            background: transparent;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #64748b;
+            position: relative;
+            white-space: nowrap;
+        }
+        .filtros-pestanas button:hover {
+            color: var(--verde);
+            background: rgba(11, 140, 94, 0.06);
+        }
+        .filtros-pestanas button.activo {
+            color: #fff;
+            background: var(--verde);
+            box-shadow: 0 4px 14px rgba(11, 140, 94, 0.25);
+        }
+
+        /* ===== GRID DE MÉDICOS ===== */
+        .medicos-grid {
+            padding: 30px 0 60px;
+            background: var(--gris-claro);
+        }
+        .grid-medicos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 28px;
+        }
+
+        /* ===== TARJETA DE MÉDICO ===== */
+        .medico-card {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            overflow: hidden;
+            box-shadow: var(--sombra);
+            transition: var(--transition);
+            border: 1px solid #e9edf2;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .medico-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--sombra-fuerte);
+            border-color: var(--verde);
+        }
+        /* Avatar con iniciales */
+        .medico-card .avatar {
+            width: 100%;
+            aspect-ratio: 16/10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.8rem;
+            font-weight: 700;
+            color: #fff;
+            position: relative;
+            transition: transform 0.5s ease;
+        }
+        .medico-card:hover .avatar {
+            transform: scale(1.02);
+        }
+        .medico-card .avatar .etiqueta-disponible {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: #16a34a;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .medico-card .avatar .etiqueta-disponible.lleno {
+            background: #dc2626;
+        }
+        .medico-card .contenido {
+            padding: 18px 20px 22px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .medico-card .contenido .cabecera {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2px;
+        }
+        .medico-card .contenido .cabecera h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        .medico-card .contenido .cabecera .estrellas {
+            color: #f59e0b;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+        .medico-card .contenido .especialidad {
+            color: var(--verde);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+        .medico-card .contenido .experiencia {
+            font-size: 0.9rem;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+        .medico-card .contenido .experiencia i {
+            color: var(--verde);
+            width: 16px;
+        }
+        .medico-card .contenido .universidad {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 2px;
+        }
+        .medico-card .contenido .cedula {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 8px;
+        }
+        .medico-card .contenido .certificaciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .medico-card .contenido .certificaciones span {
+            background: var(--verde-claro);
+            color: var(--verde);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 30px;
+        }
+        .medico-card .contenido .idiomas {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+        .medico-card .contenido .idiomas i {
+            color: var(--verde);
+            margin-right: 4px;
+        }
+        .medico-card .contenido .modalidades {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 4px 0 8px;
+        }
+        .medico-card .contenido .modalidades span {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 30px;
+            border: 1px solid #e9edf2;
+            color: #475569;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .medico-card .contenido .modalidades .presencial {
+            background: #dbeafe;
+            border-color: #93c5fd;
+            color: #1d4ed8;
+        }
+        .medico-card .contenido .modalidades .virtual {
+            background: #ede9fe;
+            border-color: #c4b5fd;
+            color: #7c3aed;
+        }
+        .medico-card .contenido .areas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 12px;
+            margin: 6px 0 10px;
+        }
+        .medico-card .contenido .areas span {
+            font-size: 0.8rem;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .medico-card .contenido .areas span i {
+            color: var(--verde);
+            font-size: 0.65rem;
+        }
+        .medico-card .contenido .hospitales {
+            font-size: 0.85rem;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+        .medico-card .contenido .hospitales i {
+            color: var(--verde);
+            margin-right: 4px;
+        }
+        .medico-card .contenido .premios {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 10px;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+        .medico-card .contenido .premios i {
+            color: #f59e0b;
+        }
+        .medico-card .contenido .biografia {
+            font-size: 0.9rem;
+            color: #475569;
+            margin-bottom: 12px;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .medico-card .contenido .botones-card {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+        .medico-card .contenido .botones-card .btn-agendar {
+            flex: 1;
+            background: var(--verde);
+            color: #fff !important;
+            padding: 10px 0;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .medico-card .contenido .botones-card .btn-agendar:hover {
+            background: #0a7a52;
+            transform: scale(1.02);
+            box-shadow: 0 4px 14px rgba(11, 140, 94, 0.3);
+        }
+        .medico-card .contenido .botones-card .btn-perfil {
+            flex: 1;
+            background: transparent;
+            color: var(--verde) !important;
+            padding: 10px 0;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid var(--verde);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .medico-card .contenido .botones-card .btn-perfil:hover {
+            background: var(--verde);
+            color: #fff !important;
+        }
+
+        /* ===== PROCESO ===== */
+        .proceso-medicos {
+            padding: 60px 0;
+            background: var(--verde-claro);
+        }
+        .proceso-medicos h3 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .proceso-medicos .sub {
+            text-align: center;
+            color: #475569;
+            margin-bottom: 30px;
+        }
+        .proceso-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+        .proceso-paso {
+            background: var(--blanco);
+            padding: 24px 16px;
+            border-radius: 16px;
+            box-shadow: var(--sombra);
+            border: 1px solid #e9edf2;
+            transition: var(--transition);
+        }
+        .proceso-paso:hover {
+            transform: translateY(-6px);
+            border-color: var(--verde);
+        }
+        .proceso-paso .num {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: var(--verde);
+            display: block;
+            margin-bottom: 4px;
+        }
+        .proceso-paso .paso-icono {
+            font-size: 2.2rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .proceso-paso h4 {
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        .proceso-paso p {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 50px 0 20px;
+            border-top: 4px solid var(--verde);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        .footer-logo span {
+            color: var(--verde);
+        }
+        .footer-desc {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            margin-bottom: 16px;
+            max-width: 300px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #1e293b;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .footer-social a:hover {
+            background: var(--verde);
+            color: #fff;
+        }
+        footer h4 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 14px;
+        }
+        footer ul {
+            list-style: none;
+        }
+        footer ul li {
+            margin-bottom: 8px;
+        }
+        footer ul a {
+            color: #94a3b8;
+            transition: var(--transition);
+        }
+        footer ul a:hover {
+            color: var(--verde);
+        }
+        .footer-cert {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .footer-cert span {
+            background: #1e293b;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #94a3b8;
+            border: 1px solid #334155;
+        }
+        .footer-copy {
+            border-top: 1px solid #1e293b;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 998;
+            background: #25d366;
+            color: #fff !important;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+            transition: var(--transition);
+            border: none;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 35px rgba(37, 211, 102, 0.6);
+            color: #fff !important;
+        }
+
+        /* ===== CHAT FLOTANTE ===== */
+        .chat-float {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+        .chat-toggle {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--verde);
+            color: #fff;
+            border: none;
+            font-size: 26px;
+            box-shadow: 0 6px 25px rgba(11, 140, 94, 0.4);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chat-toggle:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 35px rgba(11, 140, 94, 0.5);
+        }
+        .chat-ventana {
+            background: var(--blanco);
+            border-radius: 20px;
+            box-shadow: var(--sombra-fuerte);
+            width: 280px;
+            max-height: 400px;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            border: 1px solid #e9edf2;
+        }
+        .chat-ventana.abierto {
+            display: flex;
+        }
+        .chat-header {
+            background: var(--verde);
+            color: #fff;
+            padding: 12px 16px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header .cerrar-chat {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .chat-mensajes {
+            padding: 14px;
+            flex: 1;
+            overflow-y: auto;
+            max-height: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .chat-mensaje {
+            background: var(--gris-claro);
+            padding: 8px 14px;
+            border-radius: 14px;
+            max-width: 85%;
+            font-size: 0.85rem;
+            align-self: flex-start;
+        }
+        .chat-mensaje.bot {
+            background: var(--verde-claro);
+            align-self: flex-end;
+        }
+        .chat-opciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 8px 14px 12px;
+            border-top: 1px solid #e9edf2;
+        }
+        .chat-opciones button {
+            background: var(--gris-claro);
+            border: none;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            color: #1e293b;
+        }
+        .chat-opciones button:hover {
+            background: var(--verde);
+            color: #fff;
+        }
+
+        /* ===== ANIMACIONES ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease forwards;
+        }
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero-medicos h2 {
+                font-size: 2.2rem;
+            }
+            .grid-medicos {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            body {
+                padding-top: 110px;
+            }
+            header {
+                top: 48px;
+            }
+        }
+        @media (max-width: 768px) {
+            .topbar .contenedor {
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+            }
+            .topbar-izq {
+                justify-content: center;
+            }
+            .topbar-der {
+                justify-content: center;
+            }
+            header .contenedor {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+            .logo-icono {
+                width: 34px;
+                height: 34px;
+                font-size: 16px;
+            }
+            nav ul {
+                width: 100%;
+                justify-content: center;
+                gap: 4px;
+            }
+            nav a {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+            .btn-cita-header {
+                padding: 4px 14px !important;
+                font-size: 0.8rem;
+            }
+            .hero-medicos h2 {
+                font-size: 1.8rem;
+            }
+            .hero-medicos p {
+                font-size: 1rem;
+            }
+            .filtros-medicos .contenedor {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .filtros-medicos .busqueda {
+                max-width: 100%;
+            }
+            .filtros-pestanas {
+                justify-content: center;
+            }
+            .filtros-pestanas button {
+                font-size: 0.75rem;
+                padding: 4px 12px;
+            }
+            .grid-medicos {
+                grid-template-columns: 1fr;
+                max-width: 420px;
+                margin: 0 auto;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .chat-ventana {
+                width: 260px;
+                right: 10px;
+            }
+            .chat-float {
+                right: 10px;
+                bottom: 90px;
+            }
+            .whatsapp-float {
+                width: 48px;
+                height: 48px;
+                font-size: 24px;
+                bottom: 20px;
+                right: 20px;
+            }
+            body {
+                padding-top: 100px;
+            }
+            header {
+                top: 42px;
+            }
+        }
+        @media (max-width: 480px) {
+            body {
+                padding-top: 130px;
+            }
+            header {
+                top: 60px;
+            }
+            .topbar {
+                font-size: 0.7rem;
+                padding: 4px 0;
+            }
+            .topbar-izq {
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOPBAR ===== -->
+    <div class="topbar">
+        <div class="contenedor">
+            <div class="topbar-izq">
+                <a href="tel:+525598765432"><i class="fas fa-phone-alt"></i> +52 55 9876 5432</a>
+                <a href="mailto:contacto@clinicavital.mx"><i class="fas fa-envelope"></i> contacto@clinicavital.mx</a>
+                <span><i class="fas fa-map-marker-alt"></i> Av. Salud #789, CDMX</span>
+            </div>
+            <div class="topbar-der">
+                <a href="https://wa.me/525598765432?text=Hola%2C%20quiero%20agendar%20una%20cita" class="whatsapp-top" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                <a href="citas.html" style="color: white; font-weight: 500;">Agendar cita</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HEADER FLOTANTE ===== -->
+    <header id="mainHeader">
+        <div class="contenedor">
+            <div class="logo">
+                <div class="logo-icono"><i class="fas fa-heart-pulse"></i></div>
+                <h1><span>Clínica</span> Vital</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="especialidades.html">Especialidades</a></li>
+                    <li><a href="medicos.html" class="activo">Médicos</a></li>
+                    <li><a href="testimonios.html">Testimonios</a></li>
+                    <li><a href="farmacia.html"><i class="fas fa-prescription-bottle"></i> Farmacia</a></li>
+                    <li><a href="citas.html" class="btn-cita-header"><i class="fas fa-calendar-check"></i> Agendar cita</a></li>
+                    <li>
+                        <span class="cart-icon" id="cartIcon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge" id="cartBadge">0</span>
+                        </span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== BREADCRUMB ===== -->
+    <div class="breadcrumb">
+        <div class="contenedor">
+            <a href="index.html">Inicio</a> <i class="fas fa-chevron-right"></i> <span>Médicos</span>
+        </div>
+    </div>
+
+    <!-- ===== HERO MÉDICOS ===== -->
+    <section class="hero-medicos">
+        <div class="contenedor">
+            <h2>Conoce a nuestro <span>equipo médico</span></h2>
+            <p>Especialistas certificados comprometidos con tu salud.</p>
+            <a href="citas.html" class="boton-hero"><i class="fas fa-calendar-check"></i> Agenda una cita</a>
+        </div>
+    </section>
+
+    <!-- ===== FILTROS CON DISEÑO DE PESTAÑAS ===== -->
+    <section class="filtros-medicos">
+        <div class="contenedor">
+            <div class="busqueda">
+                <i class="fas fa-search"></i>
+                <input type="text" id="buscarMedico" placeholder="🔍 Buscar médico..." />
+            </div>
+            <div class="filtros-pestanas" id="filtrosEspecialidad">
+                <button class="activo" data-especialidad="todas">Todos</button>
+                <button data-especialidad="Cardiología">Cardiología</button>
+                <button data-especialidad="Pediatría">Pediatría</button>
+                <button data-especialidad="Neurología">Neurología</button>
+                <button data-especialidad="Odontología">Odontología</button>
+                <button data-especialidad="Traumatología">Traumatología</button>
+                <button data-especialidad="Dermatología">Dermatología</button>
+                <button data-especialidad="Ginecología">Ginecología</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== GRID DE MÉDICOS ===== -->
+    <section class="medicos-grid" id="medicosGrid">
+        <div class="contenedor grid-medicos" id="gridMedicos">
+            <!-- Generado por JavaScript -->
+        </div>
+    </section>
+
+    <!-- ===== PROCESO ===== -->
+    <section class="proceso-medicos">
+        <div class="contenedor">
+            <h3>Nuestro proceso</h3>
+            <p class="sub">Cuatro pasos simples para tu atención médica</p>
+            <div class="proceso-grid">
+                <div class="proceso-paso fade-in">
+                    <span class="num">1</span>
+                    <span class="paso-icono">📋</span>
+                    <h4>Agenda</h4>
+                    <p>Elige la fecha y hora que mejor te convenga.</p>
+                </div>
+                <div class="proceso-paso fade-in">
+                    <span class="num">2</span>
+                    <span class="paso-icono">👨‍⚕️</span>
+                    <h4>Elige médico</h4>
+                    <p>Selecciona al especialista que prefieras.</p>
+                </div>
+                <div class="proceso-paso fade-in">
+                    <span class="num">3</span>
+                    <span class="paso-icono">🩺</span>
+                    <h4>Consulta</h4>
+                    <p>Recibe atención médica personalizada.</p>
+                </div>
+                <div class="proceso-paso fade-in">
+                    <span class="num">4</span>
+                    <span class="paso-icono">📈</span>
+                    <h4>Seguimiento</h4>
+                    <p>Monitoreo continuo de tu salud.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="contenedor">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo"><i class="fas fa-heart-pulse" style="color: var(--verde);"></i> <span>Clínica</span> Vital</div>
+                    <div class="footer-desc">Cuidamos tu salud con excelencia y calidez humana. Más de 15 años brindando atención integral.</div>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="especialidades.html">Especialidades</a></li>
+                        <li><a href="medicos.html">Médicos</a></li>
+                        <li><a href="testimonios.html">Testimonios</a></li>
+                        <li><a href="farmacia.html">Farmacia</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                        <li><a href="admin.html">Admin</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Horario</h4>
+                    <ul>
+                        <li>Lun - Vie: 8:00 - 20:00</li>
+                        <li>Sábado: 8:00 - 14:00</li>
+                        <li>Domingo: Urgencias</li>
+                        <li style="margin-top:8px;"><a href="tel:+525598765432" style="color: #cbd5e1; text-decoration: none;"><i class="fas fa-phone-alt" style="color: var(--verde);"></i> +52 55 9876 5432</a></li>
+                        <li><a href="mailto:contacto@clinicavital.mx" style="color: #cbd5e1; text-decoration: none;"><i class="fas fa-envelope" style="color: var(--verde);"></i> contacto@clinicavital.mx</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Certificaciones</h4>
+                    <div class="footer-cert">
+                        <span>ISO 9001</span>
+                        <span>COFEPRIS</span>
+                        <span>Salud Responsable</span>
+                    </div>
+                    <div style="margin-top: 16px;">
+                        <h4 style="font-size:1rem;">Aviso de privacidad</h4>
+                        <ul>
+                            <li><a href="#">Términos y condiciones</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copy">&copy; 2026 Clínica Vital · Tu salud es nuestra misión</div>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <a href="https://wa.me/525598765432?text=Hola%2C%20quiero%20agendar%20una%20cita" target="_blank" class="whatsapp-float" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- ===== CHAT FLOTANTE ===== -->
+    <div class="chat-float">
+        <div class="chat-ventana" id="chatVentana">
+            <div class="chat-header">
+                <span><i class="fas fa-comment-dots"></i> Clínica Vital</span>
+                <button class="cerrar-chat" id="cerrarChat"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="chat-mensajes" id="chatMensajes">
+                <div class="chat-mensaje bot">👋 ¡Hola! ¿Necesitas ayuda?</div>
+            </div>
+            <div class="chat-opciones">
+                <button data-resp="Me gustaría agendar una cita.">Agendar</button>
+                <button data-resp="Quiero conocer las especialidades.">Especialidades</button>
+                <button data-resp="¿Cuáles son sus horarios?">Horarios</button>
+                <button data-resp="¿Aceptan seguros?">Seguros</button>
+            </div>
+        </div>
+        <button class="chat-toggle" id="chatToggle"><i class="fas fa-comment-dots"></i></button>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        // ============================================================
+        // DATOS DE MÉDICOS (sin imágenes, usaremos avatares con iniciales)
+        // ============================================================
+        const medicosData = [{
+            id: 1,
+            nombre: 'Dr. Carlos López',
+            especialidad: 'Cardiología',
+            estrellas: 4.9,
+            experiencia: 15,
+            universidad: 'UNAM · Facultad de Medicina',
+            cedula: 'Cédula Profesional: 1234567',
+            certificaciones: ['Consejo Mexicano de Cardiología', 'American Heart Association'],
+            idiomas: ['Español', 'English', 'Français'],
+            modalidades: ['presencial', 'virtual'],
+            disponibilidad: true,
+            areas: ['Hipertensión', 'Arritmias', 'Insuficiencia cardíaca', 'Colesterol'],
+            hospitales: 'Hospital ABC · Clínica Vital · Centro Médico',
+            premios: ['🏆 Mejor Médico 2025', '⭐ 98% satisfacción'],
+            biografia: 'Especialista en enfermedades cardiovasculares con más de 15 años de experiencia en atención clínica y hospitalaria.'
+        }, {
+            id: 2,
+            nombre: 'Dra. María González',
+            especialidad: 'Pediatría',
+            estrellas: 4.8,
+            experiencia: 12,
+            universidad: 'UNAM · Facultad de Medicina',
+            cedula: 'Cédula Profesional: 2345678',
+            certificaciones: ['Consejo Mexicano de Pediatría', 'Asociación Pediátrica Mexicana'],
+            idiomas: ['Español', 'English'],
+            modalidades: ['presencial', 'virtual'],
+            disponibilidad: true,
+            areas: ['Control de crecimiento', 'Vacunación', 'Desarrollo cognitivo', 'Nutrición infantil'],
+            hospitales: 'Clínica Vital · Hospital Infantil',
+            premios: ['⭐ 97% satisfacción'],
+            biografia: 'Pediatra con amplia experiencia en el cuidado integral de niños y adolescentes, enfocada en el desarrollo saludable.'
+        }, {
+            id: 3,
+            nombre: 'Dr. Javier Ruiz',
+            especialidad: 'Neurología',
+            estrellas: 4.7,
+            experiencia: 10,
+            universidad: 'Universidad Autónoma Metropolitana',
+            cedula: 'Cédula Profesional: 3456789',
+            certificaciones: ['Consejo Mexicano de Neurología'],
+            idiomas: ['Español', 'English'],
+            modalidades: ['presencial'],
+            disponibilidad: false,
+            areas: ['Epilepsia', 'Trastornos del movimiento', 'Cefaleas', 'Enfermedades neurodegenerativas'],
+            hospitales: 'Clínica Vital · Centro Neurológico',
+            premios: ['🏆 Excelencia en Neurología 2024'],
+            biografia: 'Neurólogo con enfoque en trastornos del movimiento y epilepsia, comprometido con la investigación y la atención de calidad.'
+        }, {
+            id: 4,
+            nombre: 'Dra. Ana Fernández',
+            especialidad: 'Odontología',
+            estrellas: 4.6,
+            experiencia: 8,
+            universidad: 'UNAM · Facultad de Odontología',
+            cedula: 'Cédula Profesional: 4567890',
+            certificaciones: ['Consejo Mexicano de Odontología'],
+            idiomas: ['Español', 'English'],
+            modalidades: ['presencial'],
+            disponibilidad: true,
+            areas: ['Limpieza profunda', 'Blanqueamiento dental', 'Ortodoncia', 'Cirugía dental'],
+            hospitales: 'Clínica Vital · Centro Dental',
+            premios: ['⭐ 96% satisfacción'],
+            biografia: 'Odontóloga con especialidad en ortodoncia y cirugía dental, dedicada a devolver sonrisas saludables.'
+        }, {
+            id: 5,
+            nombre: 'Dr. Roberto Vega',
+            especialidad: 'Traumatología',
+            estrellas: 4.8,
+            experiencia: 11,
+            universidad: 'UNAM · Facultad de Medicina',
+            cedula: 'Cédula Profesional: 5678901',
+            certificaciones: ['Consejo Mexicano de Traumatología'],
+            idiomas: ['Español', 'English'],
+            modalidades: ['presencial', 'urgencias'],
+            disponibilidad: true,
+            areas: ['Fracturas', 'Lesiones deportivas', 'Rehabilitación', 'Terapia física'],
+            hospitales: 'Clínica Vital · Hospital ABC',
+            premios: ['🏆 Mejor Traumatólogo 2025'],
+            biografia: 'Traumatólogo especializado en lesiones deportivas y fracturas, con amplia experiencia en rehabilitación física.'
+        }, {
+            id: 6,
+            nombre: 'Dra. Laura Gómez',
+            especialidad: 'Dermatología',
+            estrellas: 4.7,
+            experiencia: 9,
+            universidad: 'UNAM · Facultad de Medicina',
+            cedula: 'Cédula Profesional: 6789012',
+            certificaciones: ['Consejo Mexicano de Dermatología'],
+            idiomas: ['Español', 'English', 'Français'],
+            modalidades: ['presencial', 'virtual'],
+            disponibilidad: true,
+            areas: ['Dermatología estética', 'Láser', 'Tratamientos faciales', 'Oncología dermatológica'],
+            hospitales: 'Clínica Vital · Centro Dermatológico',
+            premios: ['⭐ 98% satisfacción'],
+            biografia: 'Dermatóloga con enfoque en dermatología estética y oncológica, comprometida con la salud de la piel.'
+        }, {
+            id: 7,
+            nombre: 'Dr. Fernando Núñez',
+            especialidad: 'Ginecología',
+            estrellas: 4.9,
+            experiencia: 14,
+            universidad: 'UNAM · Facultad de Medicina',
+            cedula: 'Cédula Profesional: 7890123',
+            certificaciones: ['Consejo Mexicano de Ginecología', 'Asociación de Ginecólogos Mexicanos'],
+            idiomas: ['Español', 'English'],
+            modalidades: ['presencial', 'virtual'],
+            disponibilidad: true,
+            areas: ['Ginecología general', 'Ultrasonido', 'Papanicolaou', 'Planificación familiar'],
+            hospitales: 'Clínica Vital · Hospital ABC',
+            premios: ['🏆 Excelencia en Ginecología 2024', '⭐ 99% satisfacción'],
+            biografia: 'Ginecólogo con amplia trayectoria en salud de la mujer, especializado en ultrasonido y planificación familiar.'
+        }, {
+            id: 8,
+            nombre: 'Dra. Patricia Ríos',
+            especialidad: 'Cardiología',
+            estrellas: 4.8,
+            experiencia: 13,
+            universidad: 'Universidad Autónoma Metropolitana',
+            cedula: 'Cédula Profesional: 8901234',
+            certificaciones: ['Consejo Mexicano de Cardiología'],
+            idiomas: ['Español', 'English'],
+            modalidades: ['presencial', 'virtual'],
+            disponibilidad: false,
+            areas: ['Insuficiencia cardíaca', 'Cardiopatías congénitas', 'Prevención cardiovascular'],
+            hospitales: 'Clínica Vital · Centro Cardiológico',
+            premios: ['⭐ 97% satisfacción'],
+            biografia: 'Cardióloga con especialidad en insuficiencia cardíaca y cardiopatías congénitas, dedicada a la prevención y cuidado cardiovascular.'
+        }, {
+            id: 9,
+            nombre: 'Dr. Hugo Castro',
+            especialidad: 'Oftalmología',
+            estrellas: 4.6,
+            experiencia: 10,
+            universidad: 'UNAM · Facultad de Medicina',
+            cedula: 'Cédula Profesional: 9012345',
+            certificaciones: ['Consejo Mexicano de Oftalmología'],
+            idiomas: ['Español', 'English'],
+            modalidades: ['presencial'],
+            disponibilidad: true,
+            areas: ['Examen de la vista', 'Lentes de contacto', 'Cirugía de cataratas', 'Glaucoma'],
+            hospitales: 'Clínica Vital · Centro Oftalmológico',
+            premios: ['⭐ 95% satisfacción'],
+            biografia: 'Oftalmólogo con experiencia en cirugía de cataratas y glaucoma, comprometido con la salud visual de sus pacientes.'
+        }, {
+            id: 10,
+            nombre: 'Dra. Cecilia Rangel',
+            especialidad: 'Gastroenterología',
+            estrellas: 4.7,
+            experiencia: 11,
+            universidad: 'UNAM · Facultad de Medicina',
+            cedula: 'Cédula Profesional: 0123456',
+            certificaciones: ['Consejo Mexicano de Gastroenterología'],
+            idiomas: ['Español', 'English', 'Français'],
+            modalidades: ['presencial'],
+            disponibilidad: true,
+            areas: ['Endoscopia', 'Colonoscopia', 'Trastornos digestivos', 'Nutrición clínica'],
+            hospitales: 'Clínica Vital · Hospital ABC',
+            premios: ['⭐ 96% satisfacción'],
+            biografia: 'Gastroenteróloga con especialidad en endoscopia y trastornos digestivos, dedicada a la salud gastrointestinal.'
+        }];
+
+        // ============================================================
+        // FUNCIÓN PARA OBTENER INICIALES
+        // ============================================================
+        function obtenerIniciales(nombre) {
+            const partes = nombre.split(' ');
+            let iniciales = '';
+            if (partes.length >= 2) {
+                iniciales = partes[0].charAt(0) + partes[1].charAt(0);
+            } else {
+                iniciales = nombre.substring(0, 2).toUpperCase();
+            }
+            return iniciales.toUpperCase();
+        }
+
+        // ============================================================
+        // COLORES PARA AVATAR (basados en id)
+        // ============================================================
+        const coloresAvatar = [
+            '#0b8c5e', '#2563eb', '#7c3aed', '#dc2626', '#f97316',
+            '#0891b2', '#8b5cf6', '#059669', '#d97706', '#4f46e5'
+        ];
+
+        // ============================================================
+        // RENDERIZADO DE TARJETAS
+        // ============================================================
+        const grid = document.getElementById('gridMedicos');
+        let filtroActual = 'todas';
+        let busquedaActual = '';
+
+        function renderizarMedicos() {
+            const filtrados = medicosData.filter(med => {
+                const coincideEspecialidad = filtroActual === 'todas' || med.especialidad === filtroActual;
+                const coincideBusqueda = med.nombre.toLowerCase().includes(busquedaActual.toLowerCase()) ||
+                    med.especialidad.toLowerCase().includes(busquedaActual.toLowerCase());
+                return coincideEspecialidad && coincideBusqueda;
+            });
+
+            if (filtrados.length === 0) {
+                grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; padding:40px 0; color:#64748b;">No hay médicos que coincidan con tu búsqueda.</p>`;
+                return;
+            }
+
+            grid.innerHTML = filtrados.map(med => {
+                const iniciales = obtenerIniciales(med.nombre);
+                const colorFondo = coloresAvatar[(med.id - 1) % coloresAvatar.length];
+                return `
+                <div class="medico-card fade-in">
+                    <div class="avatar" style="background-color: ${colorFondo};">
+                        ${iniciales}
+                        <span class="etiqueta-disponible ${med.disponibilidad ? '' : 'lleno'}">
+                            <i class="fas fa-circle"></i> ${med.disponibilidad ? 'Disponible hoy' : 'Agenda llena'}
+                        </span>
+                    </div>
+                    <div class="contenido">
+                        <div class="cabecera">
+                            <h3>${med.nombre}</h3>
+                            <span class="estrellas">${'★'.repeat(Math.floor(med.estrellas))}${med.estrellas % 1 >= 0.5 ? '★' : ''}</span>
+                        </div>
+                        <div class="especialidad">${med.especialidad}</div>
+                        <div class="experiencia"><i class="fas fa-briefcase"></i> ${med.experiencia} años de experiencia</div>
+                        <div class="universidad"><i class="fas fa-university"></i> ${med.universidad}</div>
+                        <div class="cedula"><i class="fas fa-id-card"></i> ${med.cedula}</div>
+                        <div class="certificaciones">
+                            ${med.certificaciones.map(c => `<span>${c}</span>`).join('')}
+                        </div>
+                        <div class="idiomas">
+                            ${med.idiomas.map(idioma => `<span><i class="fas fa-language"></i> ${idioma}</span>`).join('')}
+                        </div>
+                        <div class="modalidades">
+                            ${med.modalidades.includes('presencial') ? `<span class="presencial"><i class="fas fa-building"></i> Presencial</span>` : ''}
+                            ${med.modalidades.includes('virtual') ? `<span class="virtual"><i class="fas fa-video"></i> Videoconsulta</span>` : ''}
+                            ${med.modalidades.includes('urgencias') ? `<span class="presencial" style="background:#fee2e2;border-color:#fca5a5;color:#dc2626;"><i class="fas fa-ambulance"></i> Urgencias</span>` : ''}
+                        </div>
+                        <div class="areas">
+                            ${med.areas.map(a => `<span><i class="fas fa-check-circle"></i> ${a}</span>`).join('')}
+                        </div>
+                        <div class="hospitales"><i class="fas fa-hospital"></i> ${med.hospitales}</div>
+                        <div class="premios">
+                            ${med.premios.map(p => `<span>${p}</span>`).join('')}
+                        </div>
+                        <div class="biografia">${med.biografia}</div>
+                        <div class="botones-card">
+                            <a href="citas.html" class="btn-agendar"><i class="fas fa-calendar-check"></i> Agendar cita</a>
+                            <a href="#" class="btn-perfil"><i class="fas fa-user"></i> Ver perfil</a>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        // ============================================================
+        // FILTROS CON PESTAÑAS
+        // ============================================================
+        const filtrosBtns = document.querySelectorAll('#filtrosEspecialidad button');
+        filtrosBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filtrosBtns.forEach(b => b.classList.remove('activo'));
+                btn.classList.add('activo');
+                filtroActual = btn.dataset.especialidad;
+                renderizarMedicos();
+            });
+        });
+
+        const busquedaInput = document.getElementById('buscarMedico');
+        busquedaInput.addEventListener('input', (e) => {
+            busquedaActual = e.target.value;
+            renderizarMedicos();
+        });
+
+        // Render inicial
+        renderizarMedicos();
+
+        // ============================================================
+        // HEADER SHRINK AL SCROLL
+        // ============================================================
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 80) {
+                header.classList.add('shrink');
+            } else {
+                header.classList.remove('shrink');
+            }
+        });
+
+        // ============================================================
+        // CHAT FLOTANTE
+        // ============================================================
+        const chatToggle = document.getElementById('chatToggle');
+        const chatVentana = document.getElementById('chatVentana');
+        const cerrarChat = document.getElementById('cerrarChat');
+        const chatMensajes = document.getElementById('chatMensajes');
+        const chatOpciones = document.querySelectorAll('.chat-opciones button');
+
+        chatToggle.addEventListener('click', () => {
+            chatVentana.classList.toggle('abierto');
+        });
+
+        cerrarChat.addEventListener('click', () => {
+            chatVentana.classList.remove('abierto');
+        });
+
+        chatOpciones.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const resp = btn.dataset.resp;
+                const msg = document.createElement('div');
+                msg.className = 'chat-mensaje';
+                msg.textContent = resp;
+                chatMensajes.appendChild(msg);
+                chatMensajes.scrollTop = chatMensajes.scrollHeight;
+                setTimeout(() => {
+                    const bot = document.createElement('div');
+                    bot.className = 'chat-mensaje bot';
+                    bot.textContent = '✅ ¡Gracias! Un asesor te contactará en breve.';
+                    chatMensajes.appendChild(bot);
+                    chatMensajes.scrollTop = chatMensajes.scrollHeight;
+                }, 600);
+            });
+        });
+
+        // ============================================================
+        // CARRITO (placeholder)
+        // ============================================================
+        document.getElementById('cartIcon').addEventListener('click', () => {
+            alert('Carrito de compras (Farmacia) - Próximamente');
+        });
+    </script>
+</body>
+</html>

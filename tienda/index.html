@@ -1,0 +1,3457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOID · define yourself</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            color: #000000;
+            line-height: 1.6;
+            padding-top: 130px;
+            opacity: 0;
+            animation: fadeInBody 0.8s ease forwards;
+        }
+        @keyframes fadeInBody {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #000;
+            color: #fff;
+            padding: 6px 20px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            z-index: 1001;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+        .top-bar span {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .top-bar .separator {
+            opacity: 0.3;
+            margin: 0 4px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: fixed;
+            top: 34px;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            padding: 12px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        .header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            padding: 8px 40px;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+            text-decoration: none;
+            color: #000;
+        }
+        .logo-wrapper .logo-main {
+            font-weight: 900;
+            font-size: 22px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+        }
+        .logo-wrapper .logo-sub {
+            font-size: 9px;
+            font-weight: 400;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            opacity: 0.5;
+            margin-top: 2px;
+        }
+
+        .header nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .header nav a {
+            color: #000;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+            padding: 4px 0;
+            position: relative;
+        }
+        .header nav a:hover {
+            border-bottom-color: #000;
+        }
+
+        /* ===== MENÚ DERECHA (iconos) ===== */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        .nav-actions .action-link {
+            color: #000;
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            position: relative;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: inherit;
+            padding: 4px 6px;
+        }
+        .nav-actions .action-link:hover {
+            opacity: 0.6;
+        }
+        .nav-actions .action-link .label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .cart-header-btn {
+            background: rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 60px;
+            padding: 8px 18px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #000;
+            background: transparent;
+        }
+        .cart-header-btn:hover {
+            background: rgba(0, 0, 0, 0.06);
+        }
+        .cart-count-badge {
+            background: #000;
+            color: #fff;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            font-size: 11px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        .cart-count-badge.pulse {
+            transform: scale(1.3);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+            position: relative;
+            background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDgwIDgwIj48cmVjdCB3aWR0aD0iODAiIGhlaWdodD0iODAiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuMDMiLz48cGF0aCBkPSJNMzAgMTBsMTAgMTBMMzAgMzBMMjAgMjBMMzAgMTB6IE01MCAzMGwxMCAxMEw1MCA1MEw0MCA0MEw1MCAzMHoiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuMDMiLz48L3N2Zz4=');
+            opacity: 0.2;
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+        .hero-content .tagline {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: #fff;
+            opacity: 0.6;
+            margin-bottom: 16px;
+        }
+        .hero-content h1 {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -3px;
+            color: #fff;
+            line-height: 0.9;
+            margin-bottom: 8px;
+        }
+        .hero-content h1 span {
+            color: #ff6b35;
+        }
+        .hero-content .sub {
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: #fff;
+            opacity: 0.8;
+            margin-bottom: 16px;
+        }
+        .hero-content p {
+            font-size: 18px;
+            max-width: 540px;
+            margin: 0 auto 32px;
+            color: #ccc;
+            font-weight: 300;
+        }
+        .hero-content .btn-group {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            font-family: 'Inter', sans-serif;
+            padding: 16px 40px;
+            border: none;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 60px;
+        }
+        .btn-primary {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.1);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(255, 255, 255, 0.2);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+        }
+        .btn-outline:hover {
+            background: #fff;
+            color: #000;
+            transform: translateY(-3px);
+        }
+
+        /* ===== SECCIONES ===== */
+        section {
+            padding: 80px 0;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+        section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 48px;
+        }
+        section h2 span {
+            opacity: 0.3;
+        }
+
+        /* ===== CATEGORÍAS ===== */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .category-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #fff;
+            background: #1a1a1a;
+            transition: transform 0.4s, box-shadow 0.4s;
+            min-height: 200px;
+        }
+        .category-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        .category-item .bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.5;
+            transition: opacity 0.4s;
+            background-color: #2a2a2a;
+        }
+        .category-item:hover .bg {
+            opacity: 0.8;
+        }
+        .category-item .content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+        }
+        .category-item .content .icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .category-item .content .name {
+            font-weight: 700;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+        .cat-camisas .bg {
+            background: #2c3e50;
+        }
+        .cat-jeans .bg {
+            background: #34495e;
+        }
+        .cat-vestidos .bg {
+            background: #7f8c8d;
+        }
+        .cat-chaquetas .bg {
+            background: #2c3e50;
+        }
+        .cat-tennis .bg {
+            background: #1a1a2e;
+        }
+        .cat-bolsos .bg {
+            background: #4a4a4a;
+        }
+        .cat-accesorios .bg {
+            background: #3d3d3d;
+        }
+        .cat-ropa-bano .bg {
+            background: #2c3e50;
+        }
+
+        /* ===== LOOKBOOK ===== */
+        .lookbook-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+        .look-item {
+            background: #f5f5f5;
+            border-radius: 16px;
+            padding: 40px 24px;
+            text-align: center;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid #eee;
+            transition: all 0.3s;
+        }
+        .look-item:hover {
+            background: #fff;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+        }
+        .look-item .icon {
+            font-size: 52px;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .look-item .look-title {
+            font-weight: 700;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .look-item .look-desc {
+            font-size: 14px;
+            color: #666;
+            margin-top: 4px;
+            font-weight: 300;
+        }
+
+        /* ===== PRODUCTOS ===== */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .product-card {
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #eee;
+            transition: all 0.3s;
+            position: relative;
+            cursor: default;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+            border-color: #ddd;
+        }
+        .product-card .product-image-wrap {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1/1;
+            background: #f8f8f8;
+        }
+        .product-card .product-image-wrap .primary-img,
+        .product-card .product-image-wrap .secondary-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.4s, transform 0.4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: #aaa;
+        }
+        .product-card .product-image-wrap .secondary-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transform: scale(1.02);
+        }
+        .product-card:hover .product-image-wrap .primary-img {
+            opacity: 0;
+            transform: scale(1.05);
+        }
+        .product-card:hover .product-image-wrap .secondary-img {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .product-card .product-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 16px 24px;
+            background: linear-gradient(transparent, rgba(255, 255, 255, 0.9) 40%);
+            transform: translateY(100%);
+            transition: transform 0.35s ease;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .product-card:hover .product-overlay {
+            transform: translateY(0);
+        }
+        .product-card .product-overlay .btn-overlay {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1;
+            min-width: 100px;
+        }
+        .product-card .product-overlay .btn-overlay:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+        .product-card .product-overlay .btn-overlay.quick-view {
+            background: transparent;
+            border: 2px solid #000;
+            color: #000;
+        }
+        .product-card .product-overlay .btn-overlay.quick-view:hover {
+            background: #000;
+            color: #fff;
+        }
+        .product-card .product-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #000;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 12px;
+            border-radius: 30px;
+            z-index: 5;
+        }
+        .product-card .product-tag.offer {
+            background: #d32f2f;
+        }
+        .product-card .product-info {
+            padding: 16px 18px 20px;
+            text-align: center;
+        }
+        .product-card .product-info h3 {
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+        .product-card .product-info .price {
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        /* ===== CONFIANZA ===== */
+        .trust {
+            background: #f8f8f8;
+            padding: 50px 40px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        .trust-item .trust-icon {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .trust-item .trust-title {
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .trust-item .trust-desc {
+            font-size: 13px;
+            opacity: 0.6;
+            font-weight: 300;
+        }
+
+        /* ===== INSTAGRAM ===== */
+        .instagram {
+            padding: 60px 40px;
+            text-align: center;
+        }
+        .instagram h2 {
+            margin-bottom: 12px;
+        }
+        .instagram .sub {
+            color: #666;
+            margin-bottom: 32px;
+            font-size: 16px;
+        }
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .instagram-grid .insta-item {
+            aspect-ratio: 1/1;
+            background: #eee;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: #aaa;
+            transition: all 0.3s;
+            border: 1px solid #ddd;
+        }
+        .instagram-grid .insta-item:hover {
+            transform: scale(1.03);
+            border-color: #000;
+        }
+
+        /* ===== OFERTAS ===== */
+        .offers {
+            text-align: center;
+            padding: 100px 40px;
+            border-top: 1px solid #eee;
+        }
+        .offers h2 {
+            font-size: 48px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 16px;
+        }
+        .offers h2 span {
+            color: #000;
+        }
+        .offers p {
+            font-size: 18px;
+            max-width: 540px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+            color: #555;
+        }
+        .offers .btn {
+            background: #000;
+            color: #fff;
+            padding: 18px 56px;
+            border-radius: 60px;
+            font-size: 14px;
+            font-weight: 700;
+            border: none;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+        .offers .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 50px 40px 24px;
+            border-top: 3px solid #ff6b35;
+        }
+        .footer * {
+            color: #fff !important;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        .footer-col h4 {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+            color: #fff;
+        }
+        .footer-col p,
+        .footer-col a {
+            font-size: 14px;
+            color: #ccc !important;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 6px;
+            transition: color 0.2s;
+        }
+        .footer-col a:hover {
+            color: #ff6b35 !important;
+        }
+        .footer-col .brand {
+            font-weight: 900;
+            font-size: 22px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .footer-col .social {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+        }
+        .footer-col .social a {
+            font-size: 22px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+            color: #fff;
+        }
+        .footer-col .social a:hover {
+            opacity: 1;
+        }
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            opacity: 0.5;
+            flex-wrap: wrap;
+            gap: 10px;
+            color: #888 !important;
+        }
+
+        /* ===== CARRITO ===== */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        .cart-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .cart-panel {
+            position: fixed;
+            top: 0;
+            right: -440px;
+            width: 420px;
+            max-width: 90vw;
+            height: 100vh;
+            background: #fff;
+            box-shadow: -8px 0 40px rgba(0, 0, 0, 0.08);
+            z-index: 2001;
+            transition: right 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            display: flex;
+            flex-direction: column;
+            padding: 32px 24px 24px;
+            font-family: 'Inter', sans-serif;
+        }
+        .cart-panel.open {
+            right: 0;
+        }
+        .cart-panel .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            padding-bottom: 16px;
+            margin-bottom: 20px;
+        }
+        .cart-panel .cart-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .cart-panel .cart-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #000;
+            opacity: 0.4;
+            transition: 0.2s;
+            padding: 4px 8px;
+        }
+        .cart-panel .cart-close:hover {
+            opacity: 1;
+        }
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-bottom: 16px;
+        }
+        .cart-items::-webkit-scrollbar {
+            width: 4px;
+        }
+        .cart-items::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 8px;
+        }
+        .cart-item {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            font-size: 14px;
+        }
+        .cart-item .cart-thumb {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background: #f0f2f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .cart-item-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .cart-item-name {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .cart-item-price {
+            font-weight: 400;
+            color: #555;
+            font-size: 13px;
+        }
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .cart-item-qty {
+            font-weight: 600;
+            min-width: 24px;
+            text-align: center;
+        }
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.2s;
+            padding: 4px;
+        }
+        .cart-item-remove:hover {
+            color: #000;
+        }
+        .cart-footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            padding-top: 16px;
+        }
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .cart-actions-row {
+            display: flex;
+            gap: 12px;
+        }
+        .cart-actions-row button {
+            flex: 1;
+            padding: 12px 0;
+            border: none;
+            border-radius: 60px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-clear {
+            background: rgba(0, 0, 0, 0.04);
+            color: #000;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .btn-clear:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+        .btn-checkout {
+            background: #000;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+        .btn-checkout:hover {
+            background: #222;
+            transform: translateY(-2px);
+        }
+        .cart-empty {
+            text-align: center;
+            color: #888;
+            padding: 40px 0;
+            font-weight: 300;
+        }
+
+        /* ===== TOAST ===== */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000;
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 60px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .toast-notification.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ===== MODAL DE BÚSQUEDA ===== */
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            z-index: 4000;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding-top: 120px;
+        }
+        .search-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .search-modal {
+            background: #fff;
+            border-radius: 24px;
+            padding: 30px 35px;
+            max-width: 600px;
+            width: 92%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            transform: scale(0.92) translateY(-20px);
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            max-height: 70vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .search-overlay.open .search-modal {
+            transform: scale(1) translateY(0);
+        }
+        .search-modal .search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        .search-modal .search-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .search-modal .search-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.2s;
+            padding: 0 4px;
+        }
+        .search-modal .search-close:hover {
+            color: #000;
+        }
+        .search-modal input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            background: #f8f8f8;
+            transition: border 0.2s, box-shadow 0.2s;
+            margin-bottom: 16px;
+        }
+        .search-modal input:focus {
+            border-color: #000;
+            outline: none;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.04);
+        }
+        .search-results {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .search-results::-webkit-scrollbar {
+            width: 4px;
+        }
+        .search-results::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 8px;
+        }
+        .search-result-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 8px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+            color: #000;
+        }
+        .search-result-item:hover {
+            background: #f8f8f8;
+        }
+        .search-result-item .result-icon {
+            font-size: 32px;
+            width: 48px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .search-result-item .result-info {
+            flex: 1;
+        }
+        .search-result-item .result-info .result-name {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .search-result-item .result-info .result-price {
+            font-size: 14px;
+            color: #555;
+        }
+        .search-no-results {
+            text-align: center;
+            color: #888;
+            padding: 30px 0;
+            font-weight: 300;
+        }
+
+        /* ===== MODAL DE CUENTA ===== */
+        .account-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .account-modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .account-modal {
+            background: #fff;
+            border-radius: 24px;
+            padding: 40px 35px;
+            max-width: 520px;
+            width: 92%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            transform: scale(0.92) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .account-modal-overlay.open .account-modal {
+            transform: scale(1) translateY(0);
+        }
+        .account-modal::-webkit-scrollbar {
+            width: 4px;
+        }
+        .account-modal::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 8px;
+        }
+        .account-modal .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.2s;
+            padding: 4px 8px;
+        }
+        .account-modal .modal-close:hover {
+            color: #000;
+        }
+        .account-modal h2 {
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .account-modal .sub {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .account-modal .divider-text {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: #999;
+            font-size: 13px;
+            margin: 16px 0;
+        }
+        .account-modal .divider-text::before,
+        .account-modal .divider-text::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 14px;
+            border: 2px solid #e0e0e0;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+        .social-btn.google:hover {
+            border-color: #4285f4;
+            background: #f1f5fe;
+        }
+        .social-btn.apple:hover {
+            border-color: #000;
+            background: #f5f5f5;
+        }
+        .account-modal .form-group {
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .account-modal .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .account-modal .form-group .input-with-icon {
+            position: relative;
+        }
+        .account-modal .form-group .input-with-icon .icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .account-modal .form-group .input-with-icon input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            transition: border 0.2s, box-shadow 0.2s;
+            background: #f8f8f8;
+        }
+        .account-modal .form-group .input-with-icon input:focus {
+            border-color: #000;
+            outline: none;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.04);
+        }
+        .account-modal .form-group .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+            padding: 4px;
+        }
+        .account-modal .form-group .toggle-password:hover {
+            opacity: 1;
+        }
+        .account-modal .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 12px 0 18px;
+            font-size: 14px;
+        }
+        .account-modal .form-options label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 400;
+            color: #555;
+            cursor: pointer;
+        }
+        .account-modal .form-options label input[type="checkbox"] {
+            accent-color: #000;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+        .account-modal .form-options a {
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px solid transparent;
+            transition: border 0.2s;
+        }
+        .account-modal .form-options a:hover {
+            border-bottom-color: #000;
+        }
+        .account-modal .btn-primary-modal {
+            width: 100%;
+            padding: 14px;
+            background: #000;
+            color: #fff;
+            border: none;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 4px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .account-modal .btn-primary-modal:hover {
+            background: #222;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        .account-modal .btn-primary-modal:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .account-modal .btn-primary-modal .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        .account-modal .btn-primary-modal.loading .spinner {
+            display: block;
+        }
+        .account-modal .btn-primary-modal.loading .btn-text {
+            display: none;
+        }
+        .account-modal .register-cta {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 14px;
+            color: #666;
+        }
+        .account-modal .register-cta button {
+            background: none;
+            border: none;
+            color: #000;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            text-decoration: underline;
+            transition: opacity 0.2s;
+            padding: 2px 4px;
+        }
+        .account-modal .register-cta button:hover {
+            opacity: 0.7;
+        }
+        .account-modal .benefits {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 16px;
+            margin: 18px 0 10px;
+            padding: 16px;
+            background: #f8f8f8;
+            border-radius: 16px;
+        }
+        .account-modal .benefits .benefit {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #333;
+        }
+        .account-modal .benefits .benefit .icon {
+            font-size: 16px;
+        }
+        .account-modal .error-msg {
+            color: #d32f2f;
+            font-size: 13px;
+            margin-top: 4px;
+            display: none;
+            padding: 8px 12px;
+            background: #ffebee;
+            border-radius: 8px;
+            animation: shake 0.4s ease;
+        }
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-6px);
+            }
+            75% {
+                transform: translateX(6px);
+            }
+        }
+        .account-modal .error-msg.show {
+            display: block;
+        }
+        .account-modal .success-msg {
+            color: #2e7d32;
+            font-size: 14px;
+            margin-top: 12px;
+            text-align: center;
+            display: none;
+            padding: 8px;
+            background: #e8f5e9;
+            border-radius: 8px;
+        }
+        .account-modal .success-msg.show {
+            display: block;
+        }
+        .welcome-back {
+            display: none;
+            background: #f0f7ff;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #000;
+        }
+        .welcome-back.show {
+            display: block;
+        }
+        .welcome-back .greeting {
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .welcome-back .sub {
+            font-size: 14px;
+            color: #555;
+        }
+        .account-dashboard {
+            display: none;
+        }
+        .account-dashboard.show {
+            display: block;
+        }
+        .dashboard-profile {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 16px 0;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 24px;
+        }
+        .dashboard-profile .avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: #888;
+            border: 2px solid #000;
+        }
+        .dashboard-profile .info h3 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .dashboard-profile .info .member-since {
+            font-size: 13px;
+            color: #888;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .dashboard-card {
+            background: #f8f8f8;
+            border-radius: 16px;
+            padding: 16px;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        .dashboard-card:hover {
+            background: #f0f0f0;
+            border-color: #ddd;
+        }
+        .dashboard-card .card-icon {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .dashboard-card .card-title {
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .dashboard-card .card-desc {
+            font-size: 13px;
+            color: #666;
+        }
+        .dashboard-section {
+            margin-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 16px;
+            display: none;
+        }
+        .dashboard-section.show {
+            display: block;
+        }
+        .dashboard-section h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .dashboard-section .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+        .dashboard-section .item .status {
+            font-weight: 600;
+            font-size: 13px;
+            padding: 2px 12px;
+            border-radius: 30px;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .dashboard-section .item .status.pending {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        .dashboard-section .item .status.shipped {
+            background: #e3f2fd;
+            color: #0d47a1;
+        }
+        .account-dropdown {
+            position: absolute;
+            top: calc(100% + 12px);
+            right: 0;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            padding: 8px 0;
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: all 0.25s ease;
+            z-index: 1002;
+        }
+        .account-dropdown.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .account-dropdown a {
+            display: block;
+            padding: 10px 20px;
+            color: #000;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .account-dropdown a:hover {
+            background: #f0f2f6;
+        }
+        .account-dropdown .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 4px 12px;
+        }
+        .account-dropdown .user-name {
+            padding: 10px 20px;
+            font-weight: 700;
+            font-size: 14px;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 4px;
+        }
+
+        /* ===== MODAL DE PAGO CON DIRECCIÓN ===== */
+        .payment-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 5000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .payment-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .payment-modal {
+            background: #fff;
+            border-radius: 24px;
+            padding: 36px 32px 28px;
+            max-width: 520px;
+            width: 92%;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+            transform: scale(0.92) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .payment-overlay.open .payment-modal {
+            transform: scale(1) translateY(0);
+        }
+        .payment-modal .payment-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.2s;
+            padding: 4px 8px;
+        }
+        .payment-modal .payment-close:hover {
+            color: #000;
+        }
+        .payment-modal h2 {
+            font-size: 22px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .payment-modal .sub {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .payment-modal h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-top: 18px;
+            margin-bottom: 12px;
+        }
+        .payment-modal .form-group {
+            margin-bottom: 14px;
+        }
+        .payment-modal .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .payment-modal .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            background: #f8f8f8;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        .payment-modal .form-group input:focus {
+            border-color: #000;
+            outline: none;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.04);
+        }
+        .payment-modal .form-row {
+            display: flex;
+            gap: 16px;
+        }
+        .payment-modal .form-row .form-group.half {
+            flex: 1;
+        }
+        .payment-modal .payment-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 12px 0;
+            border-top: 1px solid #eee;
+            margin-top: 16px;
+            margin-bottom: 16px;
+        }
+        .payment-modal .btn-pay {
+            width: 100%;
+            padding: 14px;
+            background: #000;
+            color: #fff;
+            border: none;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .payment-modal .btn-pay:hover {
+            background: #222;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        .payment-modal .btn-pay:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .payment-modal .btn-pay .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        .payment-modal .btn-pay.loading .spinner {
+            display: block;
+        }
+        .payment-modal .btn-pay.loading .pay-text {
+            display: none;
+        }
+        .payment-error {
+            color: #d32f2f;
+            font-size: 13px;
+            margin-top: 12px;
+            display: none;
+            padding: 8px 12px;
+            background: #ffebee;
+            border-radius: 8px;
+            animation: shake 0.4s ease;
+        }
+        .payment-error.show {
+            display: block;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .products-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .trust {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .instagram-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero-content h1 {
+                font-size: 56px;
+            }
+        }
+        @media (max-width: 900px) {
+            body {
+                padding-top: 110px;
+            }
+            .top-bar {
+                font-size: 10px;
+                padding: 4px 12px;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+            .header {
+                padding: 8px 20px;
+                top: 28px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .header nav {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .header nav a {
+                font-size: 11px;
+            }
+            .nav-actions .action-link .label {
+                display: none;
+            }
+            .hero {
+                min-height: 70vh;
+                padding: 20px;
+            }
+            .hero-content h1 {
+                font-size: 42px;
+            }
+            .hero-content .sub {
+                font-size: 20px;
+            }
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .products-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .cart-panel {
+                width: 340px;
+                right: -360px;
+            }
+            .lookbook-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .trust {
+                grid-template-columns: 1fr 1fr;
+                padding: 30px 20px;
+                gap: 20px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .account-modal .benefits {
+                grid-template-columns: 1fr;
+            }
+            .search-modal {
+                padding: 20px;
+                margin-top: 40px;
+            }
+            .payment-modal {
+                padding: 24px 16px;
+            }
+            .payment-modal .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+        @media (max-width: 600px) {
+            body {
+                padding-top: 100px;
+            }
+            .top-bar {
+                font-size: 9px;
+                padding: 4px 8px;
+                gap: 8px;
+                flex-direction: column;
+                line-height: 1.4;
+            }
+            .header {
+                padding: 6px 12px;
+                top: 44px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 4px;
+            }
+            .header .logo-wrapper {
+                align-items: center;
+            }
+            .header nav {
+                justify-content: center;
+                gap: 10px;
+            }
+            .header nav a {
+                font-size: 10px;
+                letter-spacing: 0.5px;
+            }
+            .nav-actions {
+                justify-content: center;
+                gap: 12px;
+            }
+            .cart-header-btn {
+                padding: 4px 12px;
+                font-size: 11px;
+            }
+            .hero {
+                padding: 20px;
+                min-height: 60vh;
+            }
+            .hero-content h1 {
+                font-size: 32px;
+                letter-spacing: -1px;
+            }
+            .hero-content .sub {
+                font-size: 16px;
+                letter-spacing: 3px;
+            }
+            .hero-content p {
+                font-size: 15px;
+            }
+            section {
+                padding: 40px 16px;
+            }
+            .categories-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .category-item {
+                min-height: 140px;
+            }
+            .category-item .content .icon {
+                font-size: 32px;
+            }
+            .category-item .content .name {
+                font-size: 14px;
+            }
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .product-card .product-overlay {
+                transform: translateY(0);
+                position: relative;
+                padding: 12px 16px 16px;
+                background: transparent;
+                flex-wrap: wrap;
+            }
+            .product-card .product-overlay .btn-overlay {
+                flex: 1;
+                min-width: 80px;
+                font-size: 10px;
+                padding: 8px 12px;
+            }
+            .product-card .product-image-wrap .secondary-img {
+                display: none;
+            }
+            .product-card:hover .product-image-wrap .primary-img {
+                opacity: 1;
+                transform: none;
+            }
+            .lookbook-grid {
+                grid-template-columns: 1fr;
+            }
+            .trust {
+                grid-template-columns: 1fr 1fr;
+                padding: 24px 16px;
+                gap: 16px;
+            }
+            .trust-item .trust-icon {
+                font-size: 24px;
+            }
+            .offers h2 {
+                font-size: 30px;
+            }
+            .offers {
+                padding: 60px 16px;
+            }
+            .footer {
+                padding: 24px 16px;
+            }
+            .cart-panel {
+                width: 100%;
+                max-width: 100%;
+                right: -100%;
+                padding: 20px 16px;
+            }
+            .toast-notification {
+                font-size: 12px;
+                padding: 10px 18px;
+                white-space: normal;
+                max-width: 90%;
+            }
+            .account-modal {
+                padding: 24px 16px;
+                max-width: 100%;
+            }
+            .account-modal h2 {
+                font-size: 20px;
+            }
+            .instagram-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .search-modal {
+                padding: 16px;
+                max-height: 80vh;
+            }
+            .search-modal input {
+                font-size: 14px;
+                padding: 12px 14px;
+            }
+            .payment-modal {
+                padding: 20px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="top-bar">
+        <span>🚚 Envío gratis en compras mayores a $999</span>
+        <span class="separator">|</span>
+        <span>12 MSI sin intereses</span>
+        <span class="separator">|</span>
+        <span>🔄 Cambios sin costo</span>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header" id="mainHeader">
+        <a href="index.html" class="logo-wrapper">
+            <span class="logo-main">VOID</span>
+            <span class="logo-sub">define yourself</span>
+        </a>
+
+        <nav>
+            <a href="#hero">Inicio</a>
+            <a href="#products">Shop</a>
+            <a href="#nuevos">Nuevos</a>
+            <a href="colecciones.html">Colecciones</a>
+            <a href="#lookbook">Lookbook</a>
+            <a href="#offers">Ofertas</a>
+            <a href="#contacto">Contacto</a>
+        </nav>
+
+        <div class="nav-actions">
+            <button class="action-link" id="searchBtn" aria-label="Buscar">
+                <span>🔍</span>
+            </button>
+            <button class="action-link" id="favoritesBtn" aria-label="Favoritos">
+                <span>❤️</span>
+            </button>
+            <div style="position: relative; display: inline-block;">
+                <button class="action-link" id="accountBtn" aria-label="Mi cuenta">
+                    <span>👤</span>
+                    <span class="label" id="accountLabel">Cuenta</span>
+                </button>
+                <div class="account-dropdown" id="accountDropdown">
+                    <div class="user-name" id="dropdownUserName">Usuario</div>
+                    <a href="#" id="dropdownProfile">👤 Mi perfil</a>
+                    <div class="divider"></div>
+                    <a href="#" id="dropdownLogout">🚪 Cerrar sesión</a>
+                </div>
+            </div>
+            <button class="cart-header-btn" id="openCartBtn">
+                <span>🛒</span>
+                <span class="cart-count-badge" id="cartCount">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== TOAST ===== -->
+    <div id="toastMessage" class="toast-notification">✅ Producto añadido</div>
+
+    <!-- ===== CARRITO PANEL ===== -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-header">
+            <h2>Tu Carrito</h2>
+            <button class="cart-close" id="closeCartBtn">✕</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty">🛒 El carrito está vacío</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total</span>
+                <span id="cartTotal">$0 MXN</span>
+            </div>
+            <div class="cart-actions-row">
+                <button class="btn-clear" id="clearCartBtn">Vaciar</button>
+                <button class="btn-checkout" id="checkoutBtn">Finalizar compra</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL DE BÚSQUEDA ===== -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-modal">
+            <div class="search-header">
+                <h2>🔍 Buscar</h2>
+                <button class="search-close" id="closeSearchBtn">✕</button>
+            </div>
+            <input type="text" id="searchInput" placeholder="Escribe el nombre de un producto..." autofocus>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL DE CUENTA ===== -->
+    <div class="account-modal-overlay" id="accountModal">
+        <div class="account-modal">
+            <button class="modal-close" id="closeAccountModal">✕</button>
+            <div id="authView">
+                <h2 id="modalTitle">Iniciar sesión</h2>
+                <p class="sub" id="modalSub">Accede a tu cuenta o regístrate</p>
+                <button class="social-btn google" id="googleBtn">🔵 Continuar con Google</button>
+                <button class="social-btn apple" id="appleBtn">⚫ Continuar con Apple</button>
+                <div class="divider-text">o inicia sesión con tu correo</div>
+                <form id="accountForm">
+                    <div class="form-group">
+                        <label for="modalEmail">Correo electrónico</label>
+                        <div class="input-with-icon">
+                            <span class="icon">✉</span>
+                            <input type="email" id="modalEmail" placeholder="tucorreo@ejemplo.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modalPassword">Contraseña</label>
+                        <div class="input-with-icon">
+                            <span class="icon">🔒</span>
+                            <input type="password" id="modalPassword" placeholder="••••••••" required minlength="6">
+                            <button type="button" class="toggle-password" id="togglePasswordBtn" aria-label="Mostrar contraseña">👁</button>
+                        </div>
+                        <div class="error-msg" id="modalError">Correo o contraseña incorrectos</div>
+                        <div class="success-msg" id="modalSuccess">¡Cuenta creada exitosamente!</div>
+                    </div>
+
+                    <!-- ====== CAMPOS DE DIRECCIÓN (solo en modo registro) ====== -->
+                    <div id="addressFields" style="display: none;">
+                        <div class="form-group">
+                            <label for="regStreet">Calle y número</label>
+                            <div class="input-with-icon">
+                                <span class="icon">🏠</span>
+                                <input type="text" id="regStreet" placeholder="Ej. Av. Reforma 123">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="regColonia">Colonia</label>
+                            <div class="input-with-icon">
+                                <span class="icon">📍</span>
+                                <input type="text" id="regColonia" placeholder="Colonia">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="regCity">Ciudad</label>
+                            <div class="input-with-icon">
+                                <span class="icon">🏙️</span>
+                                <input type="text" id="regCity" placeholder="Ciudad">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="regState">Estado</label>
+                            <div class="input-with-icon">
+                                <span class="icon">🗺️</span>
+                                <input type="text" id="regState" placeholder="Estado">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="regZip">Código postal</label>
+                            <div class="input-with-icon">
+                                <span class="icon">📮</span>
+                                <input type="text" id="regZip" placeholder="12345" maxlength="5">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="regPhone">Teléfono de contacto</label>
+                            <div class="input-with-icon">
+                                <span class="icon">📞</span>
+                                <input type="tel" id="regPhone" placeholder="55 1234 5678">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label><input type="checkbox" id="rememberMe"> Recordarme</label>
+                        <a href="#" id="forgotPasswordLink">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    <button type="submit" class="btn-primary-modal" id="modalSubmitBtn">
+                        <span class="spinner"></span>
+                        <span class="btn-text">Iniciar sesión</span>
+                    </button>
+                </form>
+                <div class="register-cta">
+                    ¿Aún no tienes cuenta? <button type="button" id="toggleModeBtn">Crear una cuenta →</button>
+                </div>
+                <div class="benefits">
+                    <div class="benefit"><span class="icon">✓</span> Consulta tus pedidos</div>
+                    <div class="benefit"><span class="icon">✓</span> Guarda tus favoritos</div>
+                    <div class="benefit"><span class="icon">✓</span> Compra más rápido</div>
+                    <div class="benefit"><span class="icon">✓</span> Historial de compras</div>
+                </div>
+                <div class="welcome-back" id="welcomeBack">
+                    <div class="greeting">👋 Bienvenido de nuevo</div>
+                    <div class="sub">Nos alegra verte nuevamente.</div>
+                </div>
+            </div>
+            <div class="account-dashboard" id="dashboardView">
+                <div class="dashboard-profile">
+                    <div class="avatar">👤</div>
+                    <div class="info">
+                        <h3 id="dashboardUserName">Usuario</h3>
+                        <div class="member-since" id="memberSince">Miembro desde 2026</div>
+                    </div>
+                </div>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card" data-section="orders"><span class="card-icon">📦</span><div class="card-title">Mis pedidos</div><div class="card-desc">Ver historial y estado</div></div>
+                    <div class="dashboard-card" data-section="favorites"><span class="card-icon">❤️</span><div class="card-title">Favoritos</div><div class="card-desc">Productos guardados</div></div>
+                    <div class="dashboard-card" data-section="addresses"><span class="card-icon">📍</span><div class="card-title">Direcciones</div><div class="card-desc">Gestiona tus envíos</div></div>
+                    <div class="dashboard-card" data-section="payments"><span class="card-icon">💳</span><div class="card-title">Métodos de pago</div><div class="card-desc">Tarjetas guardadas</div></div>
+                    <div class="dashboard-card" data-section="coupons"><span class="card-icon">🎁</span><div class="card-title">Cupones</div><div class="card-desc">Descuentos disponibles</div></div>
+                    <div class="dashboard-card" data-section="settings"><span class="card-icon">⚙</span><div class="card-title">Configuración</div><div class="card-desc">Editar perfil y preferencias</div></div>
+                </div>
+                <div class="dashboard-section" id="section-orders">
+                    <h4>📦 Mis pedidos</h4>
+                    <div class="item"><span>Pedido #1256 - Sudadera Oversize</span><span class="status">Entregado ✔</span></div>
+                    <div class="item"><span>Pedido #1257 - Hoodie Black</span><span class="status shipped">Enviado</span></div>
+                    <div class="item"><span>Pedido #1258 - Cargo Pants</span><span class="status pending">Preparando</span></div>
+                </div>
+                <div class="dashboard-section" id="section-favorites">
+                    <h4>❤️ Favoritos</h4>
+                    <div class="item"><span>Playera VOID</span><span>❤️</span></div>
+                    <div class="item"><span>Hoodie Black</span><span>❤️</span></div>
+                    <div class="item"><span>Cargo Pants</span><span>❤️</span></div>
+                </div>
+                <div class="dashboard-section" id="section-addresses">
+                    <h4>📍 Direcciones</h4>
+                    <div class="item"><span>Casa - Av. Reforma 123, CDMX</span><span>Editar</span></div>
+                    <div class="item"><span>Oficina - Insurgentes 456, CDMX</span><span>Editar</span></div>
+                </div>
+                <div class="dashboard-section" id="section-payments">
+                    <h4>💳 Métodos de pago</h4>
+                    <div class="item"><span>Visa **** 4532</span><span>Predeterminada</span></div>
+                    <div class="item"><span>Mastercard **** 6789</span><span>Agregar tarjeta</span></div>
+                </div>
+                <div class="dashboard-section" id="section-coupons">
+                    <h4>🎁 Cupones</h4>
+                    <div class="item"><span>VOID10 - 10% de descuento</span><span>Válido</span></div>
+                    <div class="item"><span>ENVIOGRATIS - Envío gratis</span><span>Válido</span></div>
+                </div>
+                <div class="dashboard-section" id="section-settings">
+                    <h4>⚙ Configuración</h4>
+                    <div class="item"><span>Editar perfil</span><span>→</span></div>
+                    <div class="item"><span>Cambiar contraseña</span><span>→</span></div>
+                    <div class="item"><span>Preferencias de notificaciones</span><span>→</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL DE PAGO CON DIRECCIÓN ===== -->
+    <div class="payment-overlay" id="paymentOverlay">
+        <div class="payment-modal">
+            <button class="payment-close" id="closePaymentBtn">✕</button>
+            <h2>💳 Pago con tarjeta</h2>
+            <p class="sub">Ingresa los datos de envío y tu tarjeta para finalizar la compra.</p>
+
+            <form id="paymentForm">
+                <h3>📍 Dirección de envío</h3>
+                <div class="form-group">
+                    <label for="shippingStreet">Calle y número</label>
+                    <input type="text" id="shippingStreet" placeholder="Ej. Av. Reforma 123" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="shippingColonia">Colonia</label>
+                        <input type="text" id="shippingColonia" placeholder="Colonia" required>
+                    </div>
+                    <div class="form-group half">
+                        <label for="shippingCity">Ciudad</label>
+                        <input type="text" id="shippingCity" placeholder="Ciudad" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="shippingState">Estado</label>
+                        <input type="text" id="shippingState" placeholder="Estado" required>
+                    </div>
+                    <div class="form-group half">
+                        <label for="shippingZip">Código postal</label>
+                        <input type="text" id="shippingZip" placeholder="12345" maxlength="5" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="shippingPhone">Teléfono de contacto</label>
+                    <input type="tel" id="shippingPhone" placeholder="55 1234 5678" required>
+                </div>
+
+                <h3>💳 Datos de la tarjeta</h3>
+                <div class="form-group">
+                    <label for="cardNumber">Número de tarjeta</label>
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="cardExpiry">Fecha de expiración</label>
+                        <input type="text" id="cardExpiry" placeholder="MM/AA" maxlength="5" required>
+                    </div>
+                    <div class="form-group half">
+                        <label for="cardCvv">CVV</label>
+                        <input type="text" id="cardCvv" placeholder="123" maxlength="4" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cardName">Nombre del titular</label>
+                    <input type="text" id="cardName" placeholder="Como aparece en la tarjeta" required>
+                </div>
+
+                <div class="payment-total">
+                    <span>Total a pagar</span>
+                    <span id="paymentTotal">$0 MXN</span>
+                </div>
+                <button type="submit" class="btn-pay" id="payBtn">
+                    <span class="spinner"></span>
+                    <span class="pay-text">Pagar ahora</span>
+                </button>
+                <div class="payment-error" id="paymentError"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== MAIN ===== -->
+    <main>
+
+        <!-- ===== HERO ===== -->
+        <section id="hero" class="hero">
+            <div class="hero-content">
+                <div class="tagline">✦ nueva colección 2026</div>
+                <h1>DEFINE <br><span>YOURSELF</span></h1>
+                <div class="sub">estilo sin reglas</div>
+                <p>La mejor ropa urbana para quienes buscan destacar. Calidad premium, diseño único.</p>
+                <div class="btn-group">
+                    <a href="#products" class="btn btn-primary">Comprar ahora</a>
+                    <a href="#lookbook" class="btn btn-outline">Ver Lookbook</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CATEGORÍAS ===== -->
+        <section id="categories" class="categories">
+            <h2>Categorías <span>✦</span></h2>
+            <div class="categories-grid">
+                <a href="camisas.html" class="category-item cat-camisas">
+                    <div class="bg"></div>
+                    <div class="content">
+                        <span class="icon">👕</span>
+                        <span class="name">Camisas</span>
+                    </div>
+                </a>
+                <a href="jeans.html" class="category-item cat-jeans">
+                    <div class="bg"></div>
+                    <div class="content">
+                        <span class="icon">👖</span>
+                        <span class="name">Jeans</span>
+                    </div>
+                </a>
+                <a href="vestidos.html" class="category-item cat-vestidos">
+                    <div class="bg"></div>
+                    <div class="content">
+                        <span class="icon">👗</span>
+                        <span class="name">Vestidos</span>
+                    </div>
+                </a>
+                <a href="chaquetas.html" class="category-item cat-chaquetas">
+                    <div class="bg"></div>
+                    <div class="content">
+                        <span class="icon">🧥</span>
+                        <span class="name">Chaquetas</span>
+                    </div>
+                </a>
+                <a href="tennis.html" class="category-item cat-tennis">
+                    <div class="bg"></div>
+                    <div class="content">
+                        <span class="icon">👟</span>
+                        <span class="name">Tennis</span>
+                    </div>
+                </a>
+                <a href="bolsos.html" class="category-item cat-bolsos">
+                    <div class="bg"></div>
+                    <div class="content">
+                        <span class="icon">👜</span>
+                        <span class="name">Bolsos</span>
+                    </div>
+                </a>
+                <a href="accesorios.html" class="category-item cat-accesorios">
+                    <div class="bg"></div>
+                    <div class="content">
+                        <span class="icon">🧢</span>
+                        <span class="name">Accesorios</span>
+                    </div>
+                </a>
+                <a href="ropa-bano.html" class="category-item cat-ropa-bano">
+                    <div class="bg"></div>
+                    <div class="content">
+                        <span class="icon">👙</span>
+                        <span class="name">Ropa de baño</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- ===== LOOKBOOK ===== -->
+        <section id="lookbook" class="lookbook">
+            <h2>Lookbook <span>✦</span></h2>
+            <div class="lookbook-grid">
+                <div class="look-item"><span class="icon">🧥</span><span class="look-title">Otoño 26</span><span class="look-desc">Chaquetas de entretiempo</span></div>
+                <div class="look-item"><span class="icon">👗</span><span class="look-title">Primavera</span><span class="look-desc">Vestidos fluidos</span></div>
+                <div class="look-item"><span class="icon">👟</span><span class="look-title">Urban</span><span class="look-desc">Calzado ligero</span></div>
+            </div>
+        </section>
+
+        <!-- ===== PRODUCTOS DESTACADOS ===== -->
+        <section id="products" class="products-main">
+            <h2>Productos destacados <span>✦</span></h2>
+            <div class="products-grid" id="allProducts">
+                <!-- Generado por JS -->
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="shop.html" class="btn btn-outline" style="border:2px solid #000; padding:12px 30px; display:inline-block; text-decoration:none; color:#000;">Ver todos los productos →</a>
+            </div>
+        </section>
+
+        <!-- ===== NUEVOS ===== -->
+        <section id="nuevos" class="products-main">
+            <h2>Nuevos Lanzamientos <span>✦</span></h2>
+            <div class="products-grid" id="nuevosGrid">
+                <!-- Generado por JS -->
+            </div>
+        </section>
+
+        <!-- ===== CONFIANZA ===== -->
+        <div class="trust">
+            <div class="trust-item">
+                <span class="trust-icon">🚚</span>
+                <span class="trust-title">Envíos a todo México</span>
+                <span class="trust-desc">Entrega rápida y segura</span>
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon">🔒</span>
+                <span class="trust-title">Pago seguro</span>
+                <span class="trust-desc">Datos protegidos</span>
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon">⭐</span>
+                <span class="trust-title">Calidad Premium</span>
+                <span class="trust-desc">Materiales de primera</span>
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon">↩️</span>
+                <span class="trust-title">Cambios fáciles</span>
+                <span class="trust-desc">30 días de garantía</span>
+            </div>
+        </div>
+
+        <!-- ===== INSTAGRAM ===== -->
+        <section class="instagram">
+            <h2>Instagram <span>✦</span></h2>
+            <p class="sub">Síguenos para más inspiración</p>
+            <div class="instagram-grid">
+                <div class="insta-item" style="background: #e8ecf2;">📷</div>
+                <div class="insta-item" style="background: #d5dce6;">📷</div>
+                <div class="insta-item" style="background: #e8ecf2;">📷</div>
+                <div class="insta-item" style="background: #d5dce6;">📷</div>
+            </div>
+        </section>
+
+        <!-- ===== OFERTAS ===== -->
+        <section id="offers" class="offers">
+            <h2>✦ <span>Ofertas</span> exclusivas</h2>
+            <p>Hasta 40% de descuento en nuestra colección de verano · por tiempo limitado</p>
+            <a href="ofertas.html" class="btn">Ver todas</a>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="brand">VOID</div>
+                <p style="opacity:0.6; margin-top:6px;">Define yourself.</p>
+                <p style="opacity:0.4; font-size:13px;">Moda sin etiquetas para quienes viven sin reglas.</p>
+                <div class="social">
+                    <a href="#" aria-label="Instagram">📷</a>
+                    <a href="#" aria-label="TikTok">🎵</a>
+                    <a href="#" aria-label="Facebook">📘</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Ayuda</h4>
+                <a href="#">Cambios y devoluciones</a>
+                <a href="#">Guía de tallas</a>
+                <a href="#">Preguntas frecuentes</a>
+                <a href="#">Contacto</a>
+            </div>
+            <div class="footer-col">
+                <h4>Políticas</h4>
+                <a href="#">Política de privacidad</a>
+                <a href="#">Términos y condiciones</a>
+                <a href="#">Aviso de privacidad</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p>📞 +52 55 5555 5555</p>
+                <p>✉️ hola@void.mx</p>
+                <p style="opacity:0.4;">Lun-Vie 10:00 - 19:00</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 VOID · Todos los derechos reservados</span>
+            <span>Hecho con ❤️ en México</span>
+        </div>
+    </footer>
+
+    <script>
+        // =========================================================
+        // 1. PRODUCTOS DE EJEMPLO (si no existe data.js)
+        // =========================================================
+        const PRODUCTOS = window.PRODUCTOS || [
+            { id: 1, nombre: 'Sudadera Oversize', precio: 1299, categoria: 'sudadera', tags: ['Nuevo'], icono: '🧥' },
+            { id: 2, nombre: 'Hoodie Black', precio: 1499, categoria: 'hoodie', tags: ['Nuevo'], icono: '🧥' },
+            { id: 3, nombre: 'Cargo Pants', precio: 999, categoria: 'pantalon', tags: ['Oferta'], icono: '👖' },
+            { id: 4, nombre: 'Playera VOID', precio: 599, categoria: 'playera', tags: [], icono: '👕' },
+            { id: 5, nombre: 'Chaqueta Denim', precio: 1899, categoria: 'chaqueta', tags: ['Nuevo'], icono: '🧥' },
+            { id: 6, nombre: 'Tennis Urban', precio: 1599, categoria: 'tennis', tags: ['Oferta'], icono: '👟' },
+            { id: 7, nombre: 'Vestido Floral', precio: 899, categoria: 'vestido', tags: [], icono: '👗' },
+            { id: 8, nombre: 'Bolso Crossbody', precio: 749, categoria: 'bolso', tags: ['Nuevo'], icono: '👜' },
+            { id: 9, nombre: 'Gorra VOID', precio: 399, categoria: 'accesorios', tags: [], icono: '🧢' },
+            { id: 10, nombre: 'Camisa Lino', precio: 1099, categoria: 'camisa', tags: ['Oferta'], icono: '👕' },
+        ];
+
+        // =========================================================
+        // 2. FUNCIONES DE RENDERIZADO
+        // =========================================================
+        function crearTarjetaHTML(p) {
+            const tagsHtml = p.tags && p.tags.length ?
+                `<span class="product-tag ${p.tags[0].toLowerCase()}">${p.tags[0]}</span>` :
+                '';
+            const precioFormateado = p.precio.toFixed(2);
+            const imagenContenido = p.imagen ?
+                `<img src="${p.imagen}" alt="${p.nombre}" style="width:100%; height:100%; object-fit:cover;">` :
+                `<span style="font-size:80px;">${p.icono || '👕'}</span>`;
+
+            return `
+                        <div class="product-card" data-id="${p.id}" data-nombre="${p.nombre}" data-precio="${p.precio}">
+                            <div class="product-image-wrap">
+                                <div class="primary-img" style="background:#e8ecf2; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+                                    ${imagenContenido}
+                                </div>
+                                <div class="secondary-img" style="background:#d5dce6; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+                                    ${imagenContenido}
+                                </div>
+                                ${tagsHtml}
+                                <div class="product-overlay">
+                                    <button class="btn-overlay add-to-cart">Agregar</button>
+                                    <button class="btn-overlay quick-view">Vista rápida</button>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h3>${p.nombre}</h3>
+                                <span class="price">$${precioFormateado} MXN</span>
+                            </div>
+                        </div>
+                    `;
+        }
+
+        function renderDestacados() {
+            const container = document.getElementById('allProducts');
+            if (!container) return;
+            const destacados = PRODUCTOS.slice(0, 6);
+            container.innerHTML = destacados.map(crearTarjetaHTML).join('');
+        }
+
+        function renderNuevos() {
+            const container = document.getElementById('nuevosGrid');
+            if (!container) return;
+            const nuevos = PRODUCTOS.filter(p => p.tags && p.tags.includes('Nuevo')).slice(0, 3);
+            container.innerHTML = nuevos.map(crearTarjetaHTML).join('');
+        }
+
+        // =========================================================
+        // 3. CARRITO
+        // =========================================================
+        const STORAGE_CART = 'void_cart';
+        const cartCountEl = document.getElementById('cartCount');
+        const cartItemsEl = document.getElementById('cartItems');
+        const cartTotalEl = document.getElementById('cartTotal');
+        const openCartBtn = document.getElementById('openCartBtn');
+        const closeCartBtn = document.getElementById('closeCartBtn');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const cartPanel = document.getElementById('cartPanel');
+        const clearCartBtn = document.getElementById('clearCartBtn');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const toastEl = document.getElementById('toastMessage');
+
+        function getCart() {
+            const stored = localStorage.getItem(STORAGE_CART);
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem(STORAGE_CART, JSON.stringify(cart));
+        }
+
+        let toastTimeout;
+
+        function showToast(message) {
+            toastEl.textContent = message;
+            toastEl.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toastEl.classList.remove('show');
+            }, 2200);
+        }
+
+        function addProduct(id, nombre, precio, icono) {
+            const cart = getCart();
+            const existing = cart.find(item => item.id == id);
+            if (existing) {
+                existing.cantidad += 1;
+                showToast(`➕ ${nombre} (ahora x${existing.cantidad})`);
+            } else {
+                cart.push({ id, nombre, precio: parseFloat(precio), cantidad: 1, icono: icono || '👕' });
+                showToast(`✅ ${nombre} añadido al carrito`);
+            }
+            saveCart(cart);
+            renderCart();
+            cartCountEl.classList.add('pulse');
+            setTimeout(() => cartCountEl.classList.remove('pulse'), 300);
+        }
+
+        function removeOne(id) {
+            let cart = getCart();
+            const index = cart.findIndex(item => item.id == id);
+            if (index === -1) return;
+            if (cart[index].cantidad > 1) {
+                cart[index].cantidad -= 1;
+            } else {
+                cart.splice(index, 1);
+            }
+            saveCart(cart);
+            renderCart();
+        }
+
+        function clearCart() {
+            saveCart([]);
+            renderCart();
+            showToast('🗑️ Carrito vaciado');
+        }
+
+        function renderCart() {
+            const cart = getCart();
+            const totalItems = cart.reduce((acc, item) => acc + item.cantidad, 0);
+            cartCountEl.textContent = totalItems;
+
+            if (cart.length === 0) {
+                cartItemsEl.innerHTML = `<div class="cart-empty">🛒 El carrito está vacío</div>`;
+                cartTotalEl.textContent = '$0 MXN';
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+            cart.forEach(item => {
+                const subtotal = item.precio * item.cantidad;
+                total += subtotal;
+                const icono = item.icono || '👕';
+                html += `
+                            <div class="cart-item">
+                                <div class="cart-thumb">${icono}</div>
+                                <div class="cart-item-info">
+                                    <span class="cart-item-name">${item.nombre}</span>
+                                    <span class="cart-item-price">$ ${item.precio.toFixed(2)} MXN</span>
+                                </div>
+                                <div class="cart-item-actions">
+                                    <span class="cart-item-qty">${item.cantidad}</span>
+                                    <button class="cart-item-remove" data-id="${item.id}" aria-label="Eliminar uno">✕</button>
+                                </div>
+                            </div>
+                        `;
+            });
+            cartItemsEl.innerHTML = html;
+            cartTotalEl.textContent = `$ ${total.toFixed(2)} MXN`;
+
+            document.querySelectorAll('.cart-item-remove').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    removeOne(this.dataset.id);
+                });
+            });
+        }
+
+        function openCart() {
+            cartOverlay.classList.add('open');
+            cartPanel.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCart() {
+            cartOverlay.classList.remove('open');
+            cartPanel.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        if (openCartBtn) openCartBtn.addEventListener('click', openCart);
+        if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
+        if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
+        if (clearCartBtn) {
+            clearCartBtn.addEventListener('click', function() {
+                if (confirm('¿Vaciar todo el carrito?')) clearCart();
+            });
+        }
+
+        // =========================================================
+        // 4. EVENTOS DE PRODUCTOS (delegación)
+        // =========================================================
+        document.addEventListener('click', function(e) {
+            const addBtn = e.target.closest('.add-to-cart');
+            if (addBtn) {
+                e.stopPropagation();
+                const card = addBtn.closest('.product-card');
+                if (!card) return;
+                const id = card.dataset.id;
+                const nombre = card.dataset.nombre;
+                const precio = card.dataset.precio;
+                const iconoEl = card.querySelector('.primary-img');
+                let icono = '👕';
+                if (iconoEl) {
+                    const text = iconoEl.textContent.trim() || iconoEl.innerText.trim();
+                    if (text && text.length > 0 && text.length < 10) icono = text;
+                }
+                if (id && nombre && precio) {
+                    addProduct(id, nombre, precio, icono);
+                    const original = addBtn.textContent;
+                    addBtn.textContent = '✓ Añadido';
+                    setTimeout(() => { addBtn.textContent = original; }, 800);
+                }
+            }
+
+            const quickBtn = e.target.closest('.quick-view');
+            if (quickBtn) {
+                e.stopPropagation();
+                const card = quickBtn.closest('.product-card');
+                if (!card) return;
+                const nombre = card.dataset.nombre;
+                showToast(`🔍 Vista rápida de ${nombre} (simulado)`);
+            }
+        });
+
+        // =========================================================
+        // 5. BÚSQUEDA (Muestra todos al abrir)
+        // =========================================================
+        const searchBtn = document.getElementById('searchBtn');
+        const searchOverlay = document.getElementById('searchOverlay');
+        const closeSearchBtn = document.getElementById('closeSearchBtn');
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        function performSearch(query) {
+            const term = query.toLowerCase().trim();
+            let filtered = [];
+            if (term === '') {
+                filtered = PRODUCTOS; // todos
+            } else {
+                filtered = PRODUCTOS.filter(p =>
+                    p.nombre.toLowerCase().includes(term) ||
+                    p.categoria.toLowerCase().includes(term)
+                );
+            }
+            if (filtered.length === 0) {
+                searchResults.innerHTML =
+                    `<div class="search-no-results">😕 No encontramos productos que coincidan con "<strong>${query}</strong>"</div>`;
+                return;
+            }
+            let html = '';
+            filtered.forEach(p => {
+                html += `
+                            <a href="#" class="search-result-item" data-id="${p.id}">
+                                <span class="result-icon">${p.icono || '👕'}</span>
+                                <div class="result-info">
+                                    <div class="result-name">${p.nombre}</div>
+                                    <div class="result-price">$ ${p.precio.toFixed(2)} MXN</div>
+                                </div>
+                            </a>
+                        `;
+            });
+            searchResults.innerHTML = html;
+            // Evento para cada resultado
+            document.querySelectorAll('.search-result-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const id = this.dataset.id;
+                    const targetCard = document.querySelector(`.product-card[data-id="${id}"]`);
+                    if (targetCard) {
+                        closeSearch();
+                        setTimeout(() => {
+                            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            targetCard.style.boxShadow = '0 0 0 3px #000, 0 8px 30px rgba(0,0,0,0.15)';
+                            targetCard.style.transform = 'scale(1.02)';
+                            setTimeout(() => {
+                                targetCard.style.boxShadow = '';
+                                targetCard.style.transform = '';
+                            }, 1500);
+                        }, 400);
+                    } else {
+                        showToast(`🔍 Producto: ${this.querySelector('.result-name').textContent}`);
+                        closeSearch();
+                    }
+                });
+            });
+        }
+
+        function openSearch() {
+            searchOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                searchInput.focus();
+                searchInput.value = '';
+                performSearch(''); // mostrar todos
+            }, 300);
+        }
+
+        function closeSearch() {
+            searchOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        if (searchBtn) searchBtn.addEventListener('click', openSearch);
+        if (closeSearchBtn) closeSearchBtn.addEventListener('click', closeSearch);
+        if (searchOverlay) {
+            searchOverlay.addEventListener('click', function(e) {
+                if (e.target === this) closeSearch();
+            });
+        }
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                performSearch(this.value);
+            });
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && searchOverlay.classList.contains('open')) closeSearch();
+        });
+
+        // =========================================================
+        // 6. CUENTA (con dirección en registro y funciones para pago)
+        // =========================================================
+        const accountBtn = document.getElementById('accountBtn');
+        const accountDropdown = document.getElementById('accountDropdown');
+        const dropdownUserName = document.getElementById('dropdownUserName');
+        const dropdownLogout = document.getElementById('dropdownLogout');
+        const accountModal = document.getElementById('accountModal');
+        const closeAccountModal = document.getElementById('closeAccountModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalSub = document.getElementById('modalSub');
+        const modalSubmitBtn = document.getElementById('modalSubmitBtn');
+        const toggleModeBtn = document.getElementById('toggleModeBtn');
+        const modalError = document.getElementById('modalError');
+        const modalSuccess = document.getElementById('modalSuccess');
+        const modalEmail = document.getElementById('modalEmail');
+        const modalPassword = document.getElementById('modalPassword');
+        const accountForm = document.getElementById('accountForm');
+        const accountLabel = document.getElementById('accountLabel');
+        const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+        const rememberMe = document.getElementById('rememberMe');
+        const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+        const welcomeBack = document.getElementById('welcomeBack');
+        const authView = document.getElementById('authView');
+        const dashboardView = document.getElementById('dashboardView');
+        const dashboardUserName = document.getElementById('dashboardUserName');
+        const memberSince = document.getElementById('memberSince');
+        const googleBtn = document.getElementById('googleBtn');
+        const appleBtn = document.getElementById('appleBtn');
+
+        // Campos de dirección en registro
+        const addressFields = document.getElementById('addressFields');
+        const regStreet = document.getElementById('regStreet');
+        const regColonia = document.getElementById('regColonia');
+        const regCity = document.getElementById('regCity');
+        const regState = document.getElementById('regState');
+        const regZip = document.getElementById('regZip');
+        const regPhone = document.getElementById('regPhone');
+
+        let isLoginMode = true;
+        let isDashboardVisible = false;
+        const STORAGE_USER = 'void_user';
+        const STORAGE_USERS = 'void_users';
+
+        function getCurrentUser() {
+            const stored = localStorage.getItem(STORAGE_USER);
+            return stored ? JSON.parse(stored) : null;
+        }
+
+        function saveUser(user) {
+            localStorage.setItem(STORAGE_USER, JSON.stringify(user));
+        }
+
+        function logoutUser() {
+            localStorage.removeItem(STORAGE_USER);
+            updateUIForUser(null);
+            showToast('👋 Sesión cerrada');
+            closeDropdown();
+            closeAccountModalFn();
+        }
+
+        function updateUIForUser(user) {
+            if (user) {
+                const name = user.email.split('@')[0];
+                accountLabel.textContent = name;
+                dropdownUserName.textContent = `👤 ${user.email}`;
+                dashboardUserName.textContent = `Hola, ${name} 👋`;
+                memberSince.textContent = `Miembro desde ${new Date().getFullYear()}`;
+            } else {
+                accountLabel.textContent = 'Cuenta';
+                dropdownUserName.textContent = 'Usuario';
+                dashboardUserName.textContent = 'Usuario';
+                memberSince.textContent = 'Miembro desde 2026';
+                accountDropdown.classList.remove('open');
+            }
+        }
+
+        function closeDropdown() {
+            accountDropdown.classList.remove('open');
+        }
+
+        function showDashboard() {
+            authView.style.display = 'none';
+            dashboardView.classList.add('show');
+            isDashboardVisible = true;
+            welcomeBack.classList.add('show');
+        }
+
+        function showAuth() {
+            authView.style.display = 'block';
+            dashboardView.classList.remove('show');
+            isDashboardVisible = false;
+            welcomeBack.classList.remove('show');
+        }
+
+        function openAccountModal(mode) {
+            isLoginMode = mode === 'login';
+            modalError.classList.remove('show');
+            modalSuccess.classList.remove('show');
+            modalEmail.value = '';
+            modalPassword.value = '';
+            regStreet.value = '';
+            regColonia.value = '';
+            regCity.value = '';
+            regState.value = '';
+            regZip.value = '';
+            regPhone.value = '';
+
+            if (isLoginMode) {
+                modalTitle.textContent = 'Iniciar sesión';
+                modalSub.textContent = 'Accede a tu cuenta';
+                modalSubmitBtn.querySelector('.btn-text').textContent = 'Iniciar sesión';
+                toggleModeBtn.textContent = 'Crear una cuenta →';
+                addressFields.style.display = 'none';
+            } else {
+                modalTitle.textContent = 'Crear cuenta';
+                modalSub.textContent = 'Regístrate para acceder a tu historial';
+                modalSubmitBtn.querySelector('.btn-text').textContent = 'Crear cuenta';
+                toggleModeBtn.textContent = 'Iniciar sesión';
+                addressFields.style.display = 'block';
+            }
+            const user = getCurrentUser();
+            if (user) {
+                showDashboard();
+                updateUIForUser(user);
+            } else {
+                showAuth();
+            }
+            accountModal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAccountModalFn() {
+            accountModal.classList.remove('open');
+            document.body.style.overflow = '';
+            modalError.classList.remove('show');
+            modalSuccess.classList.remove('show');
+            modalSubmitBtn.classList.remove('loading');
+            modalSubmitBtn.disabled = false;
+            addressFields.style.display = 'none';
+        }
+
+        if (togglePasswordBtn) {
+            let passwordVisible = false;
+            togglePasswordBtn.addEventListener('click', function() {
+                passwordVisible = !passwordVisible;
+                modalPassword.type = passwordVisible ? 'text' : 'password';
+                this.textContent = passwordVisible ? '🙈' : '👁';
+            });
+        }
+
+        function handleSocialLogin(provider) {
+            const email = prompt(`Ingresa tu correo electrónico para continuar con ${provider}:`);
+            if (!email) return;
+            if (!email.includes('@') || !email.includes('.')) {
+                showToast('⚠️ Correo electrónico inválido');
+                return;
+            }
+            const users = JSON.parse(localStorage.getItem(STORAGE_USERS) || '[]');
+            const existingUser = users.find(u => u.email === email);
+            if (existingUser) {
+                saveUser({ email: existingUser.email });
+                updateUIForUser({ email: existingUser.email });
+                closeAccountModalFn();
+                showToast(`✅ Bienvenido de nuevo, ${existingUser.email.split('@')[0]}`);
+                setTimeout(() => {
+                    const user = getCurrentUser();
+                    if (user) { showDashboard();
+                        updateUIForUser(user); }
+                }, 300);
+            } else {
+                const newUser = { email, password: '', direccion: {} };
+                users.push(newUser);
+                localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+                saveUser({ email });
+                updateUIForUser({ email });
+                closeAccountModalFn();
+                showToast(`🎉 ¡Bienvenido! Has iniciado sesión con ${provider}`);
+                setTimeout(() => {
+                    const user = getCurrentUser();
+                    if (user) { showDashboard();
+                        updateUIForUser(user); }
+                }, 300);
+            }
+        }
+
+        if (googleBtn) googleBtn.addEventListener('click', function() { handleSocialLogin('Google'); });
+        if (appleBtn) appleBtn.addEventListener('click', function() { handleSocialLogin('Apple'); });
+        if (forgotPasswordLink) {
+            forgotPasswordLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                showToast('📧 Revisa tu correo para restablecer tu contraseña');
+            });
+        }
+
+        if (accountForm) {
+            accountForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = modalEmail.value.trim();
+                const password = modalPassword.value.trim();
+
+                if (!email || !password) {
+                    modalError.textContent = 'Completa todos los campos';
+                    modalError.classList.add('show');
+                    return;
+                }
+
+                modalSubmitBtn.classList.add('loading');
+                modalSubmitBtn.disabled = true;
+
+                setTimeout(() => {
+                    if (isLoginMode) {
+                        const users = JSON.parse(localStorage.getItem(STORAGE_USERS) || '[]');
+                        const found = users.find(u => u.email === email && u.password === password);
+                        if (found) {
+                            if (rememberMe.checked) {
+                                saveUser({ email: found.email });
+                            } else {
+                                sessionStorage.setItem('void_session', JSON.stringify({ email: found.email }));
+                            }
+                            const storedUser = localStorage.getItem(STORAGE_USER) ||
+                                JSON.parse(sessionStorage.getItem('void_session') || 'null');
+                            if (!storedUser) saveUser({ email: found.email });
+                            updateUIForUser({ email: found.email });
+                            showDashboard();
+                            modalError.classList.remove('show');
+                            modalSuccess.classList.remove('show');
+                            showToast(`✅ Bienvenido, ${found.email.split('@')[0]}`);
+                        } else {
+                            modalError.textContent = 'Correo o contraseña incorrectos';
+                            modalError.classList.add('show');
+                            modalSuccess.classList.remove('show');
+                        }
+                    } else {
+                        const users = JSON.parse(localStorage.getItem(STORAGE_USERS) || '[]');
+                        if (users.some(u => u.email === email)) {
+                            modalError.textContent = 'Este correo ya está registrado';
+                            modalError.classList.add('show');
+                            modalSuccess.classList.remove('show');
+                        } else {
+                            const direccion = {
+                                calle: regStreet.value.trim(),
+                                colonia: regColonia.value.trim(),
+                                ciudad: regCity.value.trim(),
+                                estado: regState.value.trim(),
+                                cp: regZip.value.trim(),
+                                telefono: regPhone.value.trim()
+                            };
+                            const newUser = { email, password, direccion };
+                            users.push(newUser);
+                            localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+                            saveUser({ email });
+                            updateUIForUser({ email });
+                            showDashboard();
+                            modalError.classList.remove('show');
+                            modalSuccess.textContent = '🎉 ¡Cuenta creada exitosamente!';
+                            modalSuccess.classList.add('show');
+                            showToast(`🎉 ¡Cuenta creada! Bienvenido, ${email.split('@')[0]}`);
+                        }
+                    }
+                    modalSubmitBtn.classList.remove('loading');
+                    modalSubmitBtn.disabled = false;
+                }, 800);
+            });
+        }
+
+        if (toggleModeBtn) {
+            toggleModeBtn.addEventListener('click', function() {
+                modalError.classList.remove('show');
+                modalSuccess.classList.remove('show');
+                if (isDashboardVisible) showAuth();
+                openAccountModal(isLoginMode ? 'register' : 'login');
+            });
+        }
+
+        if (accountBtn) {
+            accountBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const user = getCurrentUser();
+                if (user) {
+                    accountDropdown.classList.toggle('open');
+                } else {
+                    openAccountModal('login');
+                }
+            });
+        }
+
+        document.addEventListener('click', function(e) {
+            const target = e.target;
+            if (!target.closest('#accountBtn') && !target.closest('.account-dropdown')) {
+                closeDropdown();
+            }
+        });
+
+        if (dropdownLogout) {
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                logoutUser();
+                closeAccountModalFn();
+            });
+        }
+
+        if (closeAccountModal) closeAccountModal.addEventListener('click', closeAccountModalFn);
+        if (accountModal) {
+            accountModal.addEventListener('click', function(e) {
+                if (e.target === this) closeAccountModalFn();
+            });
+        }
+
+        document.querySelectorAll('.dashboard-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const section = this.dataset.section;
+                document.querySelectorAll('.dashboard-section').forEach(sec => sec.classList.remove('show'));
+                const target = document.getElementById(`section-${section}`);
+                if (target) target.classList.toggle('show');
+            });
+        });
+
+        // =========================================================
+        // 7. MODAL DE PAGO CON DIRECCIÓN (con guardado en perfil)
+        // =========================================================
+
+        // --- Funciones auxiliares para manejar dirección del usuario ---
+        function getCurrentUserData() {
+            const user = getCurrentUser();
+            if (!user) return null;
+            const users = JSON.parse(localStorage.getItem(STORAGE_USERS) || '[]');
+            return users.find(u => u.email === user.email) || null;
+        }
+
+        function updateUserAddress(direccion) {
+            const user = getCurrentUser();
+            if (!user) return false;
+            const users = JSON.parse(localStorage.getItem(STORAGE_USERS) || '[]');
+            const index = users.findIndex(u => u.email === user.email);
+            if (index === -1) return false;
+            users[index].direccion = direccion;
+            localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+            return true;
+        }
+
+        const paymentOverlay = document.getElementById('paymentOverlay');
+        const closePaymentBtn = document.getElementById('closePaymentBtn');
+        const paymentForm = document.getElementById('paymentForm');
+        const cardNumber = document.getElementById('cardNumber');
+        const cardExpiry = document.getElementById('cardExpiry');
+        const cardCvv = document.getElementById('cardCvv');
+        const cardName = document.getElementById('cardName');
+        const paymentTotal = document.getElementById('paymentTotal');
+        const payBtn = document.getElementById('payBtn');
+        const paymentError = document.getElementById('paymentError');
+
+        // Campos de dirección
+        const shippingStreet = document.getElementById('shippingStreet');
+        const shippingColonia = document.getElementById('shippingColonia');
+        const shippingCity = document.getElementById('shippingCity');
+        const shippingState = document.getElementById('shippingState');
+        const shippingZip = document.getElementById('shippingZip');
+        const shippingPhone = document.getElementById('shippingPhone');
+
+        // Formatear número de tarjeta
+        cardNumber.addEventListener('input', function(e) {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length > 16) value = value.slice(0, 16);
+            let formatted = '';
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) formatted += ' ';
+                formatted += value[i];
+            }
+            this.value = formatted;
+        });
+
+        // Formatear fecha MM/AA
+        cardExpiry.addEventListener('input', function(e) {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length > 4) value = value.slice(0, 4);
+            if (value.length >= 2) {
+                const month = parseInt(value.slice(0, 2));
+                if (month > 12) value = '12' + value.slice(2);
+            }
+            let formatted = '';
+            for (let i = 0; i < value.length; i++) {
+                if (i === 2) formatted += '/';
+                formatted += value[i];
+            }
+            this.value = formatted;
+        });
+
+        // CVV solo dígitos
+        cardCvv.addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').slice(0, 4);
+        });
+
+        // Código postal solo 5 dígitos
+        shippingZip.addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').slice(0, 5);
+        });
+
+        // Teléfono solo dígitos y espacios
+        shippingPhone.addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9 ]/g, '');
+        });
+
+        function showPaymentError(msg) {
+            paymentError.textContent = msg;
+            paymentError.classList.add('show');
+        }
+
+        function hidePaymentError() {
+            paymentError.classList.remove('show');
+        }
+
+        // ===== MODIFICACIÓN: openPaymentModal precarga dirección =====
+        function openPaymentModal() {
+            const cart = getCart();
+            if (cart.length === 0) {
+                showToast('🛒 El carrito está vacío');
+                return;
+            }
+            let total = cart.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
+            paymentTotal.textContent = `$ ${total.toFixed(2)} MXN`;
+
+            // Limpiar campos
+            shippingStreet.value = '';
+            shippingColonia.value = '';
+            shippingCity.value = '';
+            shippingState.value = '';
+            shippingZip.value = '';
+            shippingPhone.value = '';
+            cardNumber.value = '';
+            cardExpiry.value = '';
+            cardCvv.value = '';
+            cardName.value = '';
+
+            // --- Precargar dirección del usuario ---
+            const userData = getCurrentUserData();
+            if (userData && userData.direccion) {
+                const dir = userData.direccion;
+                shippingStreet.value = dir.calle || '';
+                shippingColonia.value = dir.colonia || '';
+                shippingCity.value = dir.ciudad || '';
+                shippingState.value = dir.estado || '';
+                shippingZip.value = dir.cp || '';
+                shippingPhone.value = dir.telefono || '';
+            }
+
+            hidePaymentError();
+            payBtn.classList.remove('loading');
+            payBtn.disabled = false;
+            paymentOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePaymentModal() {
+            paymentOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+            hidePaymentError();
+            payBtn.classList.remove('loading');
+            payBtn.disabled = false;
+        }
+
+        if (closePaymentBtn) closePaymentBtn.addEventListener('click', closePaymentModal);
+        if (paymentOverlay) {
+            paymentOverlay.addEventListener('click', function(e) {
+                if (e.target === this) closePaymentModal();
+            });
+        }
+
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', function() {
+                const cart = getCart();
+                if (cart.length === 0) {
+                    alert('El carrito está vacío. Agrega productos primero.');
+                    return;
+                }
+                openPaymentModal();
+            });
+        }
+
+        // ===== MODIFICACIÓN: guardar dirección al enviar el pago =====
+        if (paymentForm) {
+            paymentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                hidePaymentError();
+
+                // --- Validar dirección ---
+                const street = shippingStreet.value.trim();
+                const colonia = shippingColonia.value.trim();
+                const city = shippingCity.value.trim();
+                const state = shippingState.value.trim();
+                const zip = shippingZip.value.trim();
+                const phone = shippingPhone.value.trim();
+
+                if (!street || !colonia || !city || !state || !zip || !phone) {
+                    showPaymentError('Completa todos los campos de la dirección de envío');
+                    return;
+                }
+                if (!/^\d{5}$/.test(zip)) {
+                    showPaymentError('Código postal inválido (debe tener 5 dígitos)');
+                    return;
+                }
+                if (!/^[\d ]{8,15}$/.test(phone.replace(/\s/g, ''))) {
+                    showPaymentError('Teléfono inválido (mínimo 8 dígitos)');
+                    return;
+                }
+
+                // --- Validar tarjeta (simplificada) ---
+                const num = cardNumber.value.replace(/\s/g, '');
+                if (num.length !== 16 || !/^\d{16}$/.test(num)) {
+                    showPaymentError('Número de tarjeta inválido (debe tener 16 dígitos)');
+                    return;
+                }
+                const expiry = cardExpiry.value.replace('/', '');
+                if (expiry.length !== 4 || !/^\d{4}$/.test(expiry)) {
+                    showPaymentError('Fecha de expiración inválida (MM/AA)');
+                    return;
+                }
+                const month = parseInt(expiry.slice(0, 2));
+                const year = parseInt(expiry.slice(2));
+                if (month < 1 || month > 12) {
+                    showPaymentError('Mes inválido (01-12)');
+                    return;
+                }
+                const currentYear = new Date().getFullYear() % 100;
+                const currentMonth = new Date().getMonth() + 1;
+                if (year < currentYear || (year === currentYear && month < currentMonth)) {
+                    showPaymentError('La tarjeta ha expirado');
+                    return;
+                }
+                if (cardCvv.value.length < 3 || !/^\d{3,4}$/.test(cardCvv.value)) {
+                    showPaymentError('CVV inválido (3 o 4 dígitos)');
+                    return;
+                }
+                if (cardName.value.trim().length < 3) {
+                    showPaymentError('Ingresa el nombre del titular');
+                    return;
+                }
+
+                // --- Guardar dirección en el perfil del usuario ---
+                const direccion = {
+                    calle: street,
+                    colonia: colonia,
+                    ciudad: city,
+                    estado: state,
+                    cp: zip,
+                    telefono: phone
+                };
+                const updated = updateUserAddress(direccion);
+                if (updated) {
+                    showToast('📍 Dirección guardada en tu perfil');
+                }
+
+                // --- Procesar pago ---
+                payBtn.classList.add('loading');
+                payBtn.disabled = true;
+
+                setTimeout(() => {
+                    showToast('🎉 ¡Pago exitoso! Gracias por tu compra.');
+                    console.log('Dirección de envío:', direccion);
+                    clearCart();
+                    closePaymentModal();
+                    closeCart();
+                    payBtn.classList.remove('loading');
+                    payBtn.disabled = false;
+                }, 1500);
+            });
+        }
+
+        // =========================================================
+        // 8. INICIALIZACIÓN
+        // =========================================================
+        renderDestacados();
+        renderNuevos();
+        renderCart();
+
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+            updateUIForUser(currentUser);
+        } else {
+            const sessionUser = JSON.parse(sessionStorage.getItem('void_session') || 'null');
+            if (sessionUser) {
+                saveUser(sessionUser);
+                updateUIForUser(sessionUser);
+            }
+        }
+
+        // Scroll header
+        const header = document.getElementById('mainHeader');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 30) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Cerrar con ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeCart();
+                closeAccountModalFn();
+                closeDropdown();
+                if (searchOverlay.classList.contains('open')) closeSearch();
+                if (paymentOverlay.classList.contains('open')) closePaymentModal();
+            }
+        });
+
+        const observer = new MutationObserver(() => {
+            if (accountModal.classList.contains('open')) {
+                const user = getCurrentUser();
+                if (user && !isDashboardVisible) {
+                    showDashboard();
+                    updateUIForUser(user);
+                }
+            }
+        });
+        observer.observe(accountModal, { attributes: true, attributeFilter: ['class'] });
+
+        console.log('🚀 VOID · Todo listo!');
+    </script>
+</body>
+</html>

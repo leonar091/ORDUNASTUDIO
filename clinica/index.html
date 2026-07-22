@@ -1,0 +1,1856 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clínica Vital · Salud y Bienestar</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            color: #1e293b;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .contenedor {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        :root {
+            --verde: #0b8c5e;
+            --verde-claro: #e6f5f0;
+            --gris-claro: #f8fafc;
+            --gris-medio: #e9edf2;
+            --blanco: #ffffff;
+            --sombra: 0 10px 30px rgba(0, 0, 0, 0.06);
+            --sombra-fuerte: 0 20px 50px rgba(0, 0, 0, 0.12);
+            --radio: 24px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== TOPBAR ===== */
+        .topbar {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 8px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid #1e293b;
+        }
+        .topbar .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .topbar-izq {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+        .topbar-izq span i {
+            color: var(--verde);
+            margin-right: 6px;
+            width: 18px;
+        }
+        .topbar-der {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .topbar-der a {
+            color: #cbd5e1;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        .topbar-der a:hover {
+            color: var(--verde);
+        }
+        .whatsapp-top {
+            background: #25d366;
+            color: #fff !important;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        .whatsapp-top:hover {
+            background: #1ebe5e !important;
+            color: #fff !important;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: var(--blanco);
+            padding: 12px 0;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #e9edf2;
+        }
+        header .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icono {
+            width: 44px;
+            height: 44px;
+            background: var(--verde);
+            color: #fff;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .logo h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .logo h1 span {
+            color: var(--verde);
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        nav a {
+            padding: 8px 14px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            color: #1e293b;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        nav a:hover,
+        nav a.activo {
+            color: var(--verde);
+            background: var(--verde-claro);
+        }
+        .btn-cita-header {
+            background: var(--verde);
+            color: #fff !important;
+            padding: 10px 22px !important;
+            border-radius: 40px !important;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(11, 140, 94, 0.3);
+            transition: var(--transition);
+        }
+        .btn-cita-header:hover {
+            background: #0a7a52 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(11, 140, 94, 0.4);
+            color: #fff !important;
+        }
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.3rem;
+            padding: 8px 10px;
+            border-radius: 30px;
+            transition: var(--transition);
+        }
+        .cart-icon:hover {
+            background: var(--gris-claro);
+        }
+        .cart-icon .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #ef4444;
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(145deg, #f0f9f6 0%, #e2f3ed 100%);
+            padding: 60px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(11, 140, 94, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-text h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 18px;
+            letter-spacing: -1px;
+        }
+        .hero-text h2 span {
+            color: var(--verde);
+            position: relative;
+        }
+        .hero-text h2 span::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: var(--verde-claro);
+            z-index: -1;
+            border-radius: 4px;
+        }
+        .hero-text p {
+            font-size: 1.2rem;
+            color: #475569;
+            max-width: 520px;
+            margin-bottom: 28px;
+        }
+        .hero-botones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+        .boton {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border-radius: 60px;
+            font-weight: 700;
+            background: var(--verde);
+            color: #fff !important;
+            border: none;
+            transition: var(--transition);
+            box-shadow: 0 4px 16px rgba(11, 140, 94, 0.3);
+            font-size: 1rem;
+        }
+        .boton:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(11, 140, 94, 0.4);
+            background: #0a7a52;
+            color: #fff !important;
+        }
+        .boton-outline {
+            background: transparent;
+            color: var(--verde) !important;
+            border: 2px solid var(--verde);
+            box-shadow: none;
+        }
+        .boton-outline:hover {
+            background: var(--verde);
+            color: #fff !important;
+            box-shadow: 0 4px 16px rgba(11, 140, 94, 0.2);
+        }
+        .hero-stats {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .hero-stats .stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            color: #334155;
+        }
+        .hero-stats .stat i {
+            color: var(--verde);
+            font-size: 1.3rem;
+        }
+        .hero-stats .stat strong {
+            font-size: 1.3rem;
+            color: #0f172a;
+        }
+
+        /* ===== CONTENEDOR 3D ===== */
+        .hero-3d {
+            position: relative;
+            border-radius: var(--radio);
+            box-shadow: var(--sombra-fuerte);
+            overflow: hidden;
+            background: #fff;
+            padding: 20px 20px 24px;
+            transition: var(--transition);
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-3d:hover {
+            transform: scale(1.01);
+        }
+        .hero-3d canvas {
+            display: block;
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 16/10;
+            border-radius: 16px;
+            background: transparent;
+        }
+        .hero-3d .etiqueta {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: var(--verde);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            pointer-events: none;
+        }
+        .hero-3d h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 12px 0 4px;
+            text-align: center;
+        }
+        .hero-3d p {
+            color: #64748b;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        .hero-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #25d366;
+            color: #fff !important;
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-weight: 700;
+            margin-top: 8px;
+            transition: var(--transition);
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+        }
+        .hero-whatsapp:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            color: #fff !important;
+        }
+
+        /* ===== SECCIONES ALTERNADAS ===== */
+        .seccion-blanca {
+            background: var(--blanco);
+        }
+        .seccion-gris {
+            background: var(--gris-claro);
+        }
+        .seccion-verde-claro {
+            background: var(--verde-claro);
+        }
+
+        /* ===== ASEGURADORAS ===== */
+        .aseguradoras {
+            padding: 50px 0;
+            text-align: center;
+        }
+        .aseguradoras h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .aseguradoras .sub {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+        .logo-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 30px 50px;
+        }
+        .logo-item {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #334155;
+            opacity: 0.7;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo-item i {
+            font-size: 2rem;
+            color: var(--verde);
+        }
+        .logo-item:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* ===== BLOG ===== */
+        .blog {
+            padding: 60px 0;
+        }
+        .blog h3 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .blog .sub {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .blog-card {
+            background: var(--blanco);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--sombra);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--sombra-fuerte);
+        }
+        .blog-card img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+        .blog-card .blog-content {
+            padding: 18px 20px 22px;
+        }
+        .blog-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .blog-card p {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+        .blog-card .leer-mas {
+            color: var(--verde);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            padding: 0;
+        }
+        .blog-card .leer-mas:hover {
+            gap: 12px;
+        }
+
+        .blog-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .blog-modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .blog-modal {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            max-width: 700px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 32px 36px;
+            box-shadow: var(--sombra-fuerte);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        .blog-modal-overlay.active .blog-modal {
+            transform: scale(1);
+        }
+        .blog-modal .close-modal {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .blog-modal .close-modal:hover {
+            color: #1e293b;
+            transform: rotate(90deg);
+        }
+        .blog-modal img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+        .blog-modal h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .blog-modal .meta {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 14px;
+        }
+        .blog-modal .contenido-completo {
+            color: #1e293b;
+            line-height: 1.8;
+        }
+        .blog-modal .contenido-completo p {
+            margin-bottom: 14px;
+        }
+        .blog-modal .contenido-completo ul {
+            padding-left: 24px;
+            margin-bottom: 14px;
+        }
+        .blog-modal .contenido-completo ul li {
+            margin-bottom: 6px;
+        }
+        .blog-modal .contenido-completo strong {
+            color: var(--verde);
+        }
+
+        /* ===== POR QUÉ ELEGIRNOS ===== */
+        .porque {
+            padding: 60px 0;
+        }
+        .porque h3 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .porque .sub {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+        .porque-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .porque-item {
+            background: var(--blanco);
+            padding: 24px 20px;
+            border-radius: 16px;
+            box-shadow: var(--sombra);
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid #e9edf2;
+        }
+        .porque-item:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--sombra-fuerte);
+            border-color: var(--verde);
+        }
+        .porque-item i {
+            font-size: 2.4rem;
+            color: var(--verde);
+            display: block;
+            margin-bottom: 10px;
+        }
+        .porque-item h4 {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .porque-item p {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        /* ===== CARRITO SIDEBAR ===== */
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 9997;
+            display: none;
+        }
+        .cart-overlay.active {
+            display: block;
+        }
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 400px;
+            max-width: 90vw;
+            height: 100%;
+            background: var(--blanco);
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
+            z-index: 9998;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        .cart-sidebar.abierto {
+            right: 0;
+        }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e9edf2;
+        }
+        .cart-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        .cart-header .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #94a3b8;
+            transition: var(--transition);
+        }
+        .cart-header .close-cart:hover {
+            color: #1e293b;
+            transform: rotate(90deg);
+        }
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .cart-item .info {
+            flex: 1;
+        }
+        .cart-item .info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .cart-item .info .precio {
+            font-size: 0.9rem;
+            color: var(--verde);
+            font-weight: 700;
+        }
+        .cart-item .cantidad {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cart-item .cantidad button {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid #e9edf2;
+            background: var(--blanco);
+            cursor: pointer;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+        .cart-item .cantidad button:hover {
+            background: var(--verde);
+            color: #fff;
+            border-color: var(--verde);
+        }
+        .cart-item .cantidad span {
+            font-weight: 600;
+            min-width: 24px;
+            text-align: center;
+        }
+        .cart-item .eliminar-item {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 4px;
+        }
+        .cart-item .eliminar-item:hover {
+            transform: scale(1.2);
+        }
+        .cart-total {
+            border-top: 2px solid #e9edf2;
+            padding-top: 16px;
+            margin-top: 8px;
+        }
+        .cart-total .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+        .cart-total .btn-checkout {
+            width: 100%;
+            background: var(--verde);
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .cart-total .btn-checkout:hover {
+            background: #0a7a52;
+            transform: scale(1.02);
+        }
+        .cart-total .btn-checkout:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ===== CHAT FLOTANTE ===== */
+        .chat-float {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+        .chat-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--verde);
+            color: #fff;
+            border: none;
+            font-size: 28px;
+            box-shadow: 0 6px 25px rgba(11, 140, 94, 0.4);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chat-toggle:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 35px rgba(11, 140, 94, 0.5);
+        }
+        .chat-ventana {
+            background: var(--blanco);
+            border-radius: 20px;
+            box-shadow: var(--sombra-fuerte);
+            width: 300px;
+            max-height: 420px;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            border: 1px solid #e9edf2;
+        }
+        .chat-ventana.abierto {
+            display: flex;
+        }
+        .chat-header {
+            background: var(--verde);
+            color: #fff;
+            padding: 14px 18px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header .cerrar-chat {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .chat-mensajes {
+            padding: 16px;
+            flex: 1;
+            overflow-y: auto;
+            max-height: 240px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .chat-mensaje {
+            background: var(--gris-claro);
+            padding: 10px 14px;
+            border-radius: 14px;
+            max-width: 85%;
+            font-size: 0.9rem;
+            align-self: flex-start;
+        }
+        .chat-mensaje.bot {
+            background: var(--verde-claro);
+            align-self: flex-end;
+        }
+        .chat-opciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 8px 16px 14px;
+            border-top: 1px solid #e9edf2;
+        }
+        .chat-opciones button {
+            background: var(--gris-claro);
+            border: none;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            color: #1e293b;
+        }
+        .chat-opciones button:hover {
+            background: var(--verde);
+            color: #fff;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 50px 0 20px;
+            border-top: 4px solid var(--verde);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        .footer-logo span {
+            color: var(--verde);
+        }
+        .footer-desc {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            margin-bottom: 16px;
+            max-width: 300px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #1e293b;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .footer-social a:hover {
+            background: var(--verde);
+            color: #fff;
+        }
+        footer h4 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 14px;
+        }
+        footer ul {
+            list-style: none;
+        }
+        footer ul li {
+            margin-bottom: 8px;
+        }
+        footer ul a {
+            color: #94a3b8;
+            transition: var(--transition);
+        }
+        footer ul a:hover {
+            color: var(--verde);
+        }
+        .footer-cert {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .footer-cert span {
+            background: #1e293b;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #94a3b8;
+            border: 1px solid #334155;
+        }
+        .footer-copy {
+            border-top: 1px solid #1e293b;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 998;
+            background: #25d366;
+            color: #fff !important;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+            transition: var(--transition);
+            border: none;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 35px rgba(37, 211, 102, 0.6);
+            color: #fff !important;
+        }
+
+        /* ===== ANIMACIONES ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease forwards;
+        }
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-text p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-botones {
+                justify-content: center;
+            }
+            .hero-stats {
+                justify-content: center;
+            }
+            .hero-3d {
+                max-width: 500px;
+                margin: 0 auto;
+                min-height: 260px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .topbar .contenedor {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 6px;
+            }
+            .topbar-izq {
+                justify-content: center;
+            }
+            .topbar-der {
+                justify-content: center;
+            }
+            .blog-modal {
+                max-width: 95%;
+                padding: 24px 20px;
+            }
+            .cart-sidebar {
+                width: 340px;
+            }
+        }
+        @media (max-width: 768px) {
+            header .contenedor {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            nav ul {
+                width: 100%;
+                justify-content: center;
+                gap: 4px;
+            }
+            nav a {
+                font-size: 0.85rem;
+                padding: 6px 12px;
+            }
+            .btn-cita-header {
+                padding: 6px 16px !important;
+                font-size: 0.85rem;
+            }
+            .hero-text h2 {
+                font-size: 2.2rem;
+            }
+            .hero-3d {
+                min-height: 220px;
+            }
+            .logo-grid {
+                gap: 20px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .chat-ventana {
+                width: 280px;
+                right: 10px;
+            }
+            .chat-float {
+                right: 10px;
+                bottom: 100px;
+            }
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 26px;
+                bottom: 20px;
+                right: 20px;
+            }
+            .blog-modal h2 {
+                font-size: 1.3rem;
+            }
+            .cart-sidebar {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOPBAR ===== -->
+    <div class="topbar">
+        <div class="contenedor">
+            <div class="topbar-izq">
+                <a href="tel:+525598765432"><i class="fas fa-phone-alt"></i> +52 55 9876 5432</a>
+                <a href="mailto:contacto@clinicavital.mx"><i class="fas fa-envelope"></i> contacto@clinicavital.mx</a>
+                <span><i class="fas fa-map-marker-alt"></i> Av. Salud #789, CDMX</span>
+            </div>
+            <div class="topbar-der">
+                <a href="https://wa.me/525598765432?text=Hola%2C%20quiero%20agendar%20una%20cita" class="whatsapp-top" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                <a href="citas.html" style="color: white; font-weight: 500;">Agendar cita</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="contenedor">
+            <div class="logo">
+                <div class="logo-icono"><i class="fas fa-heart-pulse"></i></div>
+                <h1><span>Clínica</span> Vital</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="activo">Inicio</a></li>
+                    <li><a href="especialidades.html">Especialidades</a></li>
+                    <li><a href="medicos.html">Médicos</a></li>
+                    <li><a href="testimonios.html">Testimonios</a></li>
+                    <li><a href="farmacia.html"><i class="fas fa-prescription-bottle"></i> Farmacia</a></li>
+                    <li><a href="citas.html" class="btn-cita-header"><i class="fas fa-calendar-check"></i> Agendar cita</a></li>
+                    <li>
+                        <span class="cart-icon" id="cartIcon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge" id="cartBadge">0</span>
+                        </span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="contenedor hero-grid">
+            <div class="hero-text fade-in">
+                <h2>Tu salud <span>es nuestra prioridad</span></h2>
+                <p>En Clínica Vital brindamos atención médica integral con especialistas altamente capacitados, tecnología moderna y un trato humano que inspira confianza. Nuestro compromiso es cuidar de tu bienestar y el de tu familia con atención de calidad en cada consulta.</p>
+                <div class="hero-botones">
+                    <a href="citas.html" class="boton"><i class="fas fa-calendar-plus"></i> Agendar cita</a>
+                    <a href="especialidades.html" class="boton boton-outline"><i class="fas fa-stethoscope"></i> Ver especialidades</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat"><i class="fas fa-user-md"></i> <strong>98%</strong> satisfacción</div>
+                    <div class="stat"><i class="fas fa-users"></i> <strong>20</strong> médicos</div>
+                    <div class="stat"><i class="fas fa-clock"></i> <strong>24/7</strong> urgencias</div>
+                </div>
+                <a href="https://wa.me/525598765432?text=Hola%2C%20quiero%20agendar%20una%20cita" target="_blank" class="hero-whatsapp">
+                    <i class="fab fa-whatsapp"></i> Chatea con nosotros
+                </a>
+            </div>
+            <!-- ===== CONTENEDOR 3D ===== -->
+            <div class="hero-3d fade-in" id="hero3dContainer">
+                <span class="etiqueta"><i class="fas fa-star"></i> Confianza</span>
+                <!-- Canvas para Three.js -->
+                <div id="canvas3d" style="width:100%; aspect-ratio:16/10; border-radius:16px; overflow:hidden;"></div>
+                <h3>Atención personalizada</h3>
+                <p>Tu bienestar es nuestra prioridad número uno</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ASEGURADORAS ===== -->
+    <section class="aseguradoras seccion-gris">
+        <div class="contenedor">
+            <h3>Trabajamos con las mejores aseguradoras</h3>
+            <p class="sub">Aceptamos los principales seguros de gastos médicos</p>
+            <div class="logo-grid">
+                <div class="logo-item"><i class="fas fa-shield-alt"></i> AXA</div>
+                <div class="logo-item"><i class="fas fa-shield-alt"></i> GNP</div>
+                <div class="logo-item"><i class="fas fa-shield-alt"></i> MAPFRE</div>
+                <div class="logo-item"><i class="fas fa-shield-alt"></i> MetLife</div>
+                <div class="logo-item"><i class="fas fa-shield-alt"></i> Seguros Monterrey</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BLOG ===== -->
+    <section class="blog seccion-verde-claro">
+        <div class="contenedor">
+            <h3>Blog de salud</h3>
+            <p class="sub">Consejos y novedades para tu bienestar</p>
+            <div class="blog-grid">
+
+                <!-- Artículo 1: Diabetes -->
+                <div class="blog-card" data-modal="modal-diabetes">
+                    <img src="imgm/Diabetes.jpg.jpg" alt="Prevención diabetes">
+                    <div class="blog-content">
+                        <h4>¿Cómo prevenir la diabetes?</h4>
+                        <p>Alimentación balanceada y ejercicio regular son clave.</p>
+                        <button class="leer-mas" data-modal="modal-diabetes">Leer más <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Artículo 2: Chequeo -->
+                <div class="blog-card" data-modal="modal-chequeo">
+                    <img src="imgm/Chequeo.jpg.jpg" alt="Chequeo médico">
+                    <div class="blog-content">
+                        <h4>¿Cuándo hacer un chequeo?</h4>
+                        <p>Conoce la frecuencia recomendada según tu edad.</p>
+                        <button class="leer-mas" data-modal="modal-chequeo">Leer más <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Artículo 3: Vacunas -->
+                <div class="blog-card" data-modal="modal-vacunas">
+                    <img src="imgm/Vacunas.jpg.jpg" alt="Vacunas">
+                    <div class="blog-content">
+                        <h4>Vacunas: mitos y realidades</h4>
+                        <p>La importancia de la inmunización para todas las edades.</p>
+                        <button class="leer-mas" data-modal="modal-vacunas">Leer más <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MODALES DEL BLOG ===== -->
+
+    <!-- Modal Diabetes -->
+    <div class="blog-modal-overlay" id="modal-diabetes">
+        <div class="blog-modal">
+            <button class="close-modal" data-modal="modal-diabetes">&times;</button>
+            <img src="imgm/Diabetes.jpg.jpg" alt="Prevención diabetes">
+            <h2>¿Cómo prevenir la diabetes?</h2>
+            <div class="meta">Publicado el 15 de mayo de 2026 · 4 min de lectura</div>
+            <div class="contenido-completo">
+                <p>La diabetes tipo 2 es una de las enfermedades crónicas más comunes en el mundo, pero también una de las más prevenibles. Adoptar hábitos saludables desde hoy puede marcar una gran diferencia.</p>
+                <p><strong>Consejos clave:</strong></p>
+                <ul>
+                    <li><strong>Alimentación balanceada:</strong> Prioriza verduras, frutas, cereales integrales y proteínas magras. Reduce el consumo de azúcares refinados y grasas saturadas.</li>
+                    <li><strong>Ejercicio regular:</strong> Al menos 30 minutos de actividad física moderada (caminar, nadar, bailar) 5 veces por semana.</li>
+                    <li><strong>Control de peso:</strong> Mantener un índice de masa corporal (IMC) saludable (18.5 – 24.9) reduce significativamente el riesgo.</li>
+                    <li><strong>Chequeos anuales:</strong> Revisa tus niveles de glucosa en sangre, colesterol y presión arterial una vez al año, especialmente si tienes antecedentes familiares.</li>
+                    <li><strong>Evita el tabaco y el alcohol:</strong> El consumo excesivo de alcohol y el tabaquismo aumentan el riesgo de diabetes y complicaciones.</li>
+                </ul>
+                <p><strong>¿Sabías que?</strong> La diabetes no solo afecta el azúcar en sangre, sino también puede dañar riñones, ojos y sistema cardiovascular. La prevención es la mejor medicina.</p>
+                <p>En Clínica Vital contamos con programas de prevención y asesoría nutricional. Agenda tu cita y comienza hoy.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Chequeo -->
+    <div class="blog-modal-overlay" id="modal-chequeo">
+        <div class="blog-modal">
+            <button class="close-modal" data-modal="modal-chequeo">&times;</button>
+            <img src="imgm/Chequeo.jpg.jpg" alt="Chequeo médico">
+            <h2>¿Cuándo hacer un chequeo?</h2>
+            <div class="meta">Publicado el 10 de mayo de 2026 · 3 min de lectura</div>
+            <div class="contenido-completo">
+                <p>El chequeo médico periódico es la base para detectar a tiempo enfermedades silenciosas y mantener un buen estado de salud. Pero, ¿cada cuánto deberías hacerlo?</p>
+                <p><strong>Frecuencia recomendada según la edad:</strong></p>
+                <ul>
+                    <li><strong>De 18 a 39 años:</strong> Chequeo general cada 2–3 años si estás sano. Si hay factores de riesgo (obesidad, tabaquismo, antecedentes familiares), cada 1–2 años.</li>
+                    <li><strong>De 40 a 59 años:</strong> Chequeo anual completo, incluyendo perfil lipídico, glucosa, presión arterial y examen de vista.</li>
+                    <li><strong>Mayores de 60 años:</strong> Chequeo semestral o anual con estudios más detallados (densitometría ósea, evaluación cognitiva, etc.).</li>
+                </ul>
+                <p>Además, si presentas síntomas como fatiga persistente, pérdida de peso sin motivo, dolor recurrente o cambios en tu cuerpo, no esperes a la fecha programada.</p>
+                <p>En Clínica Vital ofrecemos paquetes de chequeo completos para cada etapa de la vida. ¡Programa tu evaluación hoy!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Vacunas -->
+    <div class="blog-modal-overlay" id="modal-vacunas">
+        <div class="blog-modal">
+            <button class="close-modal" data-modal="modal-vacunas">&times;</button>
+            <img src="imgm/Vacunas.jpg.jpg" alt="Vacunas">
+            <h2>Vacunas: mitos y realidades</h2>
+            <div class="meta">Publicado el 5 de mayo de 2026 · 5 min de lectura</div>
+            <div class="contenido-completo">
+                <p>Las vacunas son uno de los mayores logros de la medicina moderna, pero aún persisten mitos que generan dudas. Aquí te aclaramos los más comunes.</p>
+                <p><strong>Mito 1:</strong> "Las vacunas causan autismo". <br /> <strong>Realidad:</strong> Numerosos estudios científicos han demostrado que no existe relación entre las vacunas y el autismo. El estudio que lo sugería fue retirado por fraude.</p>
+                <p><strong>Mito 2:</strong> "Si tuve la enfermedad, no necesito la vacuna". <br /> <strong>Realidad:</strong> Algunas enfermedades (como el sarampión) dejan inmunidad, pero otras (como la gripe) mutan constantemente. La vacuna es la forma más segura de protegerte.</p>
+                <p><strong>Mito 3:</strong> "Las vacunas tienen efectos secundarios graves". <br /> <strong>Realidad:</strong> Los efectos secundarios suelen ser leves (dolor, fiebre baja) y desaparecen en días. Los riesgos graves son extremadamente raros.</p>
+                <p><strong>Calendario de vacunación recomendado:</strong></p>
+                <ul>
+                    <li><strong>Niños:</strong> BCG, Hepatitis B, Polio, DTP, Sarampión, Paperas, Rubeola (SRP), entre otras.</li>
+                    <li><strong>Adolescentes y adultos:</strong> Refuerzo de DTP, VPH (para ambos sexos), Influenza anual, Neumococo.</li>
+                    <li><strong>Adultos mayores:</strong> Neumococo, Influenza, Herpes Zóster.</li>
+                </ul>
+                <p>En Clínica Vital contamos con el esquema completo de vacunación para todas las edades. Consulta con tu médico y mantén tu cartilla al día.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== POR QUÉ ELEGIRNOS ===== -->
+    <section class="porque seccion-blanca">
+        <div class="contenedor">
+            <h3>¿Por qué elegir Clínica Vital?</h3>
+            <p class="sub">Somos tu mejor opción en salud</p>
+            <div class="porque-grid">
+                <div class="porque-item"><i class="fas fa-user-md"></i><h4>Médicos certificados</h4><p>Especialistas con amplia trayectoria.</p></div>
+                <div class="porque-item"><i class="fas fa-microscope"></i><h4>Equipo moderno</h4><p>Tecnología de vanguardia.</p></div>
+                <div class="porque-item"><i class="fas fa-clock"></i><h4>Resultados rápidos</h4><p>Diagnósticos precisos en tiempo breve.</p></div>
+                <div class="porque-item"><i class="fas fa-heart"></i><h4>Atención personalizada</h4><p>Trato humano y cálido.</p></div>
+                <div class="porque-item"><i class="fas fa-ambulance"></i><h4>Urgencias 24/7</h4><p>Siempre listos para atenderte.</p></div>
+                <div class="porque-item"><i class="fas fa-users"></i><h4>Más de 20,000 pacientes</h4><p>Confianza que nos respalda.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="contenedor">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo"><i class="fas fa-heart-pulse" style="color: var(--verde);"></i> <span>Clínica</span> Vital</div>
+                    <div class="footer-desc">Cuidamos tu salud con excelencia y calidez humana. Más de 15 años brindando atención integral.</div>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="especialidades.html">Especialidades</a></li>
+                        <li><a href="medicos.html">Médicos</a></li>
+                        <li><a href="testimonios.html">Testimonios</a></li>
+                        <li><a href="farmacia.html">Farmacia</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                        <li><a href="admin.html">Admin</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Horario</h4>
+                    <ul>
+                        <li>Lun - Vie: 8:00 - 20:00</li>
+                        <li>Sábado: 8:00 - 14:00</li>
+                        <li>Domingo: Urgencias</li>
+                        <li style="margin-top:8px;"><a href="tel:+525598765432" style="color: #cbd5e1; text-decoration: none;"><i class="fas fa-phone-alt" style="color: var(--verde);"></i> +52 55 9876 5432</a></li>
+                        <li><a href="mailto:contacto@clinicavital.mx" style="color: #cbd5e1; text-decoration: none;"><i class="fas fa-envelope" style="color: var(--verde);"></i> contacto@clinicavital.mx</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Certificaciones</h4>
+                    <div class="footer-cert">
+                        <span>ISO 9001</span>
+                        <span>COFEPRIS</span>
+                        <span>Salud Responsable</span>
+                    </div>
+                    <div style="margin-top: 16px;">
+                        <h4 style="font-size:1rem;">Aviso de privacidad</h4>
+                        <ul>
+                            <li><a href="#">Términos y condiciones</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copy">&copy; 2026 Clínica Vital · Tu salud es nuestra misión</div>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <a href="https://wa.me/525598765432?text=Hola%2C%20quiero%20agendar%20una%20cita" target="_blank" class="whatsapp-float" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- ===== CHAT FLOTANTE ===== -->
+    <div class="chat-float">
+        <div class="chat-ventana" id="chatVentana">
+            <div class="chat-header">
+                <span><i class="fas fa-comment-dots"></i> Clínica Vital</span>
+                <button class="cerrar-chat" id="cerrarChat"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="chat-mensajes" id="chatMensajes">
+                <div class="chat-mensaje bot">👋 ¡Hola! ¿Necesitas ayuda?</div>
+            </div>
+            <div class="chat-opciones">
+                <button data-resp="Me gustaría agendar una cita.">Agendar</button>
+                <button data-resp="Quiero conocer las especialidades.">Especialidades</button>
+                <button data-resp="¿Cuáles son sus horarios?">Horarios</button>
+                <button data-resp="¿Aceptan seguros?">Seguros</button>
+            </div>
+        </div>
+        <button class="chat-toggle" id="chatToggle"><i class="fas fa-comment-dots"></i></button>
+    </div>
+
+    <!-- ===== CARRITO SIDEBAR ===== -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Carrito</h3>
+            <button class="close-cart" id="closeCart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-total">
+            <div class="total-row">
+                <span>Total</span>
+                <span id="cartTotalPrecio">$0</span>
+            </div>
+            <button class="btn-checkout" id="btnCheckout" disabled>Proceder al pago</button>
+        </div>
+    </div>
+
+    <!-- ===== Three.js y script 3D ===== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // ============================================================
+        // MODELO 3D INTERACTIVO (Corazón con partículas)
+        // ============================================================
+        (function() {
+            const container = document.getElementById('canvas3d');
+            if (!container) return;
+
+            // Configuración
+            const width = container.clientWidth || 400;
+            const height = container.clientHeight || (width * 0.625);
+
+            // Escena, cámara, renderizador
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf0f9f6); // color de fondo suave
+
+            const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.set(0, 0, 6);
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            container.appendChild(renderer.domElement);
+
+            // ===== LUZ =====
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(1, 2, 4);
+            scene.add(dirLight);
+
+            const fillLight = new THREE.DirectionalLight(0x0b8c5e, 0.3);
+            fillLight.position.set(-2, -1, 3);
+            scene.add(fillLight);
+
+            // ===== CORAZÓN (Torus con forma de corazón) =====
+            // Usamos un toroide como base y lo deformamos con una curva
+            const heartGroup = new THREE.Group();
+
+            // Corazón principal: toroide con rotación
+            const torusGeo = new THREE.TorusGeometry(1.0, 0.4, 32, 64);
+            const torusMat = new THREE.MeshPhysicalMaterial({
+                color: 0x0b8c5e,
+                metalness: 0.1,
+                roughness: 0.3,
+                clearcoat: 0.4,
+                emissive: 0x0b8c5e,
+                emissiveIntensity: 0.08,
+                side: THREE.DoubleSide
+            });
+            const heartMesh = new THREE.Mesh(torusGeo, torusMat);
+            heartMesh.rotation.x = Math.PI / 2;
+            heartMesh.rotation.z = -0.3;
+            heartMesh.scale.set(1, 1, 0.7);
+            heartGroup.add(heartMesh);
+
+            // Segundo toroide para dar volumen
+            const torusGeo2 = new THREE.TorusGeometry(0.7, 0.3, 32, 64);
+            const torusMat2 = new THREE.MeshPhysicalMaterial({
+                color: 0x0a7a52,
+                metalness: 0.1,
+                roughness: 0.4,
+                transparent: true,
+                opacity: 0.6,
+                side: THREE.DoubleSide
+            });
+            const heartMesh2 = new THREE.Mesh(torusGeo2, torusMat2);
+            heartMesh2.rotation.x = Math.PI / 2;
+            heartMesh2.rotation.z = 0.6;
+            heartMesh2.scale.set(1, 1, 0.6);
+            heartGroup.add(heartMesh2);
+
+            // Pequeñas esferas alrededor (como latidos)
+            const sphereMat = new THREE.MeshPhysicalMaterial({
+                color: 0xdc2626,
+                emissive: 0xdc2626,
+                emissiveIntensity: 0.3,
+                roughness: 0.2,
+                metalness: 0.1
+            });
+            const positions = [
+                [1.2, 0.4, 0.2], [-1.2, 0.4, -0.2],
+                [0.8, -0.6, 0.4], [-0.8, -0.6, -0.4],
+                [0.4, 0.8, 0.6], [-0.4, 0.8, -0.6]
+            ];
+            positions.forEach(pos => {
+                const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.12, 8, 8), sphereMat);
+                sphere.position.set(pos[0], pos[1], pos[2]);
+                heartGroup.add(sphere);
+            });
+
+            scene.add(heartGroup);
+
+            // ===== PARTÍCULAS (fondo) =====
+            const particlesGeo = new THREE.BufferGeometry();
+            const particlesCount = 600;
+            const posArray = new Float32Array(particlesCount * 3);
+            for (let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const particlesMat = new THREE.PointsMaterial({
+                color: 0x0b8c5e,
+                size: 0.04,
+                transparent: true,
+                opacity: 0.5,
+                blending: THREE.AdditiveBlending
+            });
+            const particles = new THREE.Points(particlesGeo, particlesMat);
+            scene.add(particles);
+
+            // ===== MOVIMIENTO CON EL MOUSE =====
+            let mouseX = 0,
+                mouseY = 0;
+            let targetX = 0,
+                targetY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                const rect = container.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                mouseX = x * 2;
+                mouseY = y * 2;
+            });
+
+            // También en dispositivos táctiles
+            document.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 0) {
+                    const rect = container.getBoundingClientRect();
+                    const touch = e.touches[0];
+                    const x = (touch.clientX - rect.left) / rect.width - 0.5;
+                    const y = (touch.clientY - rect.top) / rect.height - 0.5;
+                    mouseX = x * 2;
+                    mouseY = y * 2;
+                }
+            }, { passive: true });
+
+            // ===== ANIMACIÓN =====
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // Suavizado
+                targetX += (mouseX - targetX) * 0.08;
+                targetY += (mouseY - targetY) * 0.08;
+
+                // Rotación del corazón
+                heartGroup.rotation.y += 0.005;
+                heartGroup.rotation.x = 0.2 + targetY * 0.3;
+                heartGroup.rotation.z = targetX * 0.15;
+
+                // Movimiento de partículas (rotación lenta)
+                particles.rotation.x += 0.0002;
+                particles.rotation.y += 0.0003;
+
+                // Pequeño latido (escala pulsante)
+                const pulse = 1 + Math.sin(Date.now() * 0.003) * 0.01;
+                heartGroup.scale.set(pulse, pulse, pulse);
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // ===== REDIMENSIONAR =====
+            function resizeRenderer() {
+                const newWidth = container.clientWidth;
+                const newHeight = container.clientHeight || (newWidth * 0.625);
+                if (newWidth > 0 && newHeight > 0) {
+                    camera.aspect = newWidth / newHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(newWidth, newHeight);
+                }
+            }
+
+            window.addEventListener('resize', resizeRenderer);
+            // Observar cambios de tamaño del contenedor
+            if (window.ResizeObserver) {
+                const ro = new ResizeObserver(() => resizeRenderer());
+                ro.observe(container);
+            }
+
+            // Inicializar tamaño
+            setTimeout(resizeRenderer, 100);
+
+            // ===== REINICIAR MOUSE AL SALIR =====
+            container.addEventListener('mouseleave', () => {
+                mouseX = 0;
+                mouseY = 0;
+            });
+
+        })();
+
+        // ============================================================
+        // CARRITO Y DEMÁS SCRIPTS (igual que antes)
+        // ============================================================
+        const CART_KEY = 'clinica_carrito';
+
+        function obtenerCarrito() {
+            const data = localStorage.getItem(CART_KEY);
+            if (data) {
+                try { return JSON.parse(data); } catch (e) { return []; }
+            }
+            return [];
+        }
+
+        function guardarCarrito(carrito) {
+            localStorage.setItem(CART_KEY, JSON.stringify(carrito));
+            actualizarBadge();
+        }
+
+        function actualizarBadge() {
+            const carrito = obtenerCarrito();
+            const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+            document.getElementById('cartBadge').textContent = totalItems;
+            return totalItems;
+        }
+
+        function mostrarCarrito() {
+            const container = document.getElementById('cartItems');
+            const carrito = obtenerCarrito();
+
+            if (carrito.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center; color:#94a3b8; padding:30px 0;">
+                        <i class="fas fa-shopping-cart" style="font-size:2.5rem; display:block; margin-bottom:10px;"></i>
+                        Tu carrito está vacío.
+                    </div>
+                `;
+                document.getElementById('cartTotalPrecio').textContent = '$0';
+                document.getElementById('btnCheckout').disabled = true;
+                return;
+            }
+
+            let total = 0;
+            container.innerHTML = carrito.map(item => {
+                const subtotal = item.precio * item.cantidad;
+                total += subtotal;
+                return `
+                    <div class="cart-item">
+                        <img src="${item.imagen || 'https://placehold.co/50x50/e9edf2/64748b?text=?'}" alt="${item.nombre}" loading="lazy" />
+                        <div class="info">
+                            <h4>${item.nombre}</h4>
+                            <div class="precio">$${item.precio.toFixed(2)}</div>
+                        </div>
+                        <div class="cantidad">
+                            <button onclick="cambiarCantidad(${item.id}, -1)">−</button>
+                            <span>${item.cantidad}</span>
+                            <button onclick="cambiarCantidad(${item.id}, 1)">+</button>
+                        </div>
+                        <button class="eliminar-item" onclick="eliminarDelCarrito(${item.id})"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('cartTotalPrecio').textContent = '$' + total.toFixed(2);
+            document.getElementById('btnCheckout').disabled = false;
+        }
+
+        function eliminarDelCarrito(productoId) {
+            let carrito = obtenerCarrito();
+            carrito = carrito.filter(item => item.id !== productoId);
+            guardarCarrito(carrito);
+            mostrarCarrito();
+        }
+
+        function cambiarCantidad(productoId, delta) {
+            let carrito = obtenerCarrito();
+            const item = carrito.find(i => i.id === productoId);
+            if (!item) return;
+
+            const nuevaCantidad = item.cantidad + delta;
+            if (nuevaCantidad < 1) {
+                carrito = carrito.filter(i => i.id !== productoId);
+            } else {
+                item.cantidad = nuevaCantidad;
+            }
+            guardarCarrito(carrito);
+            mostrarCarrito();
+        }
+
+        window.eliminarDelCarrito = eliminarDelCarrito;
+        window.cambiarCantidad = cambiarCantidad;
+
+        // ===== TOGGLE CARRITO =====
+        const cartOverlay = document.getElementById('cartOverlay');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartIcon = document.getElementById('cartIcon');
+
+        cartIcon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            cartSidebar.classList.toggle('abierto');
+            cartOverlay.classList.toggle('active');
+            if (cartSidebar.classList.contains('abierto')) {
+                mostrarCarrito();
+            }
+        });
+
+        document.getElementById('closeCart').addEventListener('click', function() {
+            cartSidebar.classList.remove('abierto');
+            cartOverlay.classList.remove('active');
+        });
+
+        cartOverlay.addEventListener('click', function() {
+            cartSidebar.classList.remove('abierto');
+            cartOverlay.classList.remove('active');
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && cartSidebar.classList.contains('abierto')) {
+                cartSidebar.classList.remove('abierto');
+                cartOverlay.classList.remove('active');
+            }
+        });
+
+        // ===== CHECKOUT =====
+        document.getElementById('btnCheckout').addEventListener('click', function() {
+            const carrito = obtenerCarrito();
+            if (carrito.length === 0) return;
+            const total = carrito.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
+            alert(`✅ Pedido realizado por un total de $${total.toFixed(2)}. Gracias por tu compra.`);
+            localStorage.removeItem(CART_KEY);
+            actualizarBadge();
+            mostrarCarrito();
+            cartSidebar.classList.remove('abierto');
+            cartOverlay.classList.remove('active');
+        });
+
+        // ============================================================
+        // INICIALIZAR
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            actualizarBadge();
+        });
+
+        window.addEventListener('storage', function(e) {
+            if (e.key === CART_KEY) {
+                actualizarBadge();
+                if (cartSidebar.classList.contains('abierto')) {
+                    mostrarCarrito();
+                }
+            }
+        });
+
+        // ============================================================
+        // CHAT
+        // ============================================================
+        const chatToggle = document.getElementById('chatToggle');
+        const chatVentana = document.getElementById('chatVentana');
+        const cerrarChat = document.getElementById('cerrarChat');
+        const chatMensajes = document.getElementById('chatMensajes');
+        document.querySelectorAll('.chat-opciones button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const resp = btn.dataset.resp;
+                const msg = document.createElement('div');
+                msg.className = 'chat-mensaje';
+                msg.textContent = resp;
+                chatMensajes.appendChild(msg);
+                chatMensajes.scrollTop = chatMensajes.scrollHeight;
+                setTimeout(() => {
+                    const bot = document.createElement('div');
+                    bot.className = 'chat-mensaje bot';
+                    bot.textContent = '✅ ¡Gracias! Un asesor te contactará en breve.';
+                    chatMensajes.appendChild(bot);
+                    chatMensajes.scrollTop = chatMensajes.scrollHeight;
+                }, 600);
+            });
+        });
+        chatToggle.addEventListener('click', () => chatVentana.classList.toggle('abierto'));
+        cerrarChat.addEventListener('click', () => chatVentana.classList.remove('abierto'));
+
+        // ============================================================
+        // MODALES DEL BLOG
+        // ============================================================
+        document.querySelectorAll('.leer-mas').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const modalId = btn.dataset.modal;
+                document.getElementById(modalId).classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        document.querySelectorAll('.blog-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const modalId = card.dataset.modal;
+                document.getElementById(modalId).classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        document.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const modalId = btn.dataset.modal;
+                document.getElementById(modalId).classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        document.querySelectorAll('.blog-modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.blog-modal-overlay.active').forEach(overlay => {
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

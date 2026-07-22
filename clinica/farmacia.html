@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clínica Vital · Farmacia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        .contenedor {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        :root {
+            --verde: #0b8c5e;
+            --verde-claro: #e6f5f0;
+            --gris-claro: #f8fafc;
+            --gris-medio: #e9edf2;
+            --blanco: #ffffff;
+            --sombra: 0 10px 30px rgba(0, 0, 0, 0.06);
+            --sombra-fuerte: 0 20px 50px rgba(0, 0, 0, 0.12);
+            --radio: 24px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== TOPBAR ===== */
+        .topbar {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 8px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid #1e293b;
+        }
+        .topbar .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .topbar-izq {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+        .topbar-izq a {
+            color: #cbd5e1;
+            transition: var(--transition);
+        }
+        .topbar-izq a:hover {
+            color: var(--verde);
+        }
+        .topbar-izq i {
+            color: var(--verde);
+            margin-right: 6px;
+            width: 18px;
+        }
+        .topbar-der {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .topbar-der a {
+            color: #cbd5e1;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        .topbar-der a:hover {
+            color: var(--verde);
+        }
+        .whatsapp-top {
+            background: #25d366;
+            color: #fff !important;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        .whatsapp-top:hover {
+            background: #1ebe5e !important;
+            color: #fff !important;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: var(--blanco);
+            padding: 12px 0;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #e9edf2;
+        }
+        header .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icono {
+            width: 44px;
+            height: 44px;
+            background: var(--verde);
+            color: #fff;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .logo h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .logo h1 span {
+            color: var(--verde);
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        nav a {
+            padding: 8px 14px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            color: #1e293b;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        nav a:hover,
+        nav a.activo {
+            color: var(--verde);
+            background: var(--verde-claro);
+        }
+        .btn-cita-header {
+            background: var(--verde);
+            color: #fff !important;
+            padding: 10px 22px !important;
+            border-radius: 40px !important;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(11, 140, 94, 0.3);
+            transition: var(--transition);
+        }
+        .btn-cita-header:hover {
+            background: #0a7a52 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(11, 140, 94, 0.4);
+            color: #fff !important;
+        }
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.3rem;
+            padding: 8px 10px;
+            border-radius: 30px;
+            transition: var(--transition);
+            user-select: none;
+        }
+        .cart-icon:hover {
+            background: var(--gris-claro);
+        }
+        .cart-icon .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #ef4444;
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        /* ===== TIENDA / FARMACIA ===== */
+        .tienda {
+            padding: 40px 0 60px;
+        }
+        .tienda-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .tienda-header h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .tienda-header h2 i {
+            color: var(--verde);
+            margin-right: 10px;
+        }
+        .tienda-filtros {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .tienda-filtros input,
+        .tienda-filtros select {
+            padding: 10px 18px;
+            border-radius: 40px;
+            border: 1px solid #e9edf2;
+            font-family: inherit;
+            font-size: 0.95rem;
+            background: var(--blanco);
+            flex: 1 1 200px;
+            min-width: 150px;
+            transition: var(--transition);
+        }
+        .tienda-filtros input:focus,
+        .tienda-filtros select:focus {
+            border-color: var(--verde);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(11, 140, 94, 0.15);
+        }
+        .grid-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 28px;
+        }
+        .producto-card {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            overflow: hidden;
+            box-shadow: var(--sombra);
+            border: 1px solid #e9edf2;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        .producto-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--sombra-fuerte);
+            border-color: var(--verde);
+        }
+        .producto-card .imagen {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background-size: cover;
+            background-position: center;
+            background-color: #f1f5f9;
+        }
+        .producto-card .info {
+            padding: 18px 20px 22px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .producto-card .info .categoria {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--verde);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .producto-card .info h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 4px 0 6px;
+        }
+        .producto-card .info .descripcion {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            flex: 1;
+        }
+        .producto-card .info .precio {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--verde);
+            margin-bottom: 12px;
+        }
+        .producto-card .info .acciones {
+            display: flex;
+            gap: 10px;
+        }
+        .producto-card .info .acciones .btn-agregar {
+            flex: 1;
+            background: var(--verde);
+            color: #fff !important;
+            padding: 10px 0;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .producto-card .info .acciones .btn-agregar:hover {
+            background: #0a7a52;
+            transform: scale(1.02);
+        }
+        .producto-card .info .acciones .btn-detalle {
+            flex: 1;
+            background: transparent;
+            color: var(--verde) !important;
+            padding: 10px 0;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 2px solid var(--verde);
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .producto-card .info .acciones .btn-detalle:hover {
+            background: var(--verde);
+            color: #fff !important;
+        }
+
+        /* ===== CARRITO SIDEBAR ===== */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .cart-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 400px;
+            height: 100%;
+            background: var(--blanco);
+            z-index: 2001;
+            box-shadow: -8px 0 30px rgba(0, 0, 0, 0.15);
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            max-width: 90vw;
+        }
+        .cart-sidebar.abierto {
+            right: 0;
+        }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid #e9edf2;
+        }
+        .cart-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        .cart-header h3 i {
+            color: var(--verde);
+        }
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+            transition: var(--transition);
+        }
+        .close-cart:hover {
+            color: #1e293b;
+            transform: rotate(90deg);
+        }
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 20px;
+        }
+        .cart-items .vacio {
+            text-align: center;
+            color: #94a3b8;
+            padding: 40px 0;
+            font-size: 1.1rem;
+        }
+        .cart-items .vacio i {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 12px;
+            color: #cbd5e1;
+        }
+        .cart-item {
+            display: flex;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            align-items: center;
+        }
+        .cart-item .item-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+            background-color: #f1f5f9;
+        }
+        .cart-item .item-info {
+            flex: 1;
+        }
+        .cart-item .item-info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .cart-item .item-info .item-precio {
+            font-size: 0.85rem;
+            color: var(--verde);
+            font-weight: 600;
+        }
+        .cart-item .item-cantidad {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .cart-item .item-cantidad button {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid #e9edf2;
+            background: var(--blanco);
+            cursor: pointer;
+            font-weight: 700;
+            color: #1e293b;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cart-item .item-cantidad button:hover {
+            background: var(--verde);
+            color: #fff;
+            border-color: var(--verde);
+        }
+        .cart-item .item-cantidad span {
+            font-weight: 600;
+            min-width: 24px;
+            text-align: center;
+        }
+        .cart-item .item-eliminar {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            padding: 4px;
+        }
+        .cart-item .item-eliminar:hover {
+            color: #ef4444;
+        }
+
+        .cart-total {
+            padding: 16px 24px 24px;
+            border-top: 1px solid #e9edf2;
+            background: #fafcfc;
+        }
+        .cart-total .subtotal,
+        .cart-total .envio,
+        .cart-total .descuento,
+        .cart-total .total {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 0.95rem;
+        }
+        .cart-total .total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-top: 1px solid #e9edf2;
+            margin-top: 6px;
+            padding-top: 10px;
+        }
+        .cart-total .total span:last-child {
+            color: var(--verde);
+        }
+        .cart-total .cupon {
+            display: flex;
+            gap: 8px;
+            margin: 12px 0;
+        }
+        .cart-total .cupon input {
+            flex: 1;
+            padding: 8px 14px;
+            border-radius: 40px;
+            border: 1px solid #e9edf2;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        .cart-total .cupon input:focus {
+            border-color: var(--verde);
+            outline: none;
+        }
+        .cart-total .cupon button {
+            padding: 8px 18px;
+            border-radius: 40px;
+            border: none;
+            background: var(--verde);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .cart-total .cupon button:hover {
+            background: #0a7a52;
+        }
+        .btn-checkout {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 60px;
+            background: var(--verde);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-checkout:hover {
+            background: #0a7a52;
+            transform: scale(1.02);
+        }
+
+        /* ===== CHECKOUT MODAL ===== */
+        .checkout-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            background: var(--blanco);
+            border-radius: var(--radio);
+            box-shadow: var(--sombra-fuerte);
+            z-index: 3000;
+            width: 90%;
+            max-width: 720px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 32px 34px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .checkout-modal.abierto {
+            opacity: 1;
+            pointer-events: all;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .checkout-modal .close-checkout {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #94a3b8;
+            transition: var(--transition);
+        }
+        .checkout-modal .close-checkout:hover {
+            color: #1e293b;
+            transform: rotate(90deg);
+        }
+        .checkout-modal h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .campo {
+            margin-bottom: 14px;
+        }
+        .campo label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+        .campo input,
+        .campo select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1px solid #e9edf2;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background: var(--gris-claro);
+        }
+        .campo input:focus,
+        .campo select:focus {
+            border-color: var(--verde);
+            outline: none;
+            background: var(--blanco);
+        }
+        .metodos-pago {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .metodos-pago label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 30px;
+            border: 1px solid #e9edf2;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .metodos-pago label.active,
+        .metodos-pago label:hover {
+            border-color: var(--verde);
+            background: var(--verde-claro);
+        }
+        .metodos-pago input[type="radio"] {
+            display: none;
+        }
+        .resumen-pedido {
+            background: var(--gris-claro);
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 8px;
+        }
+        .resumen-pedido > div {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 0.95rem;
+        }
+        .resumen-pedido .total-final {
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-top: 1px solid #e9edf2;
+            margin-top: 6px;
+            padding-top: 8px;
+        }
+        .resumen-pedido .total-final span:last-child {
+            color: var(--verde);
+        }
+        .btn-confirmar {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 60px;
+            background: var(--verde);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-confirmar:hover {
+            background: #0a7a52;
+        }
+
+        /* ===== OVERLAY PARA CHECKOUT ===== */
+        .checkout-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .checkout-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* ===== MODAL DE DETALLES DE PRODUCTO ===== */
+        .producto-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .producto-modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .producto-modal {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            max-width: 750px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 32px 36px;
+            box-shadow: var(--sombra-fuerte);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        .producto-modal-overlay.active .producto-modal {
+            transform: scale(1);
+        }
+        .producto-modal .close-modal {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 10;
+        }
+        .producto-modal .close-modal:hover {
+            color: #1e293b;
+            transform: rotate(90deg);
+        }
+        .producto-modal img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+        .producto-modal h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+        .producto-modal .categoria-modal {
+            color: var(--verde);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .producto-modal .precio-modal {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--verde);
+            margin-bottom: 14px;
+        }
+        .producto-modal .descripcion-completa {
+            color: #1e293b;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        .producto-modal .descripcion-completa p {
+            margin-bottom: 12px;
+        }
+        .producto-modal .lista-beneficios {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 20px;
+            list-style: none;
+            margin-bottom: 16px;
+        }
+        .producto-modal .lista-beneficios li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            color: #334155;
+        }
+        .producto-modal .lista-beneficios li i {
+            color: var(--verde);
+            width: 18px;
+        }
+        .producto-modal .modo-uso {
+            background: var(--verde-claro);
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+        .producto-modal .modo-uso strong {
+            color: var(--verde);
+        }
+        .producto-modal .modo-uso p {
+            color: #1e293b;
+            margin-top: 4px;
+        }
+        .producto-modal .btn-agregar-modal {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--verde);
+            color: #fff !important;
+            padding: 14px 36px;
+            border-radius: 60px;
+            font-weight: 700;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 8px;
+        }
+        .producto-modal .btn-agregar-modal:hover {
+            background: #0a7a52;
+            transform: scale(1.02);
+            box-shadow: 0 4px 14px rgba(11, 140, 94, 0.3);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 50px 0 20px;
+            border-top: 4px solid var(--verde);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        .footer-logo span {
+            color: var(--verde);
+        }
+        .footer-desc {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            margin-bottom: 16px;
+            max-width: 300px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #1e293b;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .footer-social a:hover {
+            background: var(--verde);
+            color: #fff;
+        }
+        footer h4 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 14px;
+        }
+        footer ul {
+            list-style: none;
+        }
+        footer ul li {
+            margin-bottom: 8px;
+        }
+        footer ul a {
+            color: #94a3b8;
+            transition: var(--transition);
+        }
+        footer ul a:hover {
+            color: var(--verde);
+        }
+        .footer-cert {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .footer-cert span {
+            background: #1e293b;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #94a3b8;
+            border: 1px solid #334155;
+        }
+        .footer-copy {
+            border-top: 1px solid #1e293b;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 998;
+            background: #25d366;
+            color: #fff !important;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+            transition: var(--transition);
+            border: none;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 35px rgba(37, 211, 102, 0.6);
+            color: #fff !important;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            header .contenedor {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            nav ul {
+                width: 100%;
+                justify-content: center;
+                gap: 4px;
+            }
+            nav a {
+                font-size: 0.85rem;
+                padding: 6px 12px;
+            }
+            .btn-cita-header {
+                padding: 6px 16px !important;
+                font-size: 0.85rem;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .grid-productos {
+                grid-template-columns: 1fr 1fr;
+            }
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            .checkout-modal {
+                padding: 20px;
+                max-width: 95%;
+            }
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+            .producto-modal {
+                max-width: 95%;
+                padding: 20px;
+            }
+            .producto-modal .lista-beneficios {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .grid-productos {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOPBAR ===== -->
+    <div class="topbar">
+        <div class="contenedor">
+            <div class="topbar-izq">
+                <!-- ✅ Teléfono funcional con enlace tel: -->
+                <a href="tel:+525598765432"><i class="fas fa-phone-alt"></i> +52 55 9876 5432</a>
+                <span><i class="far fa-clock"></i> Lun-Sáb 8:00 - 20:00</span>
+                <span><i class="fas fa-map-marker-alt"></i> Av. Salud #789, CDMX</span>
+            </div>
+            <div class="topbar-der">
+                <!-- ✅ WhatsApp funcional con número correcto -->
+                <a href="https://wa.me/525598765432?text=Hola%2C%20quiero%20agendar%20una%20cita" class="whatsapp-top" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                <a href="citas.html" style="color: white; font-weight: 500;">Agendar cita</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="contenedor">
+            <div class="logo">
+                <div class="logo-icono"><i class="fas fa-heart-pulse"></i></div>
+                <h1><span>Clínica</span> Vital</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="especialidades.html">Especialidades</a></li>
+                    <li><a href="medicos.html">Médicos</a></li>
+                    <li><a href="testimonios.html">Testimonios</a></li>
+                    <li><a href="farmacia.html" class="activo"><i class="fas fa-prescription-bottle"></i> Farmacia</a></li>
+                    <li><a href="citas.html" class="btn-cita-header"><i class="fas fa-calendar-check"></i> Agendar cita</a></li>
+                    <li>
+                        <span class="cart-icon" id="cartIcon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge" id="cartBadge">0</span>
+                        </span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== CONTENIDO ===== -->
+    <section class="tienda">
+        <div class="contenedor">
+            <div class="tienda-header">
+                <h2><i class="fas fa-prescription-bottle"></i> Farmacia</h2>
+                <p style="color: #64748b; margin-bottom: 16px;">Encuentra suplementos, equipo médico y productos para tu bienestar</p>
+                <div class="tienda-filtros">
+                    <input type="text" id="searchInput" placeholder="Buscar productos..." />
+                    <select id="categoryFilter">
+                        <option value="todos">Todas las categorías</option>
+                        <option value="Suplementos">Suplementos</option>
+                        <option value="Equipo médico">Equipo médico</option>
+                        <option value="Cuidado personal">Cuidado personal</option>
+                        <option value="Nutrición">Nutrición</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid-productos" id="productosContainer">
+                <!-- Los productos se generan con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="contenedor">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo"><i class="fas fa-heart-pulse" style="color: var(--verde);"></i> <span>Clínica</span> Vital</div>
+                    <div class="footer-desc">Cuidamos tu salud con excelencia y calidez humana. Más de 15 años brindando atención integral.</div>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="especialidades.html">Especialidades</a></li>
+                        <li><a href="medicos.html">Médicos</a></li>
+                        <li><a href="testimonios.html">Testimonios</a></li>
+                        <li><a href="farmacia.html">Farmacia</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                        <li><a href="admin.html">Admin</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Horario</h4>
+                    <ul>
+                        <li>Lun - Vie: 8:00 - 20:00</li>
+                        <li>Sábado: 8:00 - 14:00</li>
+                        <li>Domingo: Urgencias</li>
+                        <!-- ✅ Teléfono y correo funcionales en el footer -->
+                        <li style="margin-top:8px;"><a href="tel:+525598765432" style="color: #cbd5e1; text-decoration: none;"><i class="fas fa-phone-alt" style="color: var(--verde);"></i> +52 55 9876 5432</a></li>
+                        <li><a href="mailto:contacto@clinicavital.mx" style="color: #cbd5e1; text-decoration: none;"><i class="fas fa-envelope" style="color: var(--verde);"></i> contacto@clinicavital.mx</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Certificaciones</h4>
+                    <div class="footer-cert">
+                        <span>ISO 9001</span>
+                        <span>COFEPRIS</span>
+                        <span>Salud Responsable</span>
+                    </div>
+                    <div style="margin-top: 16px;">
+                        <h4 style="font-size:1rem;">Aviso de privacidad</h4>
+                        <ul>
+                            <li><a href="#">Preguntas frecuentes</a></li>
+                            <li><a href="#">Términos y condiciones</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copy">&copy; 2026 Clínica Vital · Tu salud es nuestra misión</div>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <a href="https://wa.me/525598765432?text=Hola%2C%20quiero%20agendar%20una%20cita" target="_blank" class="whatsapp-float" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- ===== CARRITO SIDEBAR ===== -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Carrito</h3>
+            <button class="close-cart" id="closeCart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-total">
+            <div class="subtotal"><span>Subtotal</span><span id="cartSubtotal">$0</span></div>
+            <div class="envio"><span>Envío</span><span id="cartEnvio">$0</span></div>
+            <div class="descuento"><span>Descuento</span><span id="cartDescuento">-$0</span></div>
+            <div class="total"><span>Total</span><span id="cartTotal">$0</span></div>
+            <div class="cupon">
+                <input type="text" id="cuponInput" placeholder="Código de descuento (SALUD10)" />
+                <button id="aplicarCupon">Aplicar</button>
+            </div>
+            <button class="btn-checkout" id="btnCheckout"><i class="fas fa-credit-card"></i> Proceder al pago</button>
+        </div>
+    </div>
+
+    <!-- ===== CHECKOUT ===== -->
+    <div class="checkout-overlay" id="checkoutOverlay"></div>
+    <div class="checkout-modal" id="checkoutModal">
+        <button class="close-checkout" id="closeCheckout"><i class="fas fa-times"></i></button>
+        <h2>Finalizar compra</h2>
+        <div class="checkout-grid">
+            <div>
+                <div class="campo"><label>Nombre completo</label><input type="text" id="checkoutNombre" placeholder="Ej: Juan Pérez" /></div>
+                <div class="campo"><label>Dirección de envío</label><input type="text" id="checkoutDireccion" placeholder="Calle, número, colonia" /></div>
+                <div class="campo"><label>Ciudad</label><input type="text" id="checkoutCiudad" placeholder="Ciudad" /></div>
+                <div class="campo"><label>Código postal</label><input type="text" id="checkoutCP" placeholder="CP" /></div>
+                <div class="campo"><label>Teléfono</label><input type="text" id="checkoutTelefono" placeholder="Teléfono" /></div>
+            </div>
+            <div>
+                <div class="campo"><label>Zona de envío</label>
+                    <select id="checkoutZona">
+                        <option value="local">Local (CDMX) - $50</option>
+                        <option value="nacional">Nacional - $150</option>
+                        <option value="internacional">Internacional - $500</option>
+                    </select>
+                </div>
+                <div class="campo"><label>Método de pago</label>
+                    <div class="metodos-pago">
+                        <label class="active"><input type="radio" name="pago" value="mercadopago" checked /> <i class="fab fa-mercadopago"></i> MercadoPago</label>
+                        <label><input type="radio" name="pago" value="paypal" /> <i class="fab fa-paypal"></i> PayPal</label>
+                        <label><input type="radio" name="pago" value="stripe" /> <i class="fas fa-credit-card"></i> Stripe</label>
+                    </div>
+                </div>
+                <div class="resumen-pedido" id="resumenPedido">
+                    <div><span>Subtotal</span><span id="resumenSubtotal">$0</span></div>
+                    <div><span>Envío</span><span id="resumenEnvio">$0</span></div>
+                    <div><span>Descuento</span><span id="resumenDescuento">-$0</span></div>
+                    <div class="total-final"><span>Total</span><span id="resumenTotal">$0</span></div>
+                </div>
+                <button class="btn-confirmar" id="btnConfirmarPago"><i class="fas fa-check"></i> Confirmar pedido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL DE DETALLES DE PRODUCTO ===== -->
+    <div class="producto-modal-overlay" id="productoModalOverlay">
+        <div class="producto-modal" id="productoModal">
+            <button class="close-modal" id="closeProductoModal">&times;</button>
+            <div id="productoModalContent">
+                <!-- Contenido dinámico generado por JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================================
+            // DATOS DE PRODUCTOS CON IMÁGENES LOCALES (carpeta "imga")
+            // ============================================================
+            const productos = [{
+                id: 1,
+                nombre: 'Multivitamínico Completo',
+                categoria: 'Suplementos',
+                precio: 450,
+                descripcion: 'Vitaminas y minerales esenciales para el día a día.',
+                imagen: 'imga/Multivitamínico-Completo.jpg.jpg',
+                descripcionCompleta: 'El Multivitamínico Completo es una fórmula diseñada para cubrir las necesidades diarias de vitaminas y minerales que tu cuerpo requiere para funcionar de manera óptima. Ideal para personas con dietas desequilibradas, estrés o actividad física intensa.',
+                beneficios: ['Refuerza el sistema inmunológico', 'Aporta energía y vitalidad', 'Mejora la salud de piel y cabello', 'Favorece el metabolismo'],
+                modoUso: 'Tomar 1 tableta al día con el desayuno o según indicación médica.'
+            }, {
+                id: 2,
+                nombre: 'Termómetro Digital',
+                categoria: 'Equipo médico',
+                precio: 280,
+                descripcion: 'Precisión y rapidez para medir la temperatura corporal.',
+                imagen: 'imga/Termometro-Digital.jpg.jpg',
+                descripcionCompleta: 'El Termómetro Digital de alta precisión te permite medir la temperatura corporal en segundos. Ideal para uso familiar, cuenta con una pantalla LCD clara y un sistema de alerta en caso de fiebre. Su diseño ergonómico lo hace fácil de usar en niños y adultos.',
+                beneficios: ['Medición rápida y precisa', 'Alerta de fiebre', 'Memoria de últimas mediciones', 'Apagado automático'],
+                modoUso: 'Colocar el termómetro bajo la lengua, en la axila o en el oído (según modelo) y esperar la señal acústica.'
+            }, {
+                id: 3,
+                nombre: 'Gel Antibacterial',
+                categoria: 'Cuidado personal',
+                precio: 120,
+                descripcion: 'Protección efectiva contra gérmenes y bacterias.',
+                imagen: 'imga/gel-antibacterial.jpg.jpg',
+                descripcionCompleta: 'El Gel Antibacterial con 70% de alcohol elimina el 99.9% de los gérmenes y bacterias más comunes. Su fórmula hidratante con aloe vera protege tus manos sin resecarlas. Perfecto para llevar a cualquier lugar y mantener una higiene adecuada.',
+                beneficios: ['Elimina bacterias y virus', 'Fórmula con aloe vera', 'Sin necesidad de agua', 'Aroma suave y fresco'],
+                modoUso: 'Aplicar una pequeña cantidad en las manos y frotar hasta su total evaporación.'
+            }, {
+                id: 4,
+                nombre: 'Proteína en Polvo',
+                categoria: 'Nutrición',
+                precio: 650,
+                descripcion: 'Suplemento proteico para recuperación muscular.',
+                imagen: 'imga/Proteína en Polvo.jpg.jpg',
+                descripcionCompleta: 'La Proteína en Polvo de suero de leche es el complemento ideal para deportistas y personas que buscan aumentar su masa muscular. Cada porción aporta 25g de proteína de alta calidad, con bajo contenido de carbohidratos y grasas. Su sabor es delicioso y se mezcla fácilmente.',
+                beneficios: ['Recuperación muscular', 'Aumento de masa magra', 'Sabor agradable', 'Sin azúcares añadidos'],
+                modoUso: 'Mezclar 1 scoop (30g) con 200ml de agua o leche, consumir antes o después del entrenamiento.'
+            }, {
+                id: 5,
+                nombre: 'Tensiómetro Digital',
+                categoria: 'Equipo médico',
+                precio: 890,
+                descripcion: 'Controla tu presión arterial fácilmente desde casa.',
+                imagen: 'imga/tensiometro-digital.jpg.jpg',
+                descripcionCompleta: 'El Tensiómetro Digital automático te permite monitorear tu presión arterial de forma sencilla y precisa. Cuenta con un brazalete ajustable, pantalla grande y detección de arritmias. Es un aliado indispensable para personas con hipertensión o factores de riesgo cardiovascular.',
+                beneficios: ['Medición automática', 'Detección de arritmias', 'Memoria para 2 usuarios', 'Fácil de usar'],
+                modoUso: 'Colocar el brazalete en el brazo, presionar el botón de inicio y esperar la lectura completa.'
+            }, {
+                id: 6,
+                nombre: 'Aceite de Omega 3',
+                categoria: 'Suplementos',
+                precio: 320,
+                descripcion: 'Ácidos grasos esenciales para la salud cardiovascular.',
+                imagen: 'imga/aceite-de-omega-3.jpg.jpg',
+                descripcionCompleta: 'El Aceite de Omega 3 es rico en EPA y DHA, ácidos grasos esenciales que contribuyen a la salud del corazón, el cerebro y la visión. Ayuda a reducir los niveles de triglicéridos y a mantener la flexibilidad de las articulaciones. Es un suplemento básico para una vida saludable.',
+                beneficios: ['Salud cardiovascular', 'Funcionamiento cerebral', 'Antiinflamatorio natural', 'Bienestar articular'],
+                modoUso: 'Tomar 1 o 2 cápsulas al día con las comidas, o según recomendación médica.'
+            }];
+
+            // ============================================================
+            // ESTADO DEL CARRITO
+            // ============================================================
+            let carrito = [];
+            let cuponAplicado = false;
+            const CUPON_DESCUENTO = 0.10; // 10%
+            const CUPON_CODIGO = 'SALUD10';
+
+            // ============================================================
+            // DOM REFS
+            // ============================================================
+            const cartBadge = document.getElementById('cartBadge');
+            const cartSidebar = document.getElementById('cartSidebar');
+            const cartOverlay = document.getElementById('cartOverlay');
+            const cartItems = document.getElementById('cartItems');
+            const cartSubtotal = document.getElementById('cartSubtotal');
+            const cartEnvio = document.getElementById('cartEnvio');
+            const cartDescuento = document.getElementById('cartDescuento');
+            const cartTotal = document.getElementById('cartTotal');
+            const cuponInput = document.getElementById('cuponInput');
+            const aplicarCuponBtn = document.getElementById('aplicarCupon');
+            const btnCheckout = document.getElementById('btnCheckout');
+            const closeCartBtn = document.getElementById('closeCart');
+            const cartIcon = document.getElementById('cartIcon');
+
+            // Checkout
+            const checkoutModal = document.getElementById('checkoutModal');
+            const checkoutOverlay = document.getElementById('checkoutOverlay');
+            const closeCheckoutBtn = document.getElementById('closeCheckout');
+            const btnConfirmarPago = document.getElementById('btnConfirmarPago');
+            const resumenSubtotal = document.getElementById('resumenSubtotal');
+            const resumenEnvio = document.getElementById('resumenEnvio');
+            const resumenDescuento = document.getElementById('resumenDescuento');
+            const resumenTotal = document.getElementById('resumenTotal');
+            const checkoutZona = document.getElementById('checkoutZona');
+            const checkoutNombre = document.getElementById('checkoutNombre');
+            const checkoutDireccion = document.getElementById('checkoutDireccion');
+            const checkoutCiudad = document.getElementById('checkoutCiudad');
+            const checkoutCP = document.getElementById('checkoutCP');
+            const checkoutTelefono = document.getElementById('checkoutTelefono');
+
+            // Modal de producto
+            const productoModalOverlay = document.getElementById('productoModalOverlay');
+            const productoModalContent = document.getElementById('productoModalContent');
+            const closeProductoModalBtn = document.getElementById('closeProductoModal');
+
+            // ============================================================
+            // FUNCIONES DEL CARRITO
+            // ============================================================
+            function guardarCarrito() {
+                localStorage.setItem('farmaciaCarrito', JSON.stringify(carrito));
+            }
+
+            function cargarCarrito() {
+                const data = localStorage.getItem('farmaciaCarrito');
+                if (data) {
+                    try {
+                        carrito = JSON.parse(data);
+                    } catch (e) {
+                        carrito = [];
+                    }
+                } else {
+                    carrito = [];
+                }
+                actualizarBadge();
+                renderizarCarrito();
+            }
+
+            function agregarAlCarrito(productoId) {
+                const producto = productos.find(p => p.id === productoId);
+                if (!producto) return;
+                const existente = carrito.find(item => item.id === productoId);
+                if (existente) {
+                    existente.cantidad += 1;
+                } else {
+                    carrito.push({ ...producto, cantidad: 1 });
+                }
+                guardarCarrito();
+                actualizarBadge();
+                renderizarCarrito();
+                abrirCarrito();
+            }
+
+            function eliminarDelCarrito(productoId) {
+                carrito = carrito.filter(item => item.id !== productoId);
+                guardarCarrito();
+                actualizarBadge();
+                renderizarCarrito();
+            }
+
+            function cambiarCantidad(productoId, delta) {
+                const item = carrito.find(p => p.id === productoId);
+                if (!item) return;
+                const nueva = item.cantidad + delta;
+                if (nueva <= 0) {
+                    eliminarDelCarrito(productoId);
+                } else {
+                    item.cantidad = nueva;
+                    guardarCarrito();
+                    renderizarCarrito();
+                }
+            }
+
+            function calcularTotales() {
+                let subtotal = 0;
+                carrito.forEach(item => {
+                    subtotal += item.precio * item.cantidad;
+                });
+                let envio = 0;
+                let descuento = 0;
+                if (cuponAplicado) {
+                    descuento = subtotal * CUPON_DESCUENTO;
+                }
+                let total = subtotal + envio - descuento;
+                return { subtotal, envio, descuento, total };
+            }
+
+            function actualizarBadge() {
+                const total = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+                cartBadge.textContent = total;
+                cartBadge.style.display = total > 0 ? 'flex' : 'none';
+            }
+
+            function renderizarCarrito() {
+                const { subtotal, envio, descuento, total } = calcularTotales();
+                cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+                cartEnvio.textContent = `$${envio.toFixed(2)}`;
+                cartDescuento.textContent = `-$${descuento.toFixed(2)}`;
+                cartTotal.textContent = `$${total.toFixed(2)}`;
+
+                if (carrito.length === 0) {
+                    cartItems.innerHTML = `
+                        <div class="vacio">
+                            <i class="fas fa-shopping-basket"></i>
+                            Tu carrito está vacío
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = '';
+                carrito.forEach(item => {
+                    html += `
+                        <div class="cart-item">
+                            <div class="item-img" style="background-image: url('${item.imagen}');"></div>
+                            <div class="item-info">
+                                <h4>${item.nombre}</h4>
+                                <div class="item-precio">$${item.precio} MXN</div>
+                                <div class="item-cantidad">
+                                    <button data-id="${item.id}" data-delta="-1">−</button>
+                                    <span>${item.cantidad}</span>
+                                    <button data-id="${item.id}" data-delta="1">+</button>
+                                </div>
+                            </div>
+                            <button class="item-eliminar" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    `;
+                });
+                cartItems.innerHTML = html;
+
+                cartItems.querySelectorAll('.item-cantidad button').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const id = parseInt(this.dataset.id);
+                        const delta = parseInt(this.dataset.delta);
+                        cambiarCantidad(id, delta);
+                    });
+                });
+                cartItems.querySelectorAll('.item-eliminar').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const id = parseInt(this.dataset.id);
+                        eliminarDelCarrito(id);
+                    });
+                });
+            }
+
+            function abrirCarrito() {
+                cartSidebar.classList.add('abierto');
+                cartOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function cerrarCarrito() {
+                cartSidebar.classList.remove('abierto');
+                cartOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+
+            function abrirCheckout() {
+                if (carrito.length === 0) {
+                    alert('Tu carrito está vacío. Agrega productos primero.');
+                    return;
+                }
+                actualizarResumenCheckout();
+                checkoutModal.classList.add('abierto');
+                checkoutOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function cerrarCheckout() {
+                checkoutModal.classList.remove('abierto');
+                checkoutOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+
+            function actualizarResumenCheckout() {
+                const { subtotal, envio, descuento } = calcularTotales();
+                const zona = checkoutZona.value;
+                let envioCalc = 0;
+                if (zona === 'local') envioCalc = 50;
+                else if (zona === 'nacional') envioCalc = 150;
+                else if (zona === 'internacional') envioCalc = 500;
+                const totalFinal = subtotal + envioCalc - descuento;
+                resumenSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+                resumenEnvio.textContent = `$${envioCalc.toFixed(2)}`;
+                resumenDescuento.textContent = `-$${descuento.toFixed(2)}`;
+                resumenTotal.textContent = `$${totalFinal.toFixed(2)}`;
+            }
+
+            // ============================================================
+            // MODAL DE PRODUCTO
+            // ============================================================
+            function abrirModalProducto(id) {
+                const producto = productos.find(p => p.id === id);
+                if (!producto) return;
+
+                const beneficiosHtml = producto.beneficios.map(b => `
+                    <li><i class="fas fa-check-circle"></i> ${b}</li>
+                `).join('');
+
+                productoModalContent.innerHTML = `
+                    <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy" />
+                    <h2>${producto.nombre}</h2>
+                    <div class="categoria-modal">${producto.categoria}</div>
+                    <div class="precio-modal">$${producto.precio} MXN</div>
+                    <div class="descripcion-completa">
+                        <p>${producto.descripcionCompleta}</p>
+                    </div>
+                    <ul class="lista-beneficios">
+                        ${beneficiosHtml}
+                    </ul>
+                    <div class="modo-uso">
+                        <strong><i class="fas fa-info-circle"></i> Modo de uso:</strong>
+                        <p>${producto.modoUso}</p>
+                    </div>
+                    <button class="btn-agregar-modal" data-id="${producto.id}"><i class="fas fa-cart-plus"></i> Agregar al carrito</button>
+                `;
+
+                productoModalOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                const btnAgregarModal = productoModalContent.querySelector('.btn-agregar-modal');
+                btnAgregarModal.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const id = parseInt(this.dataset.id);
+                    agregarAlCarrito(id);
+                    cerrarModalProducto();
+                });
+            }
+
+            function cerrarModalProducto() {
+                productoModalOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+
+            closeProductoModalBtn.addEventListener('click', cerrarModalProducto);
+            productoModalOverlay.addEventListener('click', function(e) {
+                if (e.target === productoModalOverlay) cerrarModalProducto();
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && productoModalOverlay.classList.contains('active')) {
+                    cerrarModalProducto();
+                }
+            });
+
+            // ============================================================
+            // EVENTOS GENERALES
+            // ============================================================
+            cartIcon.addEventListener('click', abrirCarrito);
+            closeCartBtn.addEventListener('click', cerrarCarrito);
+            cartOverlay.addEventListener('click', cerrarCarrito);
+
+            btnCheckout.addEventListener('click', () => {
+                cerrarCarrito();
+                abrirCheckout();
+            });
+
+            closeCheckoutBtn.addEventListener('click', cerrarCheckout);
+            checkoutOverlay.addEventListener('click', cerrarCheckout);
+            checkoutZona.addEventListener('change', actualizarResumenCheckout);
+
+            aplicarCuponBtn.addEventListener('click', function() {
+                const codigo = cuponInput.value.trim().toUpperCase();
+                if (codigo === CUPON_CODIGO) {
+                    if (!cuponAplicado) {
+                        cuponAplicado = true;
+                        alert('✅ Cupón aplicado: 10% de descuento');
+                        renderizarCarrito();
+                        actualizarResumenCheckout();
+                    } else {
+                        alert('El cupón ya ha sido aplicado.');
+                    }
+                } else {
+                    alert('❌ Código de cupón inválido. Prueba con "SALUD10"');
+                }
+            });
+
+            document.querySelectorAll('input[name="pago"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    document.querySelectorAll('.metodos-pago label').forEach(label => label.classList.remove('active'));
+                    const label = this.closest('label');
+                    if (label) label.classList.add('active');
+                });
+            });
+
+            btnConfirmarPago.addEventListener('click', function() {
+                const nombre = checkoutNombre.value.trim();
+                const direccion = checkoutDireccion.value.trim();
+                const ciudad = checkoutCiudad.value.trim();
+                const cp = checkoutCP.value.trim();
+                const telefono = checkoutTelefono.value.trim();
+                if (!nombre || !direccion || !ciudad || !cp || !telefono) {
+                    alert('Por favor completa todos los campos.');
+                    return;
+                }
+                const metodoSeleccionado = document.querySelector('input[name="pago"]:checked');
+                const metodo = metodoSeleccionado ? metodoSeleccionado.value : 'No seleccionado';
+                alert(`✅ ¡Pedido confirmado!\n\nGracias ${nombre}. Tu pedido será enviado a:\n${direccion}, ${ciudad}, CP ${cp}\n\nMétodo de pago: ${metodo}\n\nHemos enviado un correo con los detalles.`);
+                carrito = [];
+                cuponAplicado = false;
+                cuponInput.value = '';
+                guardarCarrito();
+                actualizarBadge();
+                renderizarCarrito();
+                cerrarCheckout();
+            });
+
+            // ============================================================
+            // RENDERIZADO DE PRODUCTOS
+            // ============================================================
+            const container = document.getElementById('productosContainer');
+            const searchInput = document.getElementById('searchInput');
+            const categoryFilter = document.getElementById('categoryFilter');
+
+            function renderizarProductos() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const category = categoryFilter.value;
+                const filtrados = productos.filter(p => {
+                    const coincideNombre = p.nombre.toLowerCase().includes(searchTerm);
+                    const coincideCategoria = category === 'todos' || p.categoria === category;
+                    return coincideNombre && coincideCategoria;
+                });
+
+                if (filtrados.length === 0) {
+                    container.innerHTML = `<p style="grid-column:1/-1; text-align:center; padding:40px 0; color:#64748b;">No hay productos que coincidan con tu búsqueda.</p>`;
+                    return;
+                }
+
+                container.innerHTML = filtrados.map(p => `
+                    <div class="producto-card">
+                        <div class="imagen" style="background-image: url('${p.imagen}');"></div>
+                        <div class="info">
+                            <div class="categoria">${p.categoria}</div>
+                            <h3>${p.nombre}</h3>
+                            <div class="descripcion">${p.descripcion}</div>
+                            <div class="precio">$${p.precio} MXN</div>
+                            <div class="acciones">
+                                <button class="btn-agregar" data-id="${p.id}"><i class="fas fa-cart-plus"></i> Agregar</button>
+                                <button class="btn-detalle" data-id="${p.id}"><i class="fas fa-eye"></i> Ver</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                document.querySelectorAll('.btn-agregar').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = parseInt(this.dataset.id);
+                        agregarAlCarrito(id);
+                    });
+                });
+
+                document.querySelectorAll('.btn-detalle').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const id = parseInt(this.dataset.id);
+                        abrirModalProducto(id);
+                    });
+                });
+
+                document.querySelectorAll('.producto-card').forEach(card => {
+                    card.addEventListener('click', function(e) {
+                        if (e.target.closest('.btn-agregar') || e.target.closest('.btn-detalle')) return;
+                        const btnDetalle = this.querySelector('.btn-detalle');
+                        if (btnDetalle) {
+                            const id = parseInt(btnDetalle.dataset.id);
+                            abrirModalProducto(id);
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.producto-card').forEach((card) => {
+                    const btn = card.querySelector('.btn-detalle');
+                    if (btn) {
+                        card.dataset.id = btn.dataset.id;
+                    }
+                });
+            }
+
+            searchInput.addEventListener('input', renderizarProductos);
+            categoryFilter.addEventListener('change', renderizarProductos);
+
+            // ============================================================
+            // INICIALIZACIÓN
+            // ============================================================
+            cargarCarrito();
+            renderizarProductos();
+            if (carrito.length === 0) {
+                cartBadge.style.display = 'none';
+            }
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    if (cartSidebar.classList.contains('abierto')) cerrarCarrito();
+                    if (checkoutModal.classList.contains('abierto')) cerrarCheckout();
+                    if (productoModalOverlay.classList.contains('active')) cerrarModalProducto();
+                }
+            });
+
+            window.farmaciaCarrito = {
+                agregar: agregarAlCarrito,
+                carrito: () => carrito,
+                totalItems: () => carrito.reduce((acc, i) => acc + i.cantidad, 0)
+            };
+
+        })();
+    </script>
+</body>
+</html>

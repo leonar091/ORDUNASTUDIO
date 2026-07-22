@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORDUNA - Contacto</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* ========== RESET Y FUENTES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+        .contenedor {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ========== TOP BAR ========== */
+        .top-bar {
+            background: #1a1a1a;
+            color: #fff !important;
+            padding: 6px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .top-bar .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .top-bar a {
+            color: #fff !important;
+            text-decoration: none;
+            margin: 0 12px;
+            transition: color 0.3s;
+        }
+        .top-bar a:hover {
+            color: #ff6b35 !important;
+        }
+        .top-bar i {
+            margin-right: 6px;
+            color: #ff6b35;
+        }
+
+        /* ========== HEADER ========== */
+        header {
+            background: #ffffff;
+            padding: 12px 0;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        header.shrink {
+            padding: 6px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+        header .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        .logo-icono {
+            width: 44px;
+            height: 44px;
+            border: 2px solid #ff6b35;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 22px;
+            color: #ff6b35;
+            transition: all 0.3s ease;
+        }
+        .logo:hover .logo-icono {
+            transform: rotate(-8deg) scale(1.05);
+            background: #ff6b35;
+            color: #fff !important;
+        }
+        .logo-texto {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        .logo-texto .nombre {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #1a1a1a;
+        }
+        .logo-texto .subtitulo {
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #888;
+            font-weight: 600;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #1a1a1a;
+            padding: 5px 10px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: max-height 0.4s ease;
+            overflow: hidden;
+        }
+        nav a {
+            padding: 8px 14px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            color: #1a1a1a;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 0;
+            height: 2.5px;
+            background: #ff6b35;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        nav a:hover::after,
+        nav a.activo::after {
+            width: 60%;
+        }
+        nav a:hover {
+            color: #ff6b35 !important;
+        }
+        nav a.activo {
+            color: #ff6b35 !important;
+        }
+
+        .btn-cotizar {
+            background: #ff6b35;
+            color: #fff !important;
+            padding: 10px 24px !important;
+            border-radius: 30px !important;
+            font-weight: 700 !important;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(255,107,53,0.35);
+        }
+        .btn-cotizar:hover {
+            background: #e05a2a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,107,53,0.45);
+            color: #fff !important;
+        }
+        .btn-cotizar::after {
+            display: none !important;
+        }
+
+        .btn-agendar {
+            background: transparent;
+            border: 2px solid #ff6b35;
+            color: #ff6b35 !important;
+            padding: 8px 20px !important;
+            border-radius: 30px !important;
+            font-weight: 700 !important;
+            transition: all 0.3s ease;
+        }
+        .btn-agendar:hover {
+            background: #ff6b35;
+            color: #fff !important;
+            transform: translateY(-2px);
+        }
+        .btn-agendar::after {
+            display: none !important;
+        }
+
+        .separador-menu {
+            width: 1px;
+            height: 28px;
+            background: #e0e0e0;
+            margin: 0 6px;
+        }
+
+        /* ========== SECCIÓN CONTACTO ========== */
+        .contacto {
+            background: #ffffff;
+            padding: 60px 0;
+        }
+        .contacto-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        /* Columna izquierda - Información */
+        .info-contacto h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+        .info-contacto .subtitulo {
+            color: #555;
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: #f8fafc;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid #eef2f6;
+        }
+        .info-item:hover {
+            border-color: #ff6b35;
+            transform: translateX(6px);
+        }
+        .info-item .icono {
+            width: 44px;
+            height: 44px;
+            background: #ff6b35;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #fff !important;
+            flex-shrink: 0;
+        }
+        .info-item .texto {
+            display: flex;
+            flex-direction: column;
+        }
+        .info-item .texto .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #888;
+            font-weight: 600;
+        }
+        .info-item .texto .valor {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #1a1a1a;
+        }
+        .info-item .texto .valor a {
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+        .info-item .texto .valor a:hover {
+            color: #ff6b35;
+        }
+
+        .info-item.whatsapp-item .icono {
+            background: #25d366;
+        }
+
+        .info-adicional {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 16px;
+            border: 1px solid #eef2f6;
+        }
+        .info-adicional p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        .info-adicional p i {
+            color: #ff6b35;
+            width: 20px;
+        }
+
+        /* ========== FORMULARIO ========== */
+        .form-wrapper {
+            background: #ffffff;
+            padding: 40px 35px;
+            border-radius: 24px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+            border: 1px solid #eef2f6;
+        }
+        .form-wrapper h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .form-wrapper .sub {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .campo {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .campo label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #333 !important;
+        }
+        .campo input,
+        .campo select,
+        .campo textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e0e6ed;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: #fafbfc;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            color: #1a1a1a;
+        }
+        .campo input:focus,
+        .campo select:focus,
+        .campo textarea:focus {
+            outline: none;
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 4px rgba(255,107,53,0.08);
+            background: #ffffff;
+        }
+        .campo textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Checkboxes inline para presupuesto y fecha */
+        .opciones-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .opcion-radio {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #eef2f6;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .opcion-radio:hover {
+            border-color: #ff6b35;
+        }
+        .opcion-radio input[type="radio"] {
+            width: auto;
+            padding: 0;
+            margin: 0;
+            accent-color: #ff6b35;
+        }
+
+        .boton-enviar {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35, #e05a2a);
+            padding: 16px 40px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #fff !important;
+            box-shadow: 0 8px 25px rgba(255,107,53,0.35);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .boton-enviar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255,107,53,0.5);
+            background: linear-gradient(135deg, #e05a2a, #cc4f20);
+        }
+
+        /* Botón WhatsApp alternativo */
+        .btn-whatsapp-alt {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #25d366;
+            color: #fff !important;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 12px;
+            border: none;
+        }
+        .btn-whatsapp-alt:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            color: #fff !important;
+        }
+
+        .mensaje-confianza {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eef2f6;
+        }
+        .mensaje-confianza span {
+            font-size: 0.85rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .mensaje-confianza i {
+            color: #ff6b35;
+        }
+
+        /* ========== MENSAJE DE ÉXITO ========== */
+        .mensaje-exito {
+            display: none;
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .mensaje-exito i {
+            font-size: 4rem;
+            color: #4caf50;
+        }
+        .mensaje-exito h3 {
+            color: #2e7d32 !important;
+            font-size: 1.5rem;
+            margin: 10px 0 6px;
+        }
+        .mensaje-exito p {
+            color: #1b5e20 !important;
+        }
+
+        /* ========== FAQ ========== */
+        .faq-contacto {
+            background: #ffffff;
+            padding: 60px 0;
+        }
+        .faq-contacto h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 40px;
+        }
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px 40px;
+        }
+        .faq-item {
+            border-bottom: 1px solid #eef2f6;
+            padding: 16px 0;
+        }
+        .faq-item h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .faq-item p {
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: #1a1a1a;
+            color: #fff !important;
+            padding: 40px 0 20px;
+            border-top: 3px solid #ff6b35;
+        }
+        footer * {
+            color: #fff !important;
+        }
+        .footer-contenido {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .footer-col h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        .footer-col p, .footer-col a, .footer-col li {
+            color: #ccc !important;
+            text-decoration: none;
+        }
+        .footer-col a:hover {
+            color: #ff6b35 !important;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 8px;
+        }
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            text-align: center;
+            color: #888 !important;
+        }
+
+        /* ========== WHATSAPP FLOTANTE ========== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            background: #25d366;
+            color: #fff !important;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            color: #fff !important;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 992px) {
+            .contacto-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .top-bar .contenedor {
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+            }
+            .top-bar .top-izquierda,
+            .top-bar .top-derecha {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+            }
+            .opciones-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            nav {
+                width: 100%;
+                order: 3;
+            }
+            nav ul {
+                flex-direction: column;
+                align-items: stretch;
+                max-height: 0;
+                gap: 6px;
+                padding-top: 0;
+                width: 100%;
+            }
+            nav.abierto ul {
+                max-height: 600px;
+                padding-top: 15px;
+                padding-bottom: 10px;
+            }
+            nav ul li {
+                width: 100%;
+                text-align: center;
+            }
+            nav a {
+                justify-content: center;
+                padding: 12px 0;
+                width: 100%;
+            }
+            nav a::after {
+                display: none;
+            }
+            .separador-menu {
+                display: none;
+            }
+            .btn-cotizar, .btn-agendar {
+                width: 100% !important;
+                justify-content: center;
+                padding: 12px !important;
+            }
+            header .contenedor {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .form-wrapper {
+                padding: 25px 18px;
+            }
+            .info-contacto h2 {
+                font-size: 1.8rem;
+            }
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+            .mensaje-confianza {
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+            }
+        }
+        @media (max-width: 480px) {
+            /* Ajustes adicionales */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== TOP BAR ========== -->
+    <div class="top-bar">
+        <div class="contenedor">
+            <div class="top-izquierda">
+                <a href="tel:+525660281521"><i class="fas fa-phone-alt"></i> +52 5660 2815 21</a>
+                <a href="mailto:ordunadigitalstudio@gmail.com"><i class="fas fa-envelope"></i> ordunadigitalstudio@gmail.com</a>
+            </div>
+            <div class="top-derecha">
+                <a href="#"><i class="fas fa-clock"></i> Lun - Vie: 9:00 - 19:00</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== HEADER ========== -->
+    <header id="mainHeader">
+        <div class="contenedor">
+            <a href="index.html" class="logo">
+                <div class="logo-icono">O</div>
+                <div class="logo-texto">
+                    <span class="nombre">ORDUNA</span>
+                    <span class="subtitulo">Digital Studio</span>
+                </div>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav id="navMenu">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="servicios.html"><i class="fas fa-laptop-code"></i> Servicios</a></li>
+                    <li><a href="portfolio.html"><i class="fas fa-images"></i> Portfolio</a></li>
+                    <li><a href="contacto.html" class="activo"><i class="fas fa-envelope"></i> Contacto</a></li>
+                    <span class="separador-menu"></span>
+                    <li><a href="contacto.html" class="btn-cotizar"><i class="fas fa-paper-plane"></i> Solicitar Cotización</a></li>
+                    <li><a href="contacto.html" class="btn-agendar"><i class="fas fa-calendar-check"></i> Agenda una llamada</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ========== CONTACTO ========== -->
+    <section class="contacto">
+        <div class="contenedor">
+            <div class="contacto-grid">
+
+                <!-- Columna izquierda: Información -->
+                <div class="info-contacto">
+                    <h2>¿Hablamos de tu proyecto?</h2>
+                    <p class="subtitulo">Déjanos tus datos y te responderemos en menos de 24 horas.</p>
+
+                    <div class="info-item">
+                        <div class="icono"><i class="fas fa-phone-alt"></i></div>
+                        <div class="texto">
+                            <span class="label">Teléfono</span>
+                            <span class="valor"><a href="tel:+525660281521">+52 5660 2815 21</a></span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="icono"><i class="fas fa-envelope"></i></div>
+                        <div class="texto">
+                            <span class="label">Email</span>
+                            <span class="valor"><a href="mailto:ordunadigitalstudio@gmail.com">ordunadigitalstudio@gmail.com</a></span>
+                        </div>
+                    </div>
+                    <div class="info-item whatsapp-item">
+                        <div class="icono"><i class="fab fa-whatsapp"></i></div>
+                        <div class="texto">
+                            <span class="label">WhatsApp</span>
+                            <span class="valor"><a href="https://wa.me/525660281521" target="_blank">+52 5660 2815 21</a></span>
+                        </div>
+                    </div>
+
+                    <div class="info-adicional">
+                        <p><i class="fas fa-clock"></i> Lunes a Viernes: 9:00 - 19:00</p>
+                        <p><i class="fas fa-check-circle"></i> Respuesta en menos de 24 horas</p>
+                        <p><i class="fas fa-lock"></i> Tus datos están protegidos</p>
+                        <p><i class="fas fa-file-invoice"></i> Cotización gratuita sin compromiso</p>
+                    </div>
+                </div>
+
+                <!-- Columna derecha: Formulario -->
+                <div class="form-wrapper">
+                    <h3>Envía tu mensaje</h3>
+                    <p class="sub">Completa el formulario y nos pondremos en contacto contigo.</p>
+
+                    <form id="contactForm" action="https://formspree.io/f/xzdnarde" method="POST">
+                        <div class="campo">
+                            <label for="nombre">Nombre completo *</label>
+                            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="campo">
+                            <label for="email">Correo electrónico *</label>
+                            <input type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com" required>
+                        </div>
+                        <div class="campo">
+                            <label for="telefono">Teléfono</label>
+                            <input type="tel" id="telefono" name="telefono" placeholder="+52 55 1234 5678">
+                        </div>
+
+                        <!-- Selector: Tipo de proyecto -->
+                        <div class="campo">
+                            <label for="tipo">Tipo de proyecto</label>
+                            <select id="tipo" name="tipo">
+                                <option value="">Selecciona una opción</option>
+                                <option value="landing">Landing Page</option>
+                                <option value="empresarial">Sitio empresarial</option>
+                                <option value="tienda">Tienda online (E-commerce)</option>
+                                <option value="sistema">Sistema web / App</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+
+                        <!-- Presupuesto -->
+                        <div class="campo">
+                            <label>¿Cuál es tu presupuesto aproximado?</label>
+                            <div class="opciones-grid">
+                                <label class="opcion-radio">
+                                    <input type="radio" name="presupuesto" value="menos-10k"> Menos de $10,000
+                                </label>
+                                <label class="opcion-radio">
+                                    <input type="radio" name="presupuesto" value="10-20k"> $10,000 – $20,000
+                                </label>
+                                <label class="opcion-radio">
+                                    <input type="radio" name="presupuesto" value="20-50k"> $20,000 – $50,000
+                                </label>
+                                <label class="opcion-radio">
+                                    <input type="radio" name="presupuesto" value="mas-50k"> Más de $50,000
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Fecha estimada -->
+                        <div class="campo">
+                            <label>¿Cuándo lo necesitas?</label>
+                            <div class="opciones-grid">
+                                <label class="opcion-radio">
+                                    <input type="radio" name="fecha" value="ahora"> Lo antes posible
+                                </label>
+                                <label class="opcion-radio">
+                                    <input type="radio" name="fecha" value="este-mes"> Este mes
+                                </label>
+                                <label class="opcion-radio">
+                                    <input type="radio" name="fecha" value="2-meses"> En 2 meses
+                                </label>
+                                <label class="opcion-radio">
+                                    <input type="radio" name="fecha" value="cotizando"> Solo estoy cotizando
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="campo">
+                            <label for="mensaje">Mensaje *</label>
+                            <textarea id="mensaje" name="mensaje" rows="4" placeholder="Cuéntanos sobre tu proyecto..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="boton-enviar"><i class="fas fa-paper-plane"></i> Enviar mensaje</button>
+
+                        <!-- Mensaje de éxito (oculto inicialmente) -->
+                        <div class="mensaje-exito" id="mensajeExito">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>¡Gracias!</h3>
+                            <p>Tu mensaje fue enviado correctamente. Nos comunicaremos contigo muy pronto.</p>
+                        </div>
+                    </form>
+
+                    <!-- Botón WhatsApp alternativo -->
+                    <a href="https://wa.me/525660281521?text=Hola%20ORDUNA!%20Quiero%20solicitar%20información%20sobre%20sus%20servicios." target="_blank" class="btn-whatsapp-alt">
+                        <i class="fab fa-whatsapp"></i> O si prefieres, escríbenos por WhatsApp
+                    </a>
+
+                    <!-- Confianza -->
+                    <div class="mensaje-confianza">
+                        <span><i class="fas fa-lock"></i> Tus datos están protegidos</span>
+                        <span><i class="fas fa-clock"></i> Respuesta en menos de 24h</span>
+                        <span><i class="fas fa-file-invoice"></i> Cotización sin compromiso</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FAQ ========== -->
+    <section class="faq-contacto">
+        <div class="contenedor">
+            <h2>Preguntas frecuentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4>¿Cuánto cuesta una página web?</h4>
+                    <p>Depende del tipo de proyecto. Nuestros planes van desde $6,500 MXN para una landing page hasta $25,000 MXN para una tienda online.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Cuánto tiempo tardan en entregar?</h4>
+                    <p>Los plazos van de 5 a 20 días hábiles, dependiendo de la complejidad del proyecto.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Aceptan pagos en parcialidades?</h4>
+                    <p>Sí, trabajamos con un anticipo del 50% y el saldo al finalizar el proyecto.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Incluye dominio y hosting?</h4>
+                    <p>Sí, todos nuestros planes incluyen dominio y hosting por el primer año.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Puedo editar la página yo mismo?</h4>
+                    <p>Claro, te entregamos un panel de administración fácil de usar para que puedas actualizar contenido.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Dan mantenimiento después del lanzamiento?</h4>
+                    <p>Sí, ofrecemos planes de soporte y mantenimiento para mantener tu sitio siempre actualizado.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <div class="contenedor">
+            <div class="footer-contenido">
+                <div class="footer-col">
+                    <h4>🚀 ORDUNA</h4>
+                    <p>Diseño web profesional para tu negocio.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Enlaces rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="servicios.html">Servicios</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <p>📧 <a href="mailto:ordunadigitalstudio@gmail.com">ordunadigitalstudio@gmail.com</a></p>
+                    <p>📞 <a href="tel:+525660281521">+52 5660 2815 21</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy;  ORDUNA. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== WHATSAPP FLOTANTE ========== -->
+    <a href="https://wa.me/525660281521?text=Hola%20ORDUNA!%20Quiero%20solicitar%20información%20sobre%20sus%20servicios." target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Toggle menú hamburguesa
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navMenu').classList.toggle('abierto');
+        });
+
+        // Efecto scroll header
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 60) {
+                header.classList.add('shrink');
+            } else {
+                header.classList.remove('shrink');
+            }
+        });
+
+        // Mensaje de éxito con Formspree (simulado)
+        const form = document.getElementById('contactForm');
+        const mensajeExito = document.getElementById('mensajeExito');
+
+        form.addEventListener('submit', function(e) {
+            // No prevenimos el envío real para que Formspree funcione,
+            // pero mostramos el mensaje de éxito después de un breve retraso
+            // (Formspree redirige, pero podemos mostrar el mensaje si queremos)
+            // Para una experiencia mejor, puedes usar fetch con Formspree.
+            // Como Formspree redirige, dejamos que funcione normalmente.
+            // Si quieres que no redirija, usa fetch.
+            // Aquí dejamos el comportamiento estándar de Formspree.
+            // Si quieres mostrar el mensaje sin redirigir, usa fetch.
+            // Por simplicidad, dejamos que Formspree maneje la respuesta.
+            // Pero añadimos un pequeño mensaje de éxito visual (se mostrará si la página no recarga)
+        });
+
+        // Si quieres evitar la redirección y mostrar el mensaje de éxito,
+        // descomenta esto y cambia el action a tu endpoint de Formspree con fetch.
+        /*
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch('https://formspree.io/f/xgojqlpr', {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+            if (response.ok) {
+                form.style.display = 'none';
+                mensajeExito.style.display = 'block';
+            } else {
+                alert('Hubo un error. Por favor, intenta de nuevo.');
+            }
+        });
+        */
+    </script>
+</body>
+</html>

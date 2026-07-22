@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbería Style · Reservar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
+    <style>
+        /* ====== COPIA TODO EL CSS DEL INDEX (con estilos de reserva) ====== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: #0b0b0b; color: #e5e5e5; line-height: 1.6; overflow-x: hidden; }
+        .contenedor { width: 90%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+        :root { --dorado: #d4a743; --dorado-oscuro: #b8922f; --negro: #0b0b0b; --gris-oscuro: #1a1a1a; --gris-medio: #2a2a2a; --blanco: #f5f5f5; --sombra: 0 10px 30px rgba(0,0,0,0.6); --sombra-dorada: 0 8px 25px rgba(212,167,67,0.25); --radio: 16px; --transition: 0.3s cubic-bezier(0.4,0,0.2,1); }
+        .topbar { background: #0f0f0f; color: #aaa; padding: 6px 0; font-size: 0.8rem; border-bottom: 1px solid #1a1a1a; }
+        .topbar .contenedor { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+        .topbar a { color: #aaa; transition: color 0.3s; }
+        .topbar a:hover { color: var(--dorado); }
+        .topbar i { color: var(--dorado); margin-right: 4px; width: 16px; }
+        .topbar .separador { color: #333; }
+        header { background: rgba(11,11,11,0.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 10px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(212,167,67,0.15); transition: all 0.3s ease; }
+        header.shrink { padding: 6px 0; background: rgba(11,11,11,0.98); box-shadow: 0 4px 30px rgba(0,0,0,0.8); }
+        header .contenedor { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo-icono { width: 42px; height: 42px; border: 2px solid var(--dorado); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 20px; color: var(--dorado); transition: all 0.3s ease; }
+        .logo:hover .logo-icono { transform: rotate(-10deg) scale(1.05); background: var(--dorado); color: #0b0b0b; }
+        .logo-texto { display: flex; flex-direction: column; line-height: 1.1; }
+        .logo-texto .nombre { font-size: 22px; font-weight: 800; letter-spacing: 1px; color: #fff; }
+        .logo-texto .nombre span { color: var(--dorado); }
+        .logo-texto .subtitulo { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #888; font-weight: 600; }
+        .menu-toggle { display: none; font-size: 28px; background: none; border: none; color: #fff; cursor: pointer; padding: 5px 10px; }
+        nav ul { list-style: none; display: flex; align-items: center; gap: 6px; transition: max-height 0.4s ease; overflow: hidden; }
+        nav a { padding: 8px 14px; font-weight: 600; font-size: 0.9rem; border-radius: 40px; transition: all 0.3s ease; color: #ccc; display: inline-flex; align-items: center; gap: 6px; border: 1px solid transparent; }
+        nav a:hover, nav a.activo { color: var(--dorado); border-color: rgba(212,167,67,0.2); background: rgba(212,167,67,0.06); }
+        .btn-reserva-nav { background: var(--dorado); color: #0b0b0b !important; padding: 8px 22px !important; border-radius: 40px !important; font-weight: 700; border: none !important; box-shadow: 0 4px 14px rgba(212,167,67,0.3); }
+        .btn-reserva-nav:hover { background: var(--dorado-oscuro); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212,167,67,0.4); color: #0b0b0b !important; }
+        section { padding: 70px 0; }
+        .section-titulo { text-align: center; font-size: 2.4rem; font-weight: 800; margin-bottom: 8px; color: #fff; }
+        .section-titulo span { color: var(--dorado); }
+        .section-sub { text-align: center; color: #999; font-size: 1.05rem; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .bg-gris { background: var(--gris-oscuro); }
+        .bg-negro { background: var(--negro); }
+        .reserva-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: var(--gris-medio); border-radius: var(--radio); padding: 40px; border: 1px solid #2a2a2a; }
+        .reserva-info h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; }
+        .reserva-info p { color: #ccc; margin-bottom: 20px; }
+        .reserva-info .contacto-rapido { display: flex; flex-direction: column; gap: 12px; }
+        .reserva-info .contacto-rapido a { display: inline-flex; align-items: center; gap: 10px; color: #ddd; transition: color 0.3s; }
+        .reserva-info .contacto-rapido a:hover { color: var(--dorado); }
+        .reserva-info .contacto-rapido i { color: var(--dorado); width: 24px; }
+        .reserva-form { display: flex; flex-direction: column; gap: 16px; }
+        .reserva-form .campo { display: flex; flex-direction: column; gap: 4px; }
+        .reserva-form .campo label { font-weight: 600; font-size: 0.9rem; color: #ccc; }
+        .reserva-form .campo input, .reserva-form .campo select { padding: 12px 16px; border-radius: 12px; border: 1px solid #333; background: #1a1a1a; color: #fff; font-size: 1rem; transition: border 0.3s; font-family: inherit; }
+        .reserva-form .campo input:focus, .reserva-form .campo select:focus { outline: none; border-color: var(--dorado); box-shadow: 0 0 0 3px rgba(212,167,67,0.15); }
+        .btn-reservar { background: var(--dorado); color: #0b0b0b; padding: 14px; border: none; border-radius: 60px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; margin-top: 8px; }
+        .btn-reservar:hover { background: var(--dorado-oscuro); transform: scale(1.01); box-shadow: var(--sombra-dorada); }
+        footer { background: #0a0a0a; border-top: 1px solid #1a1a1a; padding: 40px 0 20px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 30px; margin-bottom: 30px; }
+        .footer-logo { font-size: 1.6rem; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .footer-logo span { color: var(--dorado); }
+        .footer-desc { color: #999; font-size: 0.95rem; max-width: 300px; }
+        .footer-social { display: flex; gap: 12px; margin-top: 16px; }
+        .footer-social a { width: 40px; height: 40px; border-radius: 50%; background: #1a1a1a; color: #ccc; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .footer-social a:hover { background: var(--dorado); color: #0b0b0b; }
+        footer h4 { color: #fff; font-size: 1.1rem; margin-bottom: 14px; }
+        footer ul { list-style: none; }
+        footer ul li { margin-bottom: 8px; }
+        footer ul a { color: #999; transition: color 0.3s; }
+        footer ul a:hover { color: var(--dorado); }
+        .footer-copy { border-top: 1px solid #1a1a1a; padding-top: 20px; text-align: center; font-size: 0.85rem; color: #666; }
+        .footer-copy a { color: #888; transition: color 0.3s; }
+        .footer-copy a:hover { color: var(--dorado); }
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; z-index: 999; background: #25d366; color: #fff !important; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: 0 6px 25px rgba(37,211,102,0.5); transition: all 0.3s ease; text-decoration: none; }
+        .whatsapp-float:hover { transform: scale(1.1); color: #fff !important; }
+        .btn-subir { position: fixed; bottom: 100px; right: 30px; z-index: 998; background: var(--dorado); color: #0b0b0b; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; box-shadow: var(--sombra-dorada); border: none; cursor: pointer; transition: all 0.3s ease; opacity: 0; transform: translateY(20px); pointer-events: none; }
+        .btn-subir.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .btn-subir:hover { background: var(--dorado-oscuro); transform: scale(1.08); }
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        @media (max-width: 992px) { .reserva-wrapper { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            nav { width: 100%; order: 3; }
+            nav ul { flex-direction: column; align-items: stretch; max-height: 0; gap: 6px; padding-top: 0; width: 100%; }
+            nav.abierto ul { max-height: 600px; padding-top: 15px; padding-bottom: 10px; }
+            nav a { justify-content: center; padding: 12px; width: 100%; border: none; }
+            .btn-reserva-nav { background: var(--dorado) !important; color: #0b0b0b !important; border-radius: 40px !important; }
+            .section-titulo { font-size: 1.8rem; }
+            .reserva-wrapper { padding: 24px; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 26px; bottom: 20px; right: 20px; }
+            .btn-subir { width: 44px; height: 44px; font-size: 1.2rem; bottom: 80px; right: 20px; }
+        }
+        @media (max-width: 480px) { .topbar .contenedor { flex-direction: column; align-items: center; gap: 4px; } }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOPBAR ===== -->
+    <div class="topbar">
+        <div class="contenedor">
+            <div>
+                <a href="tel:+525512345678"><i class="fas fa-phone-alt"></i> +52 55 1234 5678</a>
+                <span class="separador">|</span>
+                <a href="mailto:info@barberiastyle.com"><i class="fas fa-envelope"></i> info@barberiastyle.com</a>
+                <span class="separador">|</span>
+                <span><i class="fas fa-map-marker-alt"></i> Av. Principal #123, CDMX</span>
+            </div>
+            <div>
+                <a href="https://wa.me/525512345678" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header id="mainHeader">
+        <div class="contenedor">
+            <a href="index.html" class="logo">
+                <div class="logo-icono">✂</div>
+                <div class="logo-texto">
+                    <span class="nombre">Barbería <span>Style</span></span>
+                    <span class="subtitulo">Tu estilo comienza aquí</span>
+                </div>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="navMenu">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="precios.html">Precios</a></li>
+                    <li><a href="trabajos.html">Galería</a></li>
+                    <li><a href="reservar.html" class="btn-reserva-nav" style="background: var(--dorado-oscuro) !important; box-shadow: 0 8px 25px rgba(212,167,67,0.5) !important;">Reservar cita</a></li>
+                    <li><a href="horarios.html">Horarios</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== RESERVAR ===== -->
+    <section class="reserva bg-negro" id="reservar">
+        <div class="contenedor">
+            <h2 class="section-titulo">Reserva tu <span>cita</span></h2>
+            <p class="section-sub">Elige el día y la hora que mejor te convenga</p>
+            <div class="reserva-wrapper reveal">
+                <div class="reserva-info">
+                    <h3>¿Cómo reservar?</h3>
+                    <p>Puedes agendar tu cita directamente por WhatsApp o llenando el formulario. Te confirmaremos a la brevedad.</p>
+                    <div class="contacto-rapido">
+                        <a href="https://wa.me/525512345678?text=Hola%2C%20quiero%20agendar%20una%20cita" target="_blank"><i class="fab fa-whatsapp"></i> Escríbenos por WhatsApp</a>
+                        <a href="tel:+525512345678"><i class="fas fa-phone-alt"></i> Llámanos al +52 55 1234 5678</a>
+                        <a href="mailto:info@barberiastyle.com"><i class="fas fa-envelope"></i> info@barberiastyle.com</a>
+                    </div>
+                    <div style="margin-top: 20px; background: var(--gris-medio); padding: 16px; border-radius: 12px; border-left: 3px solid var(--dorado);">
+                        <p style="font-weight: 600;">Horario de atención:</p>
+                        <p style="color: #aaa;">Lun-Vie: 10:00 - 20:00 · Sáb: 9:00 - 18:00 · Dom: Cerrado</p>
+                    </div>
+                </div>
+                <form class="reserva-form" id="reservaForm">
+                    <div class="campo">
+                        <label for="nombreReserva">Nombre completo</label>
+                        <input type="text" id="nombreReserva" placeholder="Ej: Juan Pérez" required>
+                    </div>
+                    <div class="campo">
+                        <label for="telefonoReserva">Teléfono</label>
+                        <input type="tel" id="telefonoReserva" placeholder="+52 55 1234 5678" required>
+                    </div>
+                    <div class="campo">
+                        <label for="servicioReserva">Servicio</label>
+                        <select id="servicioReserva">
+                            <option value="Corte">Corte</option>
+                            <option value="Corte + Barba">Corte + Barba</option>
+                            <option value="Barba">Barba</option>
+                            <option value="Afeitado">Afeitado</option>
+                            <option value="Corte infantil">Corte infantil</option>
+                            <option value="Diseño de barba">Diseño de barba</option>
+                            <option value="Paquete completo">Paquete completo</option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label for="fechaReserva">Fecha</label>
+                        <input type="date" id="fechaReserva" required>
+                    </div>
+                    <div class="campo">
+                        <label for="horaReserva">Hora</label>
+                        <input type="time" id="horaReserva" required>
+                    </div>
+                    <button type="submit" class="btn-reservar"><i class="fas fa-calendar-check"></i> Enviar solicitud</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="contenedor">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">✂ Barbería <span>Style</span></div>
+                    <div class="footer-desc">Tu estilo comienza aquí. Expertos en cortes y barba con atención personalizada.</div>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Enlaces rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="servicios.html">Servicios</a></li>
+                        <li><a href="precios.html">Precios</a></li>
+                        <li><a href="trabajos.html">Galería</a></li>
+                        <li><a href="reservar.html">Reservar cita</a></li>
+                        <li><a href="horarios.html">Horarios</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Horario</h4>
+                    <ul>
+                        <li>Lun-Vie: 10:00 - 20:00</li>
+                        <li>Sáb: 9:00 - 18:00</li>
+                        <li>Dom: Cerrado</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><a href="tel:+525512345678"><i class="fas fa-phone-alt" style="color: var(--dorado);"></i> +52 55 1234 5678</a></li>
+                        <li><a href="mailto:info@barberiastyle.com"><i class="fas fa-envelope" style="color: var(--dorado);"></i> info@barberiastyle.com</a></li>
+                        <li><i class="fas fa-map-marker-alt" style="color: var(--dorado);"></i> Av. Principal #123, CDMX</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-copy">
+                &copy; 2026 Barbería Style. Todos los derechos reservados.
+                <span style="margin: 0 8px;">·</span>
+                <a href="#">Aviso de privacidad</a>
+                <span style="margin: 0 8px;">·</span>
+                <a href="#">Términos y condiciones</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP ===== -->
+    <a href="https://wa.me/525512345678?text=Hola%2C%20quiero%20agendar%20una%20cita" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <button class="btn-subir" id="btnSubir" aria-label="Volver arriba">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        menuToggle.addEventListener('click', () => navMenu.classList.toggle('abierto'));
+
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 80) header.classList.add('shrink');
+            else header.classList.remove('shrink');
+        });
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.15 });
+        revealElements.forEach(el => observer.observe(el));
+
+        const reservaForm = document.getElementById('reservaForm');
+        reservaForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const nombre = document.getElementById('nombreReserva').value.trim();
+            const telefono = document.getElementById('telefonoReserva').value.trim();
+            const servicio = document.getElementById('servicioReserva').value;
+            const fecha = document.getElementById('fechaReserva').value;
+            const hora = document.getElementById('horaReserva').value;
+            if (!nombre || !telefono || !fecha || !hora) { alert('Por favor, completa todos los campos.'); return; }
+            const mensaje = `Hola, quiero agendar una cita:\nNombre: ${nombre}\nTeléfono: ${telefono}\nServicio: ${servicio}\nFecha: ${fecha}\nHora: ${hora}`;
+            window.open(`https://wa.me/525512345678?text=${encodeURIComponent(mensaje)}`, '_blank');
+            reservaForm.reset();
+        });
+
+        const btnSubir = document.getElementById('btnSubir');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) btnSubir.classList.add('visible');
+            else btnSubir.classList.remove('visible');
+        });
+        btnSubir.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => navMenu.classList.remove('abierto'));
+        });
+        console.log('✅ Barbería Style · Reservar cargado');
+    </script>
+</body>
+</html>
